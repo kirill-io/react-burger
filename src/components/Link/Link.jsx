@@ -27,7 +27,7 @@ class Link extends React.Component {
 
   render() {
     return (
-      <a href="#" className="link p-4">
+      <a href="#" className="link pt-4 pr-5 pb-4 pl-5">
         <div className='mr-2'>
           {this.selectionTag(this.props.tag)}
         </div>
