@@ -1,0 +1,16 @@
+.burger-constructor__container {
+  align-self: start;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+.burger-constructor__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  margin-top: 0;
+  padding: 0;
+}
