@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './BurgerIngredients.css';
 import TabList from '../TabList/TabList';
 import Ingredients from '../Ingredients/Ingredients';
@@ -17,6 +18,10 @@ class BurgerIngredients extends React.Component {
       </div>
     )
   };
+}
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.any)
 }
 
 export default BurgerIngredients;

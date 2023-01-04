@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './BurgerConstructor.css';
 import ConstructorItem from '../ConstructorItem/ConstructorItem';
 import ConstructorOrder from '../ConstructorOrder/ConstructorOrder';
@@ -44,6 +45,10 @@ class BurgerConstructor extends React.Component {
       </div>
     )
   }
+}
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.any)
 }
 
 export default BurgerConstructor;
