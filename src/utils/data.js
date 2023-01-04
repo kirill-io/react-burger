@@ -27,7 +27,7 @@ export const data = [
    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
    "__v":0,
-   "amount":0
+   "amount":1
   },
   {
    "_id":"60666c42cc7b410027a1a9b6",
@@ -102,7 +102,7 @@ export const data = [
    "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
    "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
    "__v":0,
-   "amount":0
+   "amount":1
   },
   {
    "_id":"60666c42cc7b410027a1a9bc",

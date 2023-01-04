@@ -1,4 +1,4 @@
-.burger-constructor__item {
+.burger-constructor__item, .constructor__item {
   display: flex;
   align-items: center;
   column-gap: 8px;

@@ -9,7 +9,7 @@ class ConstructorItem extends React.Component {
 
   render() {
     return (
-      <li className="burger-constructor__item">
+      <li className={(this.props.typeClass === 'bun') ? "burger-constructor__item" : "constructor__item"}>
         <a href="#" className="burger-constructor__link">
           <DragIcon type="primary" />
         </a>

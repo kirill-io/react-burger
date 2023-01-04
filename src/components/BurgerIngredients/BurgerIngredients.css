@@ -1,6 +1,7 @@
 .burger-ingredients__container {
-  width: 600px;
-
   display: flex;
   flex-direction: column;
+  padding-bottom: 40px;
+  width: 600px;
+  box-sizing: border-box;
 }

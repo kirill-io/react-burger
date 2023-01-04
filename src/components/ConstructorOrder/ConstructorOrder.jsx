@@ -10,7 +10,7 @@ class ConstructorOrder extends React.Component {
 
   render() {
     return (
-      <div className="burger-constructor__order">
+      <div className="burger-constructor__order mr-4">
         <div className="burger-constructor__price">
           <ConstructorPrice data={this.props.data} />
           <CurrencyIcon type="primary" />

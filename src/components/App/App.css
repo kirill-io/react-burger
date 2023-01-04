@@ -7,6 +7,6 @@
 .container {
   column-gap: 40px;
   display: flex;
+  max-height: calc(100vh - 88px);
   width: 1240px;
-  margin-bottom: 40px;
 }
