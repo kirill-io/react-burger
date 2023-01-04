@@ -1,0 +1,27 @@
+.ingredients {
+  flex: 1 1 auto;
+  overflow: auto;
+  position: relative;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.ingredients__container {
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+

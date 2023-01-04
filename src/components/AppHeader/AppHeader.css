@@ -7,7 +7,6 @@ svg {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 1920px;
 }
 
 .header-container {

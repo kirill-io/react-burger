@@ -132,7 +132,7 @@ export const data = [
    "image_mobile":"https://code.s3.yandex.net/react/code/mineral_rings-mobile.png",
    "image_large":"https://code.s3.yandex.net/react/code/mineral_rings-large.png",
    "__v":0,
-   "amount":2
+   "amount":1
   },
   {
    "_id":"60666c42cc7b410027a1a9ba",

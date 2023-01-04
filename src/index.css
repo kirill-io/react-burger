@@ -3,4 +3,11 @@ body {
   -webkit-font-smoothing: antialiased;
   background: #131316;
   margin: 0;
+  overflow: hidden;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
