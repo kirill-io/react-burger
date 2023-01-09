@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './App.module.css';
-import { AppHeader } from '../AppHeader/AppHeader';
-import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
-import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
-import { data } from '../../utils/data';
+import React from "react";
+import styles from "./App.module.css";
+import { AppHeader } from "../AppHeader/AppHeader";
+import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
+import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
+import { data } from "../../utils/data";
 
 export const App = () => {
   return (
@@ -16,5 +16,5 @@ export const App = () => {
         </div>
       </main>
     </>
-  )
-}
+  );
+};

@@ -6,10 +6,10 @@
   height: 100%;
   padding-bottom: 40px;
   width: 600px;
-
 }
 
-.constructor__list, .list {
+.constructor__list,
+.list {
   display: flex;
   flex-direction: column;
   gap: 16px;
