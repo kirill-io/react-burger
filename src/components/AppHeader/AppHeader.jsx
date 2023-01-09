@@ -46,7 +46,7 @@ export const AppHeader = () => {
 }
 
 Link.propTypes = {
-  tag: PropTypes.object,
-  typeText: PropTypes.string,
-  children: PropTypes.string
+  tag: PropTypes.object.isRequired,
+  typeText: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired
 }

@@ -65,18 +65,18 @@ ConstructorItem.propTypes = {
   type: PropTypes.string,
   isLocked: PropTypes.bool,
   text: PropTypes.string,
-  data: PropTypes.object,
+  data: PropTypes.object.isRequired,
   link: PropTypes.bool
 }
 
 ConstructorOrder.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 ConstructorPrice.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 }

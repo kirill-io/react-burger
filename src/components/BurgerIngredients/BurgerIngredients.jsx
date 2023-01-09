@@ -78,18 +78,18 @@ export const BurgerIngredients = ({ data }) => {
 }
 
 Ingredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 IngredientsList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  type: PropTypes.string
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  type: PropTypes.string.isRequired
 }
 
 IngredientItem.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object.isRequired
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
