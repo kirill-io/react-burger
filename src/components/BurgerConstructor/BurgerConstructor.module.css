@@ -1,4 +1,4 @@
-.burger-constructor__container {
+.constructor__container {
   align-self: start;
   box-sizing: border-box;
   display: flex;
@@ -9,7 +9,7 @@
 
 }
 
-.burger-constructor__list, .constructor__list {
+.constructor__list, .list {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -18,11 +18,11 @@
   padding: 0;
 }
 
-.burger-constructor__list {
+.constructor__list {
   flex: 1 1 auto;
 }
 
-.burger-constructor__item_center {
+.constructor__item_center {
   flex: 1 1 auto;
   max-height: 464px;
   overflow: auto;
@@ -31,23 +31,42 @@
   scrollbar-width: thin;
 }
 
-.burger-constructor__item_center::-webkit-scrollbar {
+.constructor__item_center::-webkit-scrollbar {
   width: 8px;
 }
 
-.burger-constructor__item_center::-webkit-scrollbar-track {
+.constructor__item_center::-webkit-scrollbar-track {
   background: #2f2f37;
 }
 
-.burger-constructor__item_center::-webkit-scrollbar-thumb {
+.constructor__item_center::-webkit-scrollbar-thumb {
   background: #8585ad;
 }
 
-.constructor__list {
+.list {
   display: flex;
   flex-direction: column;
   left: 0;
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.constructor__item {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.constructor__order {
+  align-self: flex-end;
+  column-gap: 40px;
+  display: flex;
+  margin-bottom: 52px;
+}
+
+.constructor__price {
+  align-items: center;
+  column-gap: 9.5px;
+  display: flex;
 }
