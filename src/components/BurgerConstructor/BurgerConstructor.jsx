@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ConstructorItem = ({ type, isLocked, text, data }) => {
+const ConstructorItem = ({ type, isLocked, text, data, link }) => {
   return (
-    <li className={styles.constructor__item}>
-      <a href="#">
-        <DragIcon type="primary" />
-      </a>
-      <ConstructorElement type={type} isLocked={isLocked} text={text ? (data.name + text) : (data.name)} price={data.price} thumbnail={data.image} />
+    <li className={type ? styles.item__exception : styles.item}>
+      {!link &&
+        <a href="#">
+          <DragIcon type="primary" />
+        </a>
+      }
+      <ConstructorElement type={type} isLocked={isLocked} text={text ? (data.name + text) : data.name} price={data.price} thumbnail={data.image} />
     </li>
   )
 }
@@ -42,7 +44,7 @@ export const BurgerConstructor = ({ data }) => {
         {data.map((item) => {
           if ((Number(item.amount) >= 1) && (item.type === 'bun')) {
             return (
-              <ConstructorItem type="top" isLocked={true} text=" (верх)" data={item} key={item._id} />
+              <ConstructorItem type="top" isLocked={true} text=" (верх)" data={item} link={true} key={item._id} />
             )
           }
         })}
@@ -60,7 +62,7 @@ export const BurgerConstructor = ({ data }) => {
         {data.map((item) => {
           if ((Number(item.amount) >= 1) && (item.type === 'bun')) {
             return (
-              <ConstructorItem type="bottom" isLocked={true} text=" (низ)" data={item} key={item._id + 1} />
+              <ConstructorItem type="bottom" isLocked={true} text=" (низ)" data={item} link={true} key={item._id + 1} />
             )
           }
         })}

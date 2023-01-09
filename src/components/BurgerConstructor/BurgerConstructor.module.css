@@ -20,6 +20,7 @@
 
 .constructor__list {
   flex: 1 1 auto;
+  max-height: 656px;
 }
 
 .constructor__item_center {
@@ -52,17 +53,21 @@
   top: 0;
 }
 
-.constructor__item {
+.item {
   display: flex;
   align-items: center;
   column-gap: 8px;
+}
+
+.item__exception {
+  padding-left: 32px;
 }
 
 .constructor__order {
   align-self: flex-end;
   column-gap: 40px;
   display: flex;
-  margin-bottom: 52px;
+  margin-bottom: 42px;
 }
 
 .constructor__price {
