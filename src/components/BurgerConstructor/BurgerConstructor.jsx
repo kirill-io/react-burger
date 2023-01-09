@@ -70,13 +70,13 @@ ConstructorItem.propTypes = {
 }
 
 ConstructorOrder.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired
+  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
 
 ConstructorPrice.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired
+  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired
+  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
