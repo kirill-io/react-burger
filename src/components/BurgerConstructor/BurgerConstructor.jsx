@@ -72,6 +72,22 @@ export const BurgerConstructor = ({ data }) => {
   )
 }
 
+ConstructorItem.propTypes = {
+  type: PropTypes.string,
+  isLocked: PropTypes.bool,
+  text: PropTypes.string,
+  data: PropTypes.object,
+  link: PropTypes.bool
+}
+
+ConstructorOrder.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}
+
+ConstructorPrice.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}
+
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.any)
+  data: PropTypes.arrayOf(PropTypes.object)
 }
