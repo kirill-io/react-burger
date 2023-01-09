@@ -38,34 +38,23 @@ const ConstructorPrice = ({ data }) => {
 }
 
 export const BurgerConstructor = ({ data }) => {
+  const ingredients = data.filter((item) => Number((item.amount) >= 1) && (item.type !== 'bun'));
+  const bun = data.find((item) => (Number(item.amount) >= 1) && (item.type === 'bun'));
+
   return (
     <div className={styles.constructor__container + ' pt-25 pl-4'}>
       <ul className={styles.constructor__list + ' mb-10'}>
-        {data.map((item) => {
-          if ((Number(item.amount) >= 1) && (item.type === 'bun')) {
-            return (
-              <ConstructorItem type="top" isLocked={true} text=" (верх)" data={item} link={true} key={item._id} />
-            )
-          }
-        })}
+        <ConstructorItem type="top" isLocked={true} text=" (верх)" data={bun} link={true}/>
         <li className={styles.constructor__item_center}>
           <ul className={styles.list}>
-            {data.map((item, i) => {
-              if (Number((item.amount) >= 1) && (item.type !== 'bun')) {
-                return (
-                  <ConstructorItem data={item} key={item._id + i} />
-                )
-              }
+            {ingredients.map((item) => {
+              return (
+                <ConstructorItem data={item} key={item._id} />
+              )
             })}
           </ul>
         </li>
-        {data.map((item) => {
-          if ((Number(item.amount) >= 1) && (item.type === 'bun')) {
-            return (
-              <ConstructorItem type="bottom" isLocked={true} text=" (низ)" data={item} link={true} key={item._id + 1} />
-            )
-          }
-        })}
+        <ConstructorItem type="bottom" isLocked={true} text=" (низ)" data={bun} link={true}/>
       </ul>
       <ConstructorOrder data={data}/>
     </div>
