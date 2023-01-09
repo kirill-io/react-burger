@@ -8,44 +8,32 @@ const TabList = () => {
   return (
     <div className={styles.tabs + ' mb-10'}>
       <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-        One
+        Булки
       </Tab>
       <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-        Two
+        Соусы
       </Tab>
       <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-        Three
+        Начинки
       </Tab>
     </div>
   )
 }
 
-const Ingredients = ({ data }) => {
+const IngredientsCategory = ({ data, type, children}) => {
   return (
-    <div className={styles.ingredients}>
-      <div className={styles.ingredients__container}>
-        <h2 className="subtitle text text_type_main-medium">Булки</h2>
-        <IngredientsList data={data} type="bun" />
-        <h2 className="subtitle text text_type_main-medium">Соусы</h2>
-        <IngredientsList data={data} type="sauce" />
-        <h2 className="subtitle text text_type_main-medium">Начинки</h2>
-        <IngredientsList data={data} type="main" />
-      </div>
-    </div>
-  )
-}
-
-const IngredientsList = ({ data, type }) => {
-  return (
-    <ul className={styles.ingredients__list + ' pt-6 pl-4'}>
-      {data.map((item) => {
-        if (item.type === type) {
-          return (
-            <IngredientItem data={item} key={item._id} />
-          )
-        }
-      })}
-    </ul>
+    <>
+      <h2 className="subtitle text text_type_main-medium">{children}</h2>
+      <ul className={styles.ingredients__list + ' pt-6 pl-4'}>
+        {data.map((item) => {
+          if (item.type === type) {
+            return (
+              <IngredientItem data={item} key={item._id} />
+            )
+          }
+        })}
+      </ul>
+    </>
   )
 }
 
@@ -72,18 +60,21 @@ export const BurgerIngredients = ({ data }) => {
     <div className={styles.container + ' pt-10'}>
       <h1 className="title text text_type_main-large mb-5">Соберите бургер</h1>
       <TabList />
-      <Ingredients data={data} />
+      <div className={styles.ingredients}>
+        <div className={styles.ingredients__container}>
+          <IngredientsCategory data={data} type="bun">Булки</IngredientsCategory>
+          <IngredientsCategory data={data} type="sauce">Соусы</IngredientsCategory>
+          <IngredientsCategory data={data} type="main">Начинки</IngredientsCategory>
+        </div>
+      </div>
     </div>
   )
 }
 
-Ingredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
-}
-
-IngredientsList.propTypes = {
+IngredientsCategory.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired
 }
 
 IngredientItem.propTypes = {
