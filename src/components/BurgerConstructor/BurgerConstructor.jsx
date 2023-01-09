@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 import { DragIcon, ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ConstructorItem = ({ type, isLocked, text, data, link }) => {
+const ConstructorItem = ({ type, isLocked, text, data, noIcon }) => {
   return (
     <li className={type ? styles.item__exception : styles.item}>
-      {!link &&
-        <a href="#">
-          <DragIcon type="primary" />
-        </a>
+      {!noIcon &&
+        <DragIcon type="primary" />
       }
       <ConstructorElement type={type} isLocked={isLocked} text={text ? (data.name + text) : data.name} price={data.price} thumbnail={data.image} />
     </li>
@@ -44,7 +42,7 @@ export const BurgerConstructor = ({ data }) => {
   return (
     <div className={styles.constructor__container + ' pt-25 pl-4'}>
       <ul className={styles.constructor__list + ' mb-10'}>
-        <ConstructorItem type="top" isLocked={true} text=" (верх)" data={bun} link={true}/>
+        <ConstructorItem type="top" isLocked={true} text=" (верх)" data={bun} noIcon={true}/>
         <li className={styles.constructor__item_center}>
           <ul className={styles.list}>
             {ingredients.map((item) => {
@@ -54,7 +52,7 @@ export const BurgerConstructor = ({ data }) => {
             })}
           </ul>
         </li>
-        <ConstructorItem type="bottom" isLocked={true} text=" (низ)" data={bun} link={true}/>
+        <ConstructorItem type="bottom" isLocked={true} text=" (низ)" data={bun} noIcon={true}/>
       </ul>
       <ConstructorOrder data={data}/>
     </div>
@@ -66,7 +64,7 @@ ConstructorItem.propTypes = {
   isLocked: PropTypes.bool,
   text: PropTypes.string,
   data: PropTypes.object.isRequired,
-  link: PropTypes.bool
+  noIcon: PropTypes.bool
 }
 
 ConstructorOrder.propTypes = {
