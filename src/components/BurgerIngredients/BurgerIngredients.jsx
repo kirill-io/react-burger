@@ -24,8 +24,7 @@ const TabList = () => {
   );
 };
 
-// Не совсем понимаю как отключить пердупреждения в терминале,
-// добавлял и делал как в статье, но не получается
+// TODO: Ничего не возвращает, так как строит список из компонентов IngredientItem.
 
 /* eslint-disable */
 const IngredientsCategory = ({ data, type, children }) => {
