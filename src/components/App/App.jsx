@@ -5,16 +5,65 @@ import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
 import { data } from "../../utils/data";
 
+const dataUrl = 'https://norma.nomoreparties.space/api/ingredients ';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <section className={styles.error}>
+        <h1 className="text text_type_main-large">Что-то пошло не так :(</h1>
+        <p className="text text_type_main-default">
+          Ошибка получения данных с сервера. Пожалуйста, перезагрузите страницу.
+        </p>
+      </section>
+    );
+  }
+}
+
+
 export const App = () => {
-  return (
-    <>
-      <AppHeader />
-      <main className={styles.content}>
-        <div className={styles.container}>
-          <BurgerIngredients data={data} />
-          <BurgerConstructor data={data} />
-        </div>
-      </main>
-    </>
-  );
+  const [dataApi, setDataApi] = React.useState({
+    isLoading: false,
+    hasError: false,
+    info: []
+  });
+
+  React.useEffect(() => {
+    const getData = async () => {
+      setDataApi({ ...dataApi, hasError: false, isLoading: true });
+      fetch(dataUrl)
+        .then(res => res.json())
+        .then(data => setDataApi({ ...dataApi, info: data.data, isLoading: false}))
+        .catch(e => {
+          setDataApi({ ...dataApi, isLoading: false, hasError: true });
+        })
+    }
+
+    getData();
+  }, [])
+
+  if (dataApi.hasError) {
+    return (
+      <ErrorBoundary />
+    )
+  } else {
+    return (
+      <>
+        <AppHeader />
+        {!dataApi.isLoading &&
+          !dataApi.hasError &&
+          <main className={styles.content}>
+            <div className={styles.container}>
+              <BurgerIngredients data={dataApi.info} />
+              <BurgerConstructor data={data} />
+            </div>
+          </main>
+        }
+      </>
+    );
+  }
 };
