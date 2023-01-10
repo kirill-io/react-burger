@@ -8,10 +8,6 @@ import { data } from "../../utils/data";
 const dataUrl = 'https://norma.nomoreparties.space/api/ingredients ';
 
 class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <section className={styles.error}>
@@ -32,6 +28,8 @@ export const App = () => {
     info: []
   });
 
+  //TODO: Нельзя в зависимостях указать dataApi или удалить пустой массив с зависимостями, так как возникает бесконечный цикл рендеринга
+  /* eslint-disable */
   React.useEffect(() => {
     const getData = async () => {
       setDataApi({ ...dataApi, hasError: false, isLoading: true });
@@ -45,6 +43,7 @@ export const App = () => {
 
     getData();
   }, [])
+  /* eslint-enable */
 
   if (dataApi.hasError) {
     return (
