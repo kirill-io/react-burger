@@ -25,16 +25,15 @@ const TabList = () => {
 };
 
 // TODO: Ничего не возвращает, так как строит список из компонентов IngredientItem.
-
 /* eslint-disable */
-const IngredientsCategory = ({ data, type, children }) => {
+const IngredientsCategory = ({ data, type, children, onOpen }) => {
   return (
     <>
       <h2 className="subtitle text text_type_main-medium">{children}</h2>
       <ul className={styles.ingredients__list + " pt-6 pl-4"}>
         {data.map((item) => {
           if (item.type === type) {
-            return <IngredientItem data={item} key={item._id} />;
+            return <IngredientItem data={item} key={item._id} onOpen={onOpen}/>;
           }
         })}
       </ul>
@@ -43,9 +42,9 @@ const IngredientsCategory = ({ data, type, children }) => {
 };
 /* eslint-enable */
 
-const IngredientItem = ({ data }) => {
+const IngredientItem = ({ data, onOpen}) => {
   return (
-    <li className={styles.ingredient__item}>
+    <li className={styles.ingredient__item} onClick={onOpen} id={data._id}>
       <div className={styles.ingredient__container + " pr-4 pl-4"}>
         <img
           className={styles.ingredient__image + " mb-2"}
@@ -67,25 +66,25 @@ const IngredientItem = ({ data }) => {
   );
 };
 
-export const BurgerIngredients = ({ data }) => {
+export const BurgerIngredients = ({ data, onOpen }) => {
   return (
-    <div className={styles.container + " pt-10"}>
+    <section className={styles.container + " pt-10"}>
       <h1 className="title text text_type_main-large mb-5">Соберите бургер</h1>
       <TabList />
       <div className={styles.ingredients}>
         <div className={styles.ingredients__container}>
-          <IngredientsCategory data={data} type="bun">
+          <IngredientsCategory data={data} type="bun" onOpen={onOpen}>
             Булки
           </IngredientsCategory>
-          <IngredientsCategory data={data} type="sauce">
+          <IngredientsCategory data={data} type="sauce" onOpen={onOpen}>
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory data={data} type="main">
+          <IngredientsCategory data={data} type="main" onOpen={onOpen}>
             Начинки
           </IngredientsCategory>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

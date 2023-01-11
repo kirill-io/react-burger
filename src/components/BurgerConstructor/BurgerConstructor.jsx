@@ -23,14 +23,14 @@ const ConstructorItem = ({ type, isLocked, text, data, noIcon }) => {
   );
 };
 
-const ConstructorOrder = ({ data }) => {
+const ConstructorOrder = ({ data, onOpen }) => {
   return (
     <div className={styles.constructor__order + " mr-4"}>
       <div className={styles.constructor__price}>
         <ConstructorPrice data={data} />
         <CurrencyIcon type="primary" />
       </div>
-      <Button htmlType="button" type="primary" size="large">
+      <Button htmlType="button" type="primary" size="large" onClick={onOpen}>
         Оформить заказ
       </Button>
     </div>
@@ -44,7 +44,7 @@ const ConstructorPrice = ({ data }) => {
   return <span className="text text_type_digits-medium">{sum}</span>;
 };
 
-export const BurgerConstructor = ({ data }) => {
+export const BurgerConstructor = ({ data, onOpen }) => {
   const ingredients = data.filter(
     (item) => Number(item.amount >= 1) && item.type !== "bun"
   );
@@ -53,7 +53,7 @@ export const BurgerConstructor = ({ data }) => {
   );
 
   return (
-    <div className={styles.constructor__container + " pt-25 pl-4"}>
+    <section className={styles.constructor__container + " pt-25 pl-4"}>
       <ul className={styles.constructor__list + " mb-10"}>
         <ConstructorItem
           type="top"
@@ -77,8 +77,8 @@ export const BurgerConstructor = ({ data }) => {
           noIcon={true}
         />
       </ul>
-      <ConstructorOrder data={data} />
-    </div>
+      <ConstructorOrder data={data} onOpen={onOpen}/>
+    </section>
   );
 };
 

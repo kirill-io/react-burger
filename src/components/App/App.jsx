@@ -3,9 +3,11 @@ import styles from "./App.module.css";
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
-import { data } from "../../utils/data";
+import { dataTest } from "../../utils/dataTest";
 
-const dataUrl = 'https://norma.nomoreparties.space/api/ingredients ';
+import { Modal } from '../Modal/Modal';
+
+const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
 
 class ErrorBoundary extends React.Component {
   render() {
@@ -28,6 +30,8 @@ export const App = () => {
     info: []
   });
 
+  const [visible, setVisible] =  React.useState(false);
+
   //TODO: Нельзя в зависимостях указать dataApi или удалить пустой массив с зависимостями, так как возникает бесконечный цикл рендеринга
   /* eslint-disable */
   React.useEffect(() => {
@@ -45,6 +49,27 @@ export const App = () => {
   }, [])
   /* eslint-enable */
 
+  const handleOpenModal = () => {
+    setVisible(true);
+  }
+
+  const handleCloseModal = () => {
+    setVisible(false);
+  }
+
+  const handleCloseModalByClickOnOverlay = (e) => {
+    if (e.target.id === 'overlay') {
+      setVisible(false);
+    }
+  }
+
+  const handleCloseModalByEscape = (e) => {
+    console.log(e.keyCode);
+    if (e.keyCode === 27) {
+      setVisible(false);
+    }
+  }
+
   if (dataApi.hasError) {
     return (
       <ErrorBoundary />
@@ -57,11 +82,13 @@ export const App = () => {
           !dataApi.hasError &&
           <main className={styles.content}>
             <div className={styles.container}>
-              <BurgerIngredients data={dataApi.info} />
-              <BurgerConstructor data={data} />
+              <BurgerIngredients data={dataApi.info} onOpen={handleOpenModal} />
+              <BurgerConstructor data={dataTest} onOpen={handleOpenModal} />
             </div>
           </main>
         }
+        {visible
+          && <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape} />}
       </>
     );
   }
