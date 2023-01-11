@@ -24,7 +24,7 @@ const ModalOverlay = ({ children, onCloseOverlay, onCloseEscape }) => {
   )
 }
 
-export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, data }) => {
+export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, data, selectionModal }) => {
   return ReactDOM.createPortal(
     (
       <ModalOverlay onCloseOverlay={onCloseOverlay} onCloseEscape={onCloseEscape}>
@@ -33,8 +33,10 @@ export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, data }) => {
             <CloseIcon type="primary" />
           </button>
           <div className={styles.container}>
-            {/* <IngredientDetails data={data} /> */}
-            <OrderDetails orderId="034536" />
+            {selectionModal ?
+              <OrderDetails orderId="034536" /> :
+              <IngredientDetails data={data} />
+            }
           </div>
         </div>
       </ModalOverlay>

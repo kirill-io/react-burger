@@ -31,6 +31,8 @@ export const App = () => {
     info: []
   });
 
+  const [selectionModal, setSelectionModal] = React.useState(false);
+
   const [visible, setVisible] =  React.useState(false);
 
   //TODO: Нельзя в зависимостях указать dataApi или удалить пустой массив с зависимостями, так как возникает бесконечный цикл рендеринга
@@ -53,6 +55,11 @@ export const App = () => {
   const handleOpenModal = (e) => {
     setVisible(true);
     dataIngredient = sortingIngredients(e.currentTarget.id);
+    if (e.currentTarget.type === 'button') {
+      setSelectionModal(true);
+    } else {
+      setSelectionModal(false);
+    }
   }
 
   const handleCloseModal = () => {
@@ -93,7 +100,7 @@ export const App = () => {
           </main>
         }
         {visible
-          && <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape} data={dataIngredient} />}
+          && <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape} data={dataIngredient} selectionModal={selectionModal} />}
       </>
     );
   }
