@@ -14,10 +14,6 @@
 }
 
 .properties {
-  color: #8585ad;
-}
-
-.properties {
   display: flex;
   justify-content: space-between;
   max-width: 516px;

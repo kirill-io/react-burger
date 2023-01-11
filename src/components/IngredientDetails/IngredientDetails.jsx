@@ -2,8 +2,8 @@ import styles from "./IngredientDetails.module.css";
 
 const Property = ({ children, value }) => {
   return (
-    <div className={styles.property}>
-      <div className={styles.property__title + ' text text_type_main-default'}>{children}</div>
+    <div className={styles.property + ' text text_type_main-default text_color_inactive'}>
+      <div className={styles.property__title}>{children}</div>
       <div className="text text_type_digits-default">{value}</div>
     </div>
   )

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import styles from "./Modal.module.css";
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { render } from "@testing-library/react";
 
@@ -32,7 +33,8 @@ export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, data }) => {
             <CloseIcon type="primary" />
           </button>
           <div className={styles.container}>
-            <IngredientDetails data={data} />
+            {/* <IngredientDetails data={data} /> */}
+            <OrderDetails orderId="034536" />
           </div>
         </div>
       </ModalOverlay>
