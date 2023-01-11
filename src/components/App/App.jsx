@@ -8,6 +8,7 @@ import { dataTest } from "../../utils/dataTest";
 import { Modal } from '../Modal/Modal';
 
 const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
+let dataIngredient = {};
 
 class ErrorBoundary extends React.Component {
   render() {
@@ -49,8 +50,9 @@ export const App = () => {
   }, [])
   /* eslint-enable */
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (e) => {
     setVisible(true);
+    dataIngredient = sortingIngredients(e.currentTarget.id);
   }
 
   const handleCloseModal = () => {
@@ -64,10 +66,13 @@ export const App = () => {
   }
 
   const handleCloseModalByEscape = (e) => {
-    console.log(e.keyCode);
     if (e.keyCode === 27) {
       setVisible(false);
     }
+  }
+
+  const sortingIngredients = (id) => {
+    return dataApi.info.find(item => item._id === id)
   }
 
   if (dataApi.hasError) {
@@ -88,7 +93,7 @@ export const App = () => {
           </main>
         }
         {visible
-          && <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape} />}
+          && <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape} data={dataIngredient} />}
       </>
     );
   }

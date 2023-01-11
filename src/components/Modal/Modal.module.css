@@ -29,3 +29,9 @@
   right: 40px;
   top: 60px;
 }
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

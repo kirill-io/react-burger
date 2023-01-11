@@ -1,0 +1,33 @@
+.title {
+  align-self: start;
+  margin-bottom: 12px;
+  padding-top: 12px;
+}
+
+.image {
+  height: 240px;
+  width: 480px;
+}
+
+.subtitle {
+  margin-bottom: 34px;
+}
+
+.properties {
+  color: #8585ad;
+}
+
+.properties {
+  display: flex;
+  justify-content: space-between;
+  max-width: 516px;
+  width: 100%;
+}
+
+.property {
+  text-align: center;
+}
+
+.property__title {
+  margin-bottom: 8px;
+}
