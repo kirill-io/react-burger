@@ -5,6 +5,8 @@ import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
 import { dataTest } from "../../utils/dataTest";
 import { Modal } from '../Modal/Modal';
+import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import { OrderDetails } from '../OrderDetails/OrderDetails';
 
 const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
 let dataIngredient = {};
@@ -98,8 +100,13 @@ export const App = () => {
             </div>
           </main>
         }
-        {visible
-          && <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape} data={dataIngredient} selectionModal={selectionModal} />}
+        {visible &&
+          <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape}>
+            {selectionModal ?
+              <OrderDetails orderId="034536" /> :
+              <IngredientDetails data={dataIngredient} />
+            }
+          </Modal>}
       </>
     );
   }

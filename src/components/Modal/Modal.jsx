@@ -30,7 +30,7 @@ ModalOverlay.propTypes = {
   onCloseEscape: PropTypes.func.isRequired
 }
 
-export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, data, selectionModal }) => {
+export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, children }) => {
   return ReactDOM.createPortal(
     (
       <ModalOverlay onCloseOverlay={onCloseOverlay} onCloseEscape={onCloseEscape}>
@@ -39,10 +39,7 @@ export const Modal = ({ onClose, onCloseOverlay, onCloseEscape, data, selectionM
             <CloseIcon type="primary" />
           </button>
           <div className={styles.container}>
-            {selectionModal ?
-              <OrderDetails orderId="034536" /> :
-              <IngredientDetails data={data} />
-            }
+            {children}
           </div>
         </div>
       </ModalOverlay>
@@ -55,19 +52,5 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onCloseOverlay: PropTypes.func.isRequired,
   onCloseEscape: PropTypes.func.isRequired,
-  data: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    price:  PropTypes.number,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string,
-    __v: PropTypes.number,
-    _id: PropTypes.string
-  }),
-  selectionModal: PropTypes.bool.isRequired
+  children: PropTypes.element.isRequired
 }
