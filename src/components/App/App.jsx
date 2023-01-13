@@ -4,7 +4,6 @@ import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
 import { dataTest } from "../../utils/dataTest";
-
 import { Modal } from '../Modal/Modal';
 
 const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';

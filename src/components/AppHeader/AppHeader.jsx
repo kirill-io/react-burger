@@ -42,6 +42,14 @@ const Link = ({ tag, typeText, children }) => {
   );
 };
 
+// Если установить children: PropTypes.element.isRequire, то в консоли браузера
+// появляется ошибка-предупреждение: Неверный тип пропса
+Link.propTypes = {
+  tag: PropTypes.object.isRequired,
+  typeText: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired
+};
+
 export const AppHeader = () => {
   return (
     <header className={styles.header + " pt-4 pb-4"}>
@@ -61,10 +69,4 @@ export const AppHeader = () => {
       </div>
     </header>
   );
-};
-
-Link.propTypes = {
-  tag: PropTypes.object.isRequired,
-  typeText: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
 };

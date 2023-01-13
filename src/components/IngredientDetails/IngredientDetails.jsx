@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./IngredientDetails.module.css";
 
 const Property = ({ children, value }) => {
@@ -7,6 +8,11 @@ const Property = ({ children, value }) => {
       <div className="text text_type_digits-default">{value}</div>
     </div>
   )
+}
+
+Property.propTypes = {
+  children: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired
 }
 
 export const IngredientDetails = ({data}) => {
@@ -24,3 +30,20 @@ export const IngredientDetails = ({data}) => {
     </>
   )
 }
+
+IngredientDetails.propTypes = {
+  data: PropTypes.shape({
+    calories: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    image: PropTypes.string,
+    image_large: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    price:  PropTypes.number,
+    proteins: PropTypes.number.isRequired,
+    type: PropTypes.string,
+    __v: PropTypes.number,
+    _id: PropTypes.string
+  }).isRequired
+};

@@ -53,16 +53,6 @@
   top: 0;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-}
-
-.item__exception {
-  padding-left: 32px;
-}
-
 .constructor__order {
   align-self: flex-end;
   column-gap: 40px;

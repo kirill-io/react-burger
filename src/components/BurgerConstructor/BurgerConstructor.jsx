@@ -1,33 +1,34 @@
-import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
+import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import {
-  DragIcon,
-  ConstructorElement,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const ConstructorItem = ({ type, isLocked, text, data, noIcon }) => {
-  return (
-    <li className={type ? styles.item__exception : styles.item}>
-      {!noIcon && <DragIcon type="primary" />}
-      <ConstructorElement
-        type={type}
-        isLocked={isLocked}
-        text={text ? data.name + text : data.name}
-        price={data.price}
-        thumbnail={data.image}
-      />
-    </li>
-  );
-};
-
 const ConstructorOrder = ({ data, onOpen }) => {
+  const calculationPrice = (dataForCalculation) => {
+    const searchBun = dataForCalculation.find((item => {
+      if (item.type === 'bun' && item.amount >= 1) {
+        return item;
+      }
+      return item;
+    }))
+
+    const priceIngredients = dataForCalculation.reduce((prevValue, item) => {
+      if (item.type !== 'bun' && item.amount >= 1) {
+        return prevValue + item.price * item.amount;
+      }
+      return prevValue;
+    }, 0);
+
+    return searchBun.price * 2 + priceIngredients;
+  }
+
   return (
     <div className={styles.constructor__order + " mr-4"}>
       <div className={styles.constructor__price}>
-        <ConstructorPrice data={data} />
+      <span className="text text_type_digits-medium">{calculationPrice(data)}</span>
         <CurrencyIcon type="primary" />
       </div>
       <Button htmlType="button" type="primary" size="large" onClick={onOpen}>
@@ -37,11 +38,22 @@ const ConstructorOrder = ({ data, onOpen }) => {
   );
 };
 
-const ConstructorPrice = ({ data }) => {
-  const sum = data.reduce((prevValue, currentValue) => {
-    return prevValue + currentValue.price * currentValue.amount;
-  }, 0);
-  return <span className="text text_type_digits-medium">{sum}</span>;
+ConstructorOrder.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    amount: PropTypes.number.isRequired,
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number.isRequired,
+    proteins: PropTypes.number,
+    type: PropTypes.string,
+    __v: PropTypes.number,
+    _id: PropTypes.string
+  }).isRequired).isRequired,
 };
 
 export const BurgerConstructor = ({ data, onOpen }) => {
@@ -82,22 +94,20 @@ export const BurgerConstructor = ({ data, onOpen }) => {
   );
 };
 
-ConstructorItem.propTypes = {
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  text: PropTypes.string,
-  data: PropTypes.object.isRequired,
-  noIcon: PropTypes.bool,
-};
-
-ConstructorOrder.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-};
-
-ConstructorPrice.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-};
-
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    amount: PropTypes.number.isRequired,
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    proteins: PropTypes.number,
+    type: PropTypes.string.isRequired,
+    __v: PropTypes.number,
+    _id: PropTypes.string.isRequired
+  }).isRequired).isRequired,
 };

@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
-import {
-  Tab,
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory'
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const TabList = () => {
   const [current, setCurrent] = React.useState("one");
@@ -24,62 +21,30 @@ const TabList = () => {
   );
 };
 
-// TODO: Ничего не возвращает, так как строит список из компонентов IngredientItem.
-/* eslint-disable */
-const IngredientsCategory = ({ data, type, children, onOpen }) => {
-  return (
-    <>
-      <h2 className="subtitle text text_type_main-medium">{children}</h2>
-      <ul className={styles.ingredients__list + " pt-6 pl-4"}>
-        {data.map((item) => {
-          if (item.type === type) {
-            return <IngredientItem data={item} key={item._id} onOpen={onOpen}/>;
-          }
-        })}
-      </ul>
-    </>
-  );
-};
-/* eslint-enable */
-
-const IngredientItem = ({ data, onOpen}) => {
-  return (
-    <li className={styles.ingredient__item} onClick={onOpen} id={data._id}>
-      <div className={styles.ingredient__container + " pr-4 pl-4"}>
-        <img
-          className={styles.ingredient__image + " mb-2"}
-          src={data.image}
-          alt={data.name}
-        />
-        <div className={styles.ingredient__price + " mb-2"}>
-          <span className="text text_type_digits-default">{data.price}</span>
-          <CurrencyIcon type="primary" />
-        </div>
-      </div>
-      <p className={styles.ingredient__name + " text text_type_main-default"}>
-        {data.name}
-      </p>
-      {Number(data.amount) ? (
-        <Counter count={data.amount} size="default" extraClass="m-1" />
-      ) : null}
-    </li>
-  );
-};
-
 export const BurgerIngredients = ({ data, onOpen }) => {
+  const buns = React.useMemo(() => {
+    return data.filter((item) => item.type === 'bun');
+  }, [data]);
+  const mains = React.useMemo(() => {
+    return data.filter((item) => item.type === 'main');
+  }, [data]);
+  const sauces = React.useMemo(() => {
+    return data.filter((item) => item.type === 'sauce');
+  }, [data]);
+
   return (
     <section className={styles.container + " pt-10"}>
       <h1 className="title text text_type_main-large mb-5">Соберите бургер</h1>
       <TabList />
       <div className={styles.ingredients}>
         <div className={styles.ingredients__container}>
-          <IngredientsCategory data={data} type="bun" onOpen={onOpen}>
+          <IngredientsCategory data={buns} onOpen={onOpen}>
             Булки
           </IngredientsCategory>
-          <IngredientsCategory data={data} type="sauce" onOpen={onOpen}>
+          <IngredientsCategory data={sauces} onOpen={onOpen}>
             Соусы
           </IngredientsCategory>
-          <IngredientsCategory data={data} type="main" onOpen={onOpen}>
+          <IngredientsCategory data={mains} onOpen={onOpen}>
             Начинки
           </IngredientsCategory>
         </div>
@@ -88,16 +53,20 @@ export const BurgerIngredients = ({ data, onOpen }) => {
   );
 };
 
-IngredientsCategory.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  type: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
-};
-
-IngredientItem.propTypes = {
-  data: PropTypes.object.isRequired,
-};
-
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    proteins: PropTypes.number,
+    type: PropTypes.string.isRequired,
+    __v: PropTypes.number,
+    _id: PropTypes.string.isRequired
+  }).isRequired).isRequired,
+  onOpen: PropTypes.func.isRequired
 };
