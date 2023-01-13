@@ -1,0 +1,38 @@
+svg {
+  display: block;
+}
+
+.header {
+  background-color: #1c1c21;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  width: 1280px;
+}
+
+.menu {
+  margin-right: 112px;
+}
+
+.logo {
+  align-items: center;
+  display: flex;
+  margin-right: auto;
+}
+
+.list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  color: #f2f2f3;
+  display: flex;
+  text-decoration: none;
+}
