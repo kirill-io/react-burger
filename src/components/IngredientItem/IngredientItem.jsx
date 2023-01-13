@@ -5,7 +5,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const IngredientItem = ({ data, onOpen}) => {
+export const IngredientItem = ({ data, onOpen }) => {
   return (
     <li className={styles.ingredient__item} onClick={onOpen} id={data._id}>
       <div className={styles.ingredient__container + " pr-4 pl-4"}>
@@ -38,11 +38,11 @@ IngredientItem.propTypes = {
     image_large: PropTypes.string,
     image_mobile: PropTypes.string,
     name: PropTypes.string.isRequired,
-    price:  PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
     proteins: PropTypes.number,
     type: PropTypes.string,
     __v: PropTypes.number,
-    _id: PropTypes.string.isRequired
+    _id: PropTypes.string.isRequired,
   }).isRequired,
-  onOpen: PropTypes.func.isRequired
+  onOpen: PropTypes.func.isRequired,
 };

@@ -4,11 +4,11 @@ import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
 import { dataTest } from "../../utils/dataTest";
-import { Modal } from '../Modal/Modal';
-import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
-import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { Modal } from "../Modal/Modal";
+import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
+import { OrderDetails } from "../OrderDetails/OrderDetails";
 
-const dataUrl = 'https://norma.nomoreparties.space/api/ingredients';
+const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
 let dataIngredient = {};
 
 class ErrorBoundary extends React.Component {
@@ -24,17 +24,16 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-
 export const App = () => {
   const [dataApi, setDataApi] = React.useState({
     isLoading: false,
     hasError: false,
-    info: []
+    info: [],
   });
 
   const [selectionModal, setSelectionModal] = React.useState(false);
 
-  const [visible, setVisible] =  React.useState(false);
+  const [visible, setVisible] = React.useState(false);
 
   //TODO: Нельзя в зависимостях указать dataApi или удалить пустой массив с зависимостями, так как возникает бесконечный цикл рендеринга
   /* eslint-disable */
@@ -42,71 +41,76 @@ export const App = () => {
     const getData = async () => {
       setDataApi({ ...dataApi, hasError: false, isLoading: true });
       fetch(dataUrl)
-        .then(res => res.json())
-        .then(data => setDataApi({ ...dataApi, info: data.data, isLoading: false}))
-        .catch(e => {
+        .then((res) => res.json())
+        .then((data) =>
+          setDataApi({ ...dataApi, info: data.data, isLoading: false })
+        )
+        .catch((e) => {
           setDataApi({ ...dataApi, isLoading: false, hasError: true });
-        })
-    }
+        });
+    };
 
     getData();
-  }, [])
+  }, []);
   /* eslint-enable */
 
   const handleOpenModal = (e) => {
     setVisible(true);
     dataIngredient = sortingIngredients(e.currentTarget.id);
-    if (e.currentTarget.type === 'button') {
+    if (e.currentTarget.type === "button") {
       setSelectionModal(true);
     } else {
       setSelectionModal(false);
     }
-  }
+  };
 
   const handleCloseModal = () => {
     setVisible(false);
-  }
+  };
 
   const handleCloseModalByClickOnOverlay = (e) => {
-    if (e.target.id === 'overlay') {
+    if (e.target.id === "overlay") {
       setVisible(false);
     }
-  }
+  };
 
   const handleCloseModalByEscape = (e) => {
     if (e.keyCode === 27) {
       setVisible(false);
     }
-  }
+  };
 
   const sortingIngredients = (id) => {
-    return dataApi.info.find(item => item._id === id)
-  }
+    return dataApi.info.find((item) => item._id === id);
+  };
 
   if (dataApi.hasError) {
-    return (
-      <ErrorBoundary />
-    )
+    return <ErrorBoundary />;
   } else {
     return (
       <>
         <AppHeader />
-        {!dataApi.isLoading &&
-          !dataApi.hasError &&
+        {!dataApi.isLoading && !dataApi.hasError && (
           <main className={styles.content}>
             <div className={styles.container}>
               <BurgerIngredients data={dataApi.info} onOpen={handleOpenModal} />
               <BurgerConstructor data={dataTest} onOpen={handleOpenModal} />
             </div>
           </main>
-        }
-        {visible &&
-          <Modal onClose={handleCloseModal} onCloseOverlay={handleCloseModalByClickOnOverlay} onCloseEscape={handleCloseModalByEscape}>
-            {selectionModal ?
-              <OrderDetails orderId="034536" /> :
+        )}
+        {visible && (
+          <Modal
+            onClose={handleCloseModal}
+            onCloseOverlay={handleCloseModalByClickOnOverlay}
+            onCloseEscape={handleCloseModalByEscape}
+          >
+            {selectionModal ? (
+              <OrderDetails orderId="034536" />
+            ) : (
               <IngredientDetails data={dataIngredient} />
-            }
-          </Modal>}
+            )}
+          </Modal>
+        )}
       </>
     );
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
-import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory'
+import { IngredientsCategory } from "../IngredientsCategory/IngredientsCategory";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const TabList = () => {
@@ -23,13 +23,13 @@ const TabList = () => {
 
 export const BurgerIngredients = ({ data, onOpen }) => {
   const buns = React.useMemo(() => {
-    return data.filter((item) => item.type === 'bun');
+    return data.filter((item) => item.type === "bun");
   }, [data]);
   const mains = React.useMemo(() => {
-    return data.filter((item) => item.type === 'main');
+    return data.filter((item) => item.type === "main");
   }, [data]);
   const sauces = React.useMemo(() => {
-    return data.filter((item) => item.type === 'sauce');
+    return data.filter((item) => item.type === "sauce");
   }, [data]);
 
   return (
@@ -54,19 +54,21 @@ export const BurgerIngredients = ({ data, onOpen }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-    _id: PropTypes.string.isRequired
-  }).isRequired).isRequired,
-  onOpen: PropTypes.func.isRequired
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      calories: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      fat: PropTypes.number,
+      image: PropTypes.string.isRequired,
+      image_large: PropTypes.string,
+      image_mobile: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      proteins: PropTypes.number,
+      type: PropTypes.string.isRequired,
+      __v: PropTypes.number,
+      _id: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
