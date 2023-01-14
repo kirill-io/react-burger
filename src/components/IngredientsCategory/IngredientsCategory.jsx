@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
 import styles from "./IngredientsCategory.module.css";
+import { propTypesData } from "../../utils/prop-types";
 import { IngredientItem } from "../IngredientItem/IngredientItem";
 
-export const IngredientsCategory = ({ data, title, onOpen }) => {
+export const IngredientsCategory = ({ data, title, onOpen, goTo }) => {
   return (
     <>
-      <h2 className="subtitle text text_type_main-medium">{title}</h2>
+      <h2 className="subtitle text text_type_main-medium" ref={goTo}>
+        {title}
+      </h2>
       <ul className={styles.ingredients__list + " pt-6 pl-4"}>
         {data.map((item) => {
           return <IngredientItem data={item} key={item._id} onOpen={onOpen} />;
@@ -16,22 +19,8 @@ export const IngredientsCategory = ({ data, title, onOpen }) => {
 };
 
 IngredientsCategory.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  data: PropTypes.arrayOf(propTypesData).isRequired,
   title: PropTypes.string.isRequired,
   onOpen: PropTypes.func.isRequired,
+  goTo: PropTypes.object.isRequired,
 };

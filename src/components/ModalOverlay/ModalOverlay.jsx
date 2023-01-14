@@ -17,13 +17,13 @@ export const ModalOverlay = ({ onClose }) => {
     if (e.keyCode === ESC_KEYCODE) {
       onClose();
     }
-  }
+  };
 
   const onCloseOverlay = (e) => {
     if (e.target.id === "overlay") {
       onClose();
     }
-  }
+  };
 
   return (
     <>
@@ -33,5 +33,5 @@ export const ModalOverlay = ({ onClose }) => {
 };
 
 ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
 };

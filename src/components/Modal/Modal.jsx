@@ -6,7 +6,6 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("root");
 
-
 export const Modal = ({ onClose, children }) => {
   return ReactDOM.createPortal(
     <>
@@ -24,5 +23,5 @@ export const Modal = ({ onClose, children }) => {
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };

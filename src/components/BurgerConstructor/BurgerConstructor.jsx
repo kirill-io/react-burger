@@ -1,36 +1,18 @@
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
+import { propTypesData } from "../../utils/prop-types";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const ConstructorOrder = ({ data, onOpen }) => {
-  const calculationPrice = (dataForCalculation) => {
-    const searchBun = dataForCalculation.find((item) => {
-      if (item.type === "bun" && item.amount >= 1) {
-        return item;
-      }
-      return item;
-    });
-
-    const priceIngredients = dataForCalculation.reduce((prevValue, item) => {
-      if (item.type !== "bun" && item.amount >= 1) {
-        return prevValue + item.price * item.amount;
-      }
-      return prevValue;
-    }, 0);
-
-    return searchBun.price * 2 + priceIngredients;
-  };
-
+const ConstructorOrder = ({ totalPrice, onOpen }) => {
   return (
     <div className={styles.constructor__order + " mr-4"}>
       <div className={styles.constructor__price}>
-        <span className="text text_type_digits-medium">
-          {calculationPrice(data)}
-        </span>
+        <span className="text text_type_digits-medium">{totalPrice}</span>
         <CurrencyIcon type="primary" />
       </div>
       <Button htmlType="button" type="primary" size="large" onClick={onOpen}>
@@ -41,31 +23,19 @@ const ConstructorOrder = ({ data, onOpen }) => {
 };
 
 ConstructorOrder.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number,
-      type: PropTypes.string,
-      __v: PropTypes.number,
-      _id: PropTypes.string,
-    }).isRequired
-  ).isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export const BurgerConstructor = ({ data, onOpen }) => {
-  const ingredients = data.filter(
-    (item) => Number(item.amount >= 1) && item.type !== "bun"
-  );
-  const bun = data.find(
-    (item) => Number(item.amount) >= 1 && item.type === "bun"
+  const ingredients = data.filter((item) => item.type !== "bun");
+
+  const bun = data.find((item) => item.type === "bun");
+
+  const totalPrice = React.useMemo(
+    () =>
+      bun.price * 2 + ingredients.reduce((acc, item) => (acc += item.price), 0),
+    [bun, ingredients]
   );
 
   return (
@@ -93,27 +63,11 @@ export const BurgerConstructor = ({ data, onOpen }) => {
           noIcon={true}
         />
       </ul>
-      <ConstructorOrder data={data} onOpen={onOpen} />
+      <ConstructorOrder totalPrice={totalPrice} onOpen={onOpen} />
     </section>
   );
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  data: PropTypes.arrayOf(propTypesData).isRequired,
 };

@@ -1,24 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
+import { propTypesData } from "../../utils/prop-types";
 import { IngredientsCategory } from "../IngredientsCategory/IngredientsCategory";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const TabList = () => {
+const TabList = ({ bunClick, mainsClick, sauceClick }) => {
   const [current, setCurrent] = React.useState("one");
   return (
     <div className={styles.tabs + " mb-10"}>
-      <Tab value="one" active={current === "one"} onClick={setCurrent}>
+      <Tab
+        value="one"
+        active={current === "one"}
+        onClick={() => {
+          setCurrent("one");
+          bunClick();
+        }}
+      >
         Булки
       </Tab>
-      <Tab value="two" active={current === "two"} onClick={setCurrent}>
+      <Tab
+        value="two"
+        active={current === "two"}
+        onClick={() => {
+          setCurrent("two");
+          sauceClick();
+        }}
+      >
         Соусы
       </Tab>
-      <Tab value="three" active={current === "three"} onClick={setCurrent}>
+      <Tab
+        value="three"
+        active={current === "three"}
+        onClick={() => {
+          setCurrent("three");
+          mainsClick();
+        }}
+      >
         Начинки
       </Tab>
     </div>
   );
+};
+
+TabList.propTypes = {
+  bunClick: PropTypes.func.isRequired,
+  mainsClick: PropTypes.func.isRequired,
+  sauceClick: PropTypes.func.isRequired,
 };
 
 export const BurgerIngredients = ({ data, onOpen }) => {
@@ -32,15 +60,50 @@ export const BurgerIngredients = ({ data, onOpen }) => {
     return data.filter((item) => item.type === "sauce");
   }, [data]);
 
+  const bunRef = React.useRef(null);
+  const mainsRef = React.useRef(null);
+  const sauceRef = React.useRef(null);
+
+  const bunClick = () => {
+    bunRef.current.scrollIntoView();
+  };
+
+  const mainsClick = () => {
+    mainsRef.current.scrollIntoView();
+  };
+
+  const sauceClick = () => {
+    sauceRef.current.scrollIntoView();
+  };
+
   return (
     <section className={styles.container + " pt-10"}>
       <h1 className="title text text_type_main-large mb-5">Соберите бургер</h1>
-      <TabList />
+      <TabList
+        bunClick={bunClick}
+        mainsClick={mainsClick}
+        sauceClick={sauceClick}
+      />
       <div className={styles.ingredients}>
         <div className={styles.ingredients__container}>
-          <IngredientsCategory data={buns} onOpen={onOpen} title="Булки" />
-          <IngredientsCategory data={sauces} onOpen={onOpen} title="Соусы" />
-          <IngredientsCategory data={mains} onOpen={onOpen} title="Начинки" />
+          <IngredientsCategory
+            data={buns}
+            onOpen={onOpen}
+            title="Булки"
+            goTo={bunRef}
+          />
+          <IngredientsCategory
+            data={sauces}
+            onOpen={onOpen}
+            title="Соусы"
+            goTo={sauceRef}
+          />
+          <IngredientsCategory
+            data={mains}
+            onOpen={onOpen}
+            title="Начинки"
+            goTo={mainsRef}
+          />
         </div>
       </div>
     </section>
@@ -48,21 +111,6 @@ export const BurgerIngredients = ({ data, onOpen }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      fat: PropTypes.number,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string,
-      image_mobile: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      proteins: PropTypes.number,
-      type: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-      _id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  data: PropTypes.arrayOf(propTypesData).isRequired,
   onOpen: PropTypes.func.isRequired,
 };
