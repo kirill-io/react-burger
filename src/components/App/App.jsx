@@ -66,18 +66,6 @@ export const App = () => {
     setVisible(false);
   };
 
-  const handleCloseModalByClickOnOverlay = (e) => {
-    if (e.target.id === "overlay") {
-      setVisible(false);
-    }
-  };
-
-  const handleCloseModalByEscape = (e) => {
-    if (e.keyCode === 27) {
-      setVisible(false);
-    }
-  };
-
   const sortingIngredients = (id) => {
     return dataApi.info.find((item) => item._id === id);
   };
@@ -97,11 +85,7 @@ export const App = () => {
           </main>
         )}
         {visible && (
-          <Modal
-            onClose={handleCloseModal}
-            onCloseOverlay={handleCloseModalByClickOnOverlay}
-            onCloseEscape={handleCloseModalByEscape}
-          >
+          <Modal onClose={handleCloseModal}>
             {selectionModal ? (
               <OrderDetails orderId="034536" />
             ) : (
