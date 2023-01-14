@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./App.module.css";
+import { getIngredients } from "../../utils/burger-api";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
@@ -9,7 +10,6 @@ import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 
-const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
 let dataIngredient = {};
 
 export const App = () => {
@@ -28,22 +28,29 @@ export const App = () => {
       setDataApi(prevState => {
         return { ...prevState, hasError: false, isLoading: true }
       })
-      fetch(dataUrl)
-        .then((res) => res.json())
-        .then((data) =>
-          setDataApi(prevState => {
-            return { ...prevState, info: data.data, isLoading: false }
-          })
-        )
-        .catch((e) => {
-          setDataApi(prevState => {
-            return { ...prevState, isLoading: false, hasError: true }
-          })
-        });
+      getIngredients(responseServer, rejectServer, requestСompletionServer);
     };
 
     getData();
   }, []);
+
+  const responseServer = (data) => {
+    setDataApi(prevState => {
+      return { ...prevState, info: data.data }
+    });
+  };
+
+  const rejectServer = () => {
+    setDataApi(prevState => {
+      return { ...prevState, isLoading: false, hasError: true }
+    })
+  };
+
+  const requestСompletionServer = () => {
+    setDataApi(prevState => {
+      return { ...prevState, isLoading: false }
+    });
+  };
 
   const handleOpenModal = (e) => {
     setVisible(true);
