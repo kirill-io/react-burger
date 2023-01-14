@@ -10,8 +10,6 @@ import { Modal } from "../Modal/Modal";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 
-let dataIngredient = {};
-
 export const App = () => {
   const [dataApi, setDataApi] = React.useState({
     isLoading: false,
@@ -22,6 +20,8 @@ export const App = () => {
   const [selectionModal, setSelectionModal] = React.useState(false);
 
   const [visible, setVisible] = React.useState(false);
+
+  const [dataIngredient, setDataIngredient] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -54,7 +54,7 @@ export const App = () => {
 
   const handleOpenModal = (e) => {
     setVisible(true);
-    dataIngredient = sortingIngredients(e.currentTarget.id);
+    setDataIngredient(sortingIngredients(e.currentTarget.id));
     if (e.currentTarget.type === "button") {
       setSelectionModal(true);
     } else {
