@@ -23,24 +23,27 @@ export const App = () => {
 
   const [visible, setVisible] = React.useState(false);
 
-  //TODO: Нельзя в зависимостях указать dataApi или удалить пустой массив с зависимостями, так как возникает бесконечный цикл рендеринга
-  /* eslint-disable */
   React.useEffect(() => {
     const getData = async () => {
-      setDataApi({ ...dataApi, hasError: false, isLoading: true });
+      setDataApi(prevState => {
+        return { ...prevState, hasError: false, isLoading: true }
+      })
       fetch(dataUrl)
         .then((res) => res.json())
         .then((data) =>
-          setDataApi({ ...dataApi, info: data.data, isLoading: false })
+          setDataApi(prevState => {
+            return { ...prevState, info: data.data, isLoading: false }
+          })
         )
         .catch((e) => {
-          setDataApi({ ...dataApi, isLoading: false, hasError: true });
+          setDataApi(prevState => {
+            return { ...prevState, isLoading: false, hasError: true }
+          })
         });
     };
 
     getData();
   }, []);
-  /* eslint-enable */
 
   const handleOpenModal = (e) => {
     setVisible(true);
