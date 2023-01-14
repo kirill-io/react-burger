@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import styles from "./IngredientsCategory.module.css";
 import { IngredientItem } from "../IngredientItem/IngredientItem";
 
-export const IngredientsCategory = ({ data, children, onOpen }) => {
+export const IngredientsCategory = ({ data, title, onOpen }) => {
   return (
     <>
-      <h2 className="subtitle text text_type_main-medium">{children}</h2>
+      <h2 className="subtitle text text_type_main-medium">{title}</h2>
       <ul className={styles.ingredients__list + " pt-6 pl-4"}>
         {data.map((item) => {
           return <IngredientItem data={item} key={item._id} onOpen={onOpen} />;
@@ -32,6 +32,6 @@ IngredientsCategory.propTypes = {
       _id: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
-  children: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   onOpen: PropTypes.func.isRequired,
 };

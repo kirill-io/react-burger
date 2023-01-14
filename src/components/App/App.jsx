@@ -17,7 +17,7 @@ export const App = () => {
     info: [],
   });
 
-  const [selectionModal, setSelectionModal] = React.useState(false);
+  const [choiceOrderModal, setChoiceOrderModal] = React.useState(false);
 
   const [visible, setVisible] = React.useState(false);
 
@@ -52,18 +52,19 @@ export const App = () => {
     });
   };
 
-  const handleOpenModal = (e) => {
+  const handleOpenModalIngredients = (e) => {
     setVisible(true);
     setDataIngredient(sortingIngredients(e.currentTarget.id));
-    if (e.currentTarget.type === "button") {
-      setSelectionModal(true);
-    } else {
-      setSelectionModal(false);
-    }
+  };
+
+  const handleOpenModalConstructor = () => {
+    setVisible(true);
+    setChoiceOrderModal(true);
   };
 
   const handleCloseModal = () => {
     setVisible(false);
+    setChoiceOrderModal(false);
   };
 
   const sortingIngredients = (id) => {
@@ -72,28 +73,31 @@ export const App = () => {
 
   if (dataApi.hasError) {
     return <ErrorBoundary />;
-  } else {
-    return (
-      <>
-        <AppHeader />
-        {!dataApi.isLoading && !dataApi.hasError && (
-          <main className={styles.content}>
-            <div className={styles.container}>
-              <BurgerIngredients data={dataApi.info} onOpen={handleOpenModal} />
-              <BurgerConstructor data={dataTest} onOpen={handleOpenModal} />
-            </div>
-          </main>
-        )}
-        {visible && (
+  }
+
+  return (
+    <>
+      <AppHeader />
+      {!dataApi.isLoading && !dataApi.hasError && (
+        <main className={styles.content}>
+          <div className={styles.container}>
+            <BurgerIngredients data={dataApi.info} onOpen={handleOpenModalIngredients} />
+            <BurgerConstructor data={dataTest} onOpen={handleOpenModalConstructor} />
+          </div>
+        </main>
+      )}
+      {visible && (
+        <Modal onClose={handleCloseModal}>
+          <IngredientDetails data={dataIngredient} />
+        </Modal>
+      )}
+      {visible &&
+        choiceOrderModal &&
+        (
           <Modal onClose={handleCloseModal}>
-            {selectionModal ? (
-              <OrderDetails orderId="034536" />
-            ) : (
-              <IngredientDetails data={dataIngredient} />
-            )}
+            <OrderDetails orderId="034536" />
           </Modal>
         )}
-      </>
-    );
-  }
+    </>
+  );
 };

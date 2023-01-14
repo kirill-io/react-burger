@@ -38,15 +38,9 @@ export const BurgerIngredients = ({ data, onOpen }) => {
       <TabList />
       <div className={styles.ingredients}>
         <div className={styles.ingredients__container}>
-          <IngredientsCategory data={buns} onOpen={onOpen}>
-            Булки
-          </IngredientsCategory>
-          <IngredientsCategory data={sauces} onOpen={onOpen}>
-            Соусы
-          </IngredientsCategory>
-          <IngredientsCategory data={mains} onOpen={onOpen}>
-            Начинки
-          </IngredientsCategory>
+          <IngredientsCategory data={buns} onOpen={onOpen} title="Булки" />
+          <IngredientsCategory data={sauces} onOpen={onOpen} title="Соусы" />
+          <IngredientsCategory data={mains} onOpen={onOpen} title="Начинки" />
         </div>
       </div>
     </section>
