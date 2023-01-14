@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./App.module.css";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
@@ -10,19 +11,6 @@ import { OrderDetails } from "../OrderDetails/OrderDetails";
 
 const dataUrl = "https://norma.nomoreparties.space/api/ingredients";
 let dataIngredient = {};
-
-class ErrorBoundary extends React.Component {
-  render() {
-    return (
-      <section className={styles.error}>
-        <h1 className="text text_type_main-large">Что-то пошло не так :(</h1>
-        <p className="text text_type_main-default">
-          Ошибка получения данных с сервера. Пожалуйста, перезагрузите страницу.
-        </p>
-      </section>
-    );
-  }
-}
 
 export const App = () => {
   const [dataApi, setDataApi] = React.useState({
