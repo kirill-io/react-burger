@@ -18,23 +18,17 @@ export const App = () => {
   });
 
   const [visible, setVisible] = React.useState(false);
-
-  const [dataIngredient, setDataIngredient] = React.useState(null);
-
+  const [ingredients, setIngredients] = React.useState([]);
+  const [ingredientsLoading, setIngredientsLoading] = React.useState(true);
   const [ingredientDetailsOpen, setIngredientDetailsOpen] =
     React.useState(null);
-
   const [orderDetailsOpen, setOrderDetailsOpen] = React.useState(null);
 
   React.useEffect(() => {
-    const getData = async () => {
-      setDataApi((prevState) => {
-        return { ...prevState, hasError: false, isLoading: true };
-      });
-      getIngredients(responseServer, rejectServer, requestСompletionServer);
-    };
-
-    getData();
+    getIngredients()
+      .then(setIngredients)
+      .catch(() => alert("Во время загрузки ингредиентов произошла ошибка."))
+      .finally(() => setIngredientsLoading(false));
   }, []);
 
   const responseServer = (data) => {
@@ -56,7 +50,7 @@ export const App = () => {
   };
 
   const handleOpenModalIngredients = (e) => {
-    setDataIngredient(sortingIngredients(e.currentTarget.id));
+    // setDataIngredient(sortingIngredients(e.currentTarget.id));
     setVisible(true);
     setIngredientDetailsOpen(true);
   };
@@ -83,15 +77,15 @@ export const App = () => {
   return (
     <>
       <AppHeader />
-      {!dataApi.isLoading && !dataApi.hasError && dataApi.init && (
+      {!ingredientsLoading && (
         <main className={styles.content}>
           <div className={styles.container}>
             <BurgerIngredients
-              data={dataApi.info}
+              data={ingredients}
               onOpen={handleOpenModalIngredients}
             />
             <BurgerConstructor
-              data={dataApi.info}
+              data={ingredients}
               onOpen={handleOpenModalConstructor}
             />
           </div>
@@ -99,7 +93,7 @@ export const App = () => {
       )}
       {visible && ingredientDetailsOpen && (
         <Modal onClose={handleCloseModal}>
-          <IngredientDetails data={dataIngredient} />
+          {/* <IngredientDetails data={dataIngredient} /> */}
         </Modal>
       )}
       {visible && orderDetailsOpen && (
