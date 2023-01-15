@@ -8,7 +8,7 @@ import {
 
 export const IngredientItem = ({ data, onOpen }) => {
   return (
-    <li className={styles.ingredient__item} onClick={onOpen} id={data._id}>
+    <li className={styles.ingredient__item} onClick={() => onOpen(data)}>
       <div className={styles.ingredient__container + " pr-4 pl-4"}>
         <img
           className={styles.ingredient__image + " mb-2"}
