@@ -65,15 +65,15 @@ export const BurgerIngredients = ({ data, onOpen }) => {
   const sauceRef = React.useRef(null);
 
   const bunClick = () => {
-    bunRef.current.scrollIntoView();
+    bunRef.current.scrollIntoView({behavior: "smooth"});
   };
 
   const mainsClick = () => {
-    mainsRef.current.scrollIntoView();
+    mainsRef.current.scrollIntoView({behavior: "smooth"});
   };
 
   const sauceClick = () => {
-    sauceRef.current.scrollIntoView();
+    sauceRef.current.scrollIntoView({behavior: "smooth"});
   };
 
   return (
