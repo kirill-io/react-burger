@@ -35,11 +35,21 @@ const Menu = () => {
 
 const Link = ({ tag, typeText, children }) => {
   return (
+    // TODO: на данном этапе проект состоит из одной страницы "Конструктор", в атрибуте href указаны заглушки
+    // eslint-disable-next-line
     <a href="#" className={styles.link + " pt-4 pr-5 pb-4 pl-5"}>
       <div className="mr-2">{tag}</div>
       <span className={typeText}>{children}</span>
     </a>
   );
+};
+
+// Если установить children: PropTypes.element.isRequire, то в консоли браузера
+// появляется ошибка-предупреждение: Неверный тип пропса
+Link.propTypes = {
+  tag: PropTypes.object.isRequired,
+  typeText: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 };
 
 export const AppHeader = () => {
@@ -61,10 +71,4 @@ export const AppHeader = () => {
       </div>
     </header>
   );
-};
-
-Link.propTypes = {
-  tag: PropTypes.object.isRequired,
-  typeText: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
 };

@@ -1,104 +1,116 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
-import {
-  Tab,
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { propTypesData } from "../../utils/prop-types";
+import { IngredientsCategory } from "../IngredientsCategory/IngredientsCategory";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const TabList = () => {
+const TabList = ({ bunClick, mainsClick, sauceClick }) => {
   const [current, setCurrent] = React.useState("one");
   return (
     <div className={styles.tabs + " mb-10"}>
-      <Tab value="one" active={current === "one"} onClick={setCurrent}>
+      <Tab
+        value="one"
+        active={current === "one"}
+        onClick={() => {
+          setCurrent("one");
+          bunClick();
+        }}
+      >
         Булки
       </Tab>
-      <Tab value="two" active={current === "two"} onClick={setCurrent}>
+      <Tab
+        value="two"
+        active={current === "two"}
+        onClick={() => {
+          setCurrent("two");
+          sauceClick();
+        }}
+      >
         Соусы
       </Tab>
-      <Tab value="three" active={current === "three"} onClick={setCurrent}>
+      <Tab
+        value="three"
+        active={current === "three"}
+        onClick={() => {
+          setCurrent("three");
+          mainsClick();
+        }}
+      >
         Начинки
       </Tab>
     </div>
   );
 };
 
-// TODO: Ничего не возвращает, так как строит список из компонентов IngredientItem.
-
-/* eslint-disable */
-const IngredientsCategory = ({ data, type, children }) => {
-  return (
-    <>
-      <h2 className="subtitle text text_type_main-medium">{children}</h2>
-      <ul className={styles.ingredients__list + " pt-6 pl-4"}>
-        {data.map((item) => {
-          if (item.type === type) {
-            return <IngredientItem data={item} key={item._id} />;
-          }
-        })}
-      </ul>
-    </>
-  );
-};
-/* eslint-enable */
-
-const IngredientItem = ({ data }) => {
-  return (
-    <li className={styles.ingredient__item}>
-      <div className={styles.ingredient__container + " pr-4 pl-4"}>
-        <img
-          className={styles.ingredient__image + " mb-2"}
-          src={data.image}
-          alt={data.name}
-        />
-        <div className={styles.ingredient__price + " mb-2"}>
-          <span className="text text_type_digits-default">{data.price}</span>
-          <CurrencyIcon type="primary" />
-        </div>
-      </div>
-      <p className={styles.ingredient__name + " text text_type_main-default"}>
-        {data.name}
-      </p>
-      {Number(data.amount) ? (
-        <Counter count={data.amount} size="default" extraClass="m-1" />
-      ) : null}
-    </li>
-  );
+TabList.propTypes = {
+  bunClick: PropTypes.func.isRequired,
+  mainsClick: PropTypes.func.isRequired,
+  sauceClick: PropTypes.func.isRequired,
 };
 
-export const BurgerIngredients = ({ data }) => {
+export const BurgerIngredients = ({ data, onOpen }) => {
+  const buns = React.useMemo(() => {
+    return data.filter((item) => item.type === "bun");
+  }, [data]);
+  const mains = React.useMemo(() => {
+    return data.filter((item) => item.type === "main");
+  }, [data]);
+  const sauces = React.useMemo(() => {
+    return data.filter((item) => item.type === "sauce");
+  }, [data]);
+
+  const bunRef = React.useRef(null);
+  const mainsRef = React.useRef(null);
+  const sauceRef = React.useRef(null);
+
+  const bunClick = () => {
+    bunRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const mainsClick = () => {
+    mainsRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const sauceClick = () => {
+    sauceRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className={styles.container + " pt-10"}>
+    <section className={styles.container + " pt-10"}>
       <h1 className="title text text_type_main-large mb-5">Соберите бургер</h1>
-      <TabList />
+      <TabList
+        bunClick={bunClick}
+        mainsClick={mainsClick}
+        sauceClick={sauceClick}
+      />
       <div className={styles.ingredients}>
         <div className={styles.ingredients__container}>
-          <IngredientsCategory data={data} type="bun">
-            Булки
-          </IngredientsCategory>
-          <IngredientsCategory data={data} type="sauce">
-            Соусы
-          </IngredientsCategory>
-          <IngredientsCategory data={data} type="main">
-            Начинки
-          </IngredientsCategory>
+          <IngredientsCategory
+            data={buns}
+            onOpen={onOpen}
+            title="Булки"
+            goTo={bunRef}
+          />
+          <IngredientsCategory
+            data={sauces}
+            onOpen={onOpen}
+            title="Соусы"
+            goTo={sauceRef}
+          />
+          <IngredientsCategory
+            data={mains}
+            onOpen={onOpen}
+            title="Начинки"
+            goTo={mainsRef}
+          />
         </div>
       </div>
-    </div>
+    </section>
   );
-};
-
-IngredientsCategory.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  type: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired,
-};
-
-IngredientItem.propTypes = {
-  data: PropTypes.object.isRequired,
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  data: PropTypes.arrayOf(propTypesData).isRequired,
+  onOpen: PropTypes.func.isRequired,
 };

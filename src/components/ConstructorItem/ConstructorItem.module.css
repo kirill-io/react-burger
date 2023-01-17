@@ -1,0 +1,9 @@
+.item {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.item__exception {
+  padding-left: 32px;
+}
