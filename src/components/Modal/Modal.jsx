@@ -15,7 +15,7 @@ export const Modal = ({ onClose, children }) => {
     return () => {
       document.removeEventListener("keydown", onCloseEscape);
     };
-  });
+  }, []); // eslint-disable-line
 
   const onCloseEscape = (e) => {
     if (e.keyCode === ESC_KEYCODE) {

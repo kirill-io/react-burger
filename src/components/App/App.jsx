@@ -9,9 +9,9 @@ import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { OrderDetails } from "../OrderDetails/OrderDetails";
 
 export const App = () => {
-  const [ingredients, setIngredients] = React.useState([]);
+  const [ingredients, setIngredients] = React.useState(null);
   const [ingredientsLoading, setIngredientsLoading] = React.useState(true);
-  const [dataIngredient, setDataIngredient] = React.useState({});
+  const [dataIngredient, setDataIngredient] = React.useState(null);
   const [ingredientDetailsOpen, setIngredientDetailsOpen] =
     React.useState(null);
   const [orderDetailsOpen, setOrderDetailsOpen] = React.useState(null);
