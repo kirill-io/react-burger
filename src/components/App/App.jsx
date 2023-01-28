@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./App.module.css";
 import { getIngredients } from "../../utils/burger-api";
+import { IngredientsContext } from '../../services/ingredientsContext';
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
@@ -38,7 +39,7 @@ export const App = () => {
   };
 
   return (
-    <>
+    <IngredientsContext.Provider value={ingredients}>
       <AppHeader />
       {!ingredientsLoading && (
         <main className={styles.content}>
@@ -64,6 +65,6 @@ export const App = () => {
           <OrderDetails orderId="034536" />
         </Modal>
       )}
-    </>
+    </IngredientsContext.Provider>
   );
 };
