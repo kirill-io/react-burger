@@ -12,3 +12,20 @@ export const getIngredients = () => {
       return Promise.reject(data);
     });
 };
+
+export const getOrderNumber = (ingredientsId) => {
+  return fetch(`${BURGER_API_URL}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ingredients: ingredientsId,
+    }),
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data?.success) return data.order.number;
+      return Promise.reject(data);
+    });
+};

@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
-import { propTypesData } from "../../utils/prop-types";
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { IngredientsContext } from "../../services/ingredientsContext";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
 import {
   CurrencyIcon,
@@ -29,7 +28,7 @@ ConstructorOrder.propTypes = {
 };
 
 export const BurgerConstructor = ({ onOpen }) => {
-  const data = useContext(IngredientsContext);
+  const data = React.useContext(IngredientsContext);
 
   const ingredients = data.filter((item) => item.type !== "bun");
 

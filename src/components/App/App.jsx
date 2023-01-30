@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./App.module.css";
 import { getIngredients } from "../../utils/burger-api";
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { IngredientsContext } from "../../services/ingredientsContext";
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
@@ -48,10 +48,7 @@ export const App = () => {
               data={ingredients}
               onOpen={handleOpenModalIngredients}
             />
-            <BurgerConstructor
-              data={ingredients}
-              onOpen={handleOpenModalConstructor}
-            />
+            <BurgerConstructor onOpen={handleOpenModalConstructor} />
           </div>
         </main>
       )}
@@ -62,7 +59,7 @@ export const App = () => {
       )}
       {orderDetailsOpen && (
         <Modal onClose={handleCloseModal}>
-          <OrderDetails orderId="034536" />
+          <OrderDetails />
         </Modal>
       )}
     </IngredientsContext.Provider>
