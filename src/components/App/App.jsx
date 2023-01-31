@@ -39,29 +39,31 @@ export const App = () => {
   };
 
   return (
-    <IngredientsContext.Provider value={ingredients}>
+    <>
       <AppHeader />
-      {!ingredientsLoading && (
-        <main className={styles.content}>
-          <div className={styles.container}>
-            <BurgerIngredients
-              data={ingredients}
-              onOpen={handleOpenModalIngredients}
-            />
-            <BurgerConstructor onOpen={handleOpenModalConstructor} />
-          </div>
-        </main>
-      )}
-      {ingredientDetailsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <IngredientDetails data={dataIngredient} />
-        </Modal>
-      )}
-      {orderDetailsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <OrderDetails />
-        </Modal>
-      )}
-    </IngredientsContext.Provider>
+      <IngredientsContext.Provider value={ingredients}>
+        {!ingredientsLoading && (
+          <main className={styles.content}>
+            <div className={styles.container}>
+              <BurgerIngredients
+                data={ingredients}
+                onOpen={handleOpenModalIngredients}
+              />
+              <BurgerConstructor onOpen={handleOpenModalConstructor} />
+            </div>
+          </main>
+        )}
+        {ingredientDetailsOpen && (
+          <Modal onClose={handleCloseModal}>
+            <IngredientDetails data={dataIngredient} />
+          </Modal>
+        )}
+        {orderDetailsOpen && (
+          <Modal onClose={handleCloseModal}>
+            <OrderDetails />
+          </Modal>
+        )}
+      </IngredientsContext.Provider>
+    </>
   );
 };
