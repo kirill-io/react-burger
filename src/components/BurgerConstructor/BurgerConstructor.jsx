@@ -38,7 +38,7 @@ export const BurgerConstructor = ({ onOpen }) => {
 
   React.useEffect(() => {
     getOrderNumber(ingredientsId)
-      .then(res => setOrderNumber(res))
+      .then((res) => setOrderNumber(res))
       .catch(() => alert("Во время формирования заказа произошла ошибка."));
   }, []);
 

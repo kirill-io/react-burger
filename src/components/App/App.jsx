@@ -43,30 +43,30 @@ export const App = () => {
   return (
     <>
       <AppHeader />
-      <OrderNumberContext.Provider value={ orderNumberState }>
-      <IngredientsContext.Provider value={ ingredients }>
-        {!ingredientsLoading && (
-          <main className={styles.content}>
-            <div className={styles.container}>
-              <BurgerIngredients
-                data={ingredients}
-                onOpen={handleOpenModalIngredients}
-              />
-              <BurgerConstructor onOpen={handleOpenModalConstructor} />
-            </div>
-          </main>
+      <OrderNumberContext.Provider value={orderNumberState}>
+        <IngredientsContext.Provider value={ingredients}>
+          {!ingredientsLoading && (
+            <main className={styles.content}>
+              <div className={styles.container}>
+                <BurgerIngredients
+                  data={ingredients}
+                  onOpen={handleOpenModalIngredients}
+                />
+                <BurgerConstructor onOpen={handleOpenModalConstructor} />
+              </div>
+            </main>
+          )}
+        </IngredientsContext.Provider>
+        {ingredientDetailsOpen && (
+          <Modal onClose={handleCloseModal}>
+            <IngredientDetails data={dataIngredient} />
+          </Modal>
         )}
-      </IngredientsContext.Provider>
-      {ingredientDetailsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <IngredientDetails data={dataIngredient} />
-        </Modal>
-      )}
-      {orderDetailsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <OrderDetails />
-        </Modal>
-      )}
+        {orderDetailsOpen && (
+          <Modal onClose={handleCloseModal}>
+            <OrderDetails />
+          </Modal>
+        )}
       </OrderNumberContext.Provider>
     </>
   );
