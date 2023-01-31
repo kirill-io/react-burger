@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
 import { IngredientsContext } from "../../services/ingredientsContext";
+import { OrderNumberContext } from "../../services/orderNumberContext";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
+import { getOrderNumber } from "../../utils/burger-api";
 import {
   CurrencyIcon,
   Button,
@@ -28,7 +30,17 @@ ConstructorOrder.propTypes = {
 };
 
 export const BurgerConstructor = ({ onOpen }) => {
+  const [orderNumber, setOrderNumber] = React.useContext(OrderNumberContext);
+
   const data = React.useContext(IngredientsContext);
+
+  const ingredientsId = data.map((item) => item._id);
+
+  React.useEffect(() => {
+    getOrderNumber(ingredientsId)
+      .then(res => setOrderNumber(res))
+      .catch(() => alert("Во время формирования заказа произошла ошибка."));
+  }, []);
 
   const ingredients = data.filter((item) => item.type !== "bun");
 
