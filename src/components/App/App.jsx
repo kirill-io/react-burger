@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./App.module.css";
-import { getIngredients } from "../../utils/burger-api";
+import { getIngredients, getOrderNumber } from "../../utils/burger-api";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import { OrderNumberContext } from "../../services/orderNumberContext";
 import { AppHeader } from "../AppHeader/AppHeader";
@@ -17,7 +17,8 @@ export const App = () => {
   const [ingredientDetailsOpen, setIngredientDetailsOpen] =
     React.useState(null);
   const [orderDetailsOpen, setOrderDetailsOpen] = React.useState(null);
-  const orderNumberState = React.useState(null);
+  const [orderNumber, setOrderNumber] = React.useState(null);
+  const [ingredientsId, setIngredientsId] = React.useState(null);
 
   React.useEffect(() => {
     getIngredients()
@@ -32,7 +33,10 @@ export const App = () => {
   };
 
   const handleOpenModalConstructor = () => {
-    setOrderDetailsOpen(true);
+    getOrderNumber(ingredientsId)
+      .then((res) => setOrderNumber(res))
+      .catch(() => alert("Во время формирования заказа произошла ошибка."))
+      .finally(() => setOrderDetailsOpen(true));
   };
 
   const handleCloseModal = () => {
@@ -43,7 +47,7 @@ export const App = () => {
   return (
     <>
       <AppHeader />
-      <OrderNumberContext.Provider value={orderNumberState}>
+      <OrderNumberContext.Provider value={orderNumber}>
         <IngredientsContext.Provider value={ingredients}>
           {!ingredientsLoading && (
             <main className={styles.content}>
@@ -52,7 +56,7 @@ export const App = () => {
                   data={ingredients}
                   onOpen={handleOpenModalIngredients}
                 />
-                <BurgerConstructor onOpen={handleOpenModalConstructor} />
+                <BurgerConstructor setIngredientsId={ setIngredientsId } onOpen={handleOpenModalConstructor} />
               </div>
             </main>
           )}

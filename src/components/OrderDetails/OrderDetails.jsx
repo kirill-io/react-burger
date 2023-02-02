@@ -4,7 +4,7 @@ import { OrderNumberContext } from "../../services/orderNumberContext";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const OrderDetails = () => {
-  const [orderNumber] = React.useContext(OrderNumberContext);
+  const orderNumber = React.useContext(OrderNumberContext);
 
   return (
     <>
