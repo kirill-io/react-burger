@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./App.module.css";
-import { getIngredients } from "../../utils/burger-api";
+import { getIngredients, getOrderNumber } from "../../utils/burger-api";
+import { IngredientsContext } from "../../services/ingredientsContext";
+import { OrderNumberContext } from "../../services/orderNumberContext";
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
@@ -15,6 +17,8 @@ export const App = () => {
   const [ingredientDetailsOpen, setIngredientDetailsOpen] =
     React.useState(null);
   const [orderDetailsOpen, setOrderDetailsOpen] = React.useState(null);
+  const [orderNumber, setOrderNumber] = React.useState(null);
+  const [ingredientsId, setIngredientsId] = React.useState(null);
 
   React.useEffect(() => {
     getIngredients()
@@ -23,13 +27,20 @@ export const App = () => {
       .finally(() => setIngredientsLoading(false));
   }, []);
 
+  // const setIngredientsIdCallback = React.useCallback((burgerComposition) => {
+  //   setIngredientsId(burgerComposition);
+  // }, []);
+
   const handleOpenModalIngredients = (data) => {
     setDataIngredient(data);
     setIngredientDetailsOpen(true);
   };
 
   const handleOpenModalConstructor = () => {
-    setOrderDetailsOpen(true);
+    getOrderNumber(ingredientsId)
+      .then((res) => setOrderNumber(res))
+      .catch(() => alert("Во время формирования заказа произошла ошибка."))
+      .finally(() => setOrderDetailsOpen(true));
   };
 
   const handleCloseModal = () => {
@@ -40,30 +51,31 @@ export const App = () => {
   return (
     <>
       <AppHeader />
-      {!ingredientsLoading && (
-        <main className={styles.content}>
-          <div className={styles.container}>
-            <BurgerIngredients
-              data={ingredients}
-              onOpen={handleOpenModalIngredients}
-            />
-            <BurgerConstructor
-              data={ingredients}
-              onOpen={handleOpenModalConstructor}
-            />
-          </div>
-        </main>
-      )}
-      {ingredientDetailsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <IngredientDetails data={dataIngredient} />
-        </Modal>
-      )}
-      {orderDetailsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <OrderDetails orderId="034536" />
-        </Modal>
-      )}
+      <OrderNumberContext.Provider value={orderNumber}>
+        <IngredientsContext.Provider value={ingredients}>
+          {!ingredientsLoading && (
+            <main className={styles.content}>
+              <div className={styles.container}>
+                <BurgerIngredients
+                  data={ingredients}
+                  onOpen={handleOpenModalIngredients}
+                />
+                <BurgerConstructor setIngredientsId={ setIngredientsId } onOpen={handleOpenModalConstructor} />
+              </div>
+            </main>
+          )}
+        </IngredientsContext.Provider>
+        {ingredientDetailsOpen && (
+          <Modal onClose={handleCloseModal}>
+            <IngredientDetails data={dataIngredient} />
+          </Modal>
+        )}
+        {orderDetailsOpen && (
+          <Modal onClose={handleCloseModal}>
+            <OrderDetails />
+          </Modal>
+        )}
+      </OrderNumberContext.Provider>
     </>
   );
 };
