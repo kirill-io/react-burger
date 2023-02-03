@@ -27,6 +27,10 @@ export const App = () => {
       .finally(() => setIngredientsLoading(false));
   }, []);
 
+  // const setIngredientsIdCallback = React.useCallback((burgerComposition) => {
+  //   setIngredientsId(burgerComposition);
+  // }, []);
+
   const handleOpenModalIngredients = (data) => {
     setDataIngredient(data);
     setIngredientDetailsOpen(true);
