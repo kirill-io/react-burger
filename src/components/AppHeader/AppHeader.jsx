@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import styles from "./AppHeader.module.css";
 import {
@@ -44,8 +43,6 @@ const Link = ({ tag, typeText, children }) => {
   );
 };
 
-// Если установить children: PropTypes.element.isRequire, то в консоли браузера
-// появляется ошибка-предупреждение: Неверный тип пропса
 Link.propTypes = {
   tag: PropTypes.object.isRequired,
   typeText: PropTypes.string.isRequired,

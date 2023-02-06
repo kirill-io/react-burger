@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
-import { propTypesData } from "../../utils/prop-types";
 import { IngredientsCategory } from "../IngredientsCategory/IngredientsCategory";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const TabList = ({ bunClick, mainsClick, sauceClick }) => {
-  const [current, setCurrent] = React.useState("one");
+  const [current, setCurrent] = useState("one");
   return (
     <div className={styles.tabs + " mb-10"}>
       <Tab
@@ -49,16 +49,18 @@ TabList.propTypes = {
   sauceClick: PropTypes.func.isRequired,
 };
 
-export const BurgerIngredients = ({ data, onOpen }) => {
+export const BurgerIngredients = ({ onOpen }) => {
+  const { ingredients } = useSelector(store => store.ingredients);
+
   const buns = React.useMemo(() => {
-    return data.filter((item) => item.type === "bun");
-  }, [data]);
+    return ingredients.filter((item) => item.type === "bun");
+  }, [ingredients]);
   const mains = React.useMemo(() => {
-    return data.filter((item) => item.type === "main");
-  }, [data]);
+    return ingredients.filter((item) => item.type === "main");
+  }, [ingredients]);
   const sauces = React.useMemo(() => {
-    return data.filter((item) => item.type === "sauce");
-  }, [data]);
+    return ingredients.filter((item) => item.type === "sauce");
+  }, [ingredients]);
 
   const bunRef = React.useRef(null);
   const mainsRef = React.useRef(null);
@@ -111,6 +113,5 @@ export const BurgerIngredients = ({ data, onOpen }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(propTypesData).isRequired,
   onOpen: PropTypes.func.isRequired,
 };
