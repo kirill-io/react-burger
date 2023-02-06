@@ -49,7 +49,7 @@ export const BurgerConstructor = ({ onOpen }) => {
 
   useEffect(() => {
     dispatch(setIngredientsId(ingredientsId()));
-  }, [dispatch]);
+  }, [dispatch]); // eslint-disable-line
 
   return (
     <section className={styles.constructor__container + " pt-25 pl-4"}>
@@ -63,8 +63,8 @@ export const BurgerConstructor = ({ onOpen }) => {
         />
         <li className={styles.constructor__item_center}>
           <ul className={styles.list}>
-            {ingredients.map((item) => {
-              return <ConstructorItem data={item} key={item._id} />;
+            {ingredients.map((item, i) => {
+              return <ConstructorItem data={item} key={item._id + i} />;
             })}
           </ul>
         </li>

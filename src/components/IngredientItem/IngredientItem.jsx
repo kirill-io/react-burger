@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 import styles from "./IngredientItem.module.css";
 import { propTypesData } from "../../utils/prop-types";
@@ -7,6 +8,25 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const IngredientItem = ({ data, onOpen }) => {
+  const selectedIngredients = useSelector(store => store.burgerConstructor);
+
+  const choiceOfIngredients = () => {
+    if (data.type === 'bun') {
+      const bun = selectedIngredients.find(item => item._id === data._id);
+      if (bun) {
+        return 2;
+      }
+    } else {
+      const ingredients = selectedIngredients.filter(item => item._id === data._id);
+      if (ingredients.length) {
+        return ingredients.length;
+      }
+    }
+    return null;
+  };
+
+  choiceOfIngredients();
+
   return (
     <li className={styles.ingredient__item} onClick={() => onOpen(data)}>
       <div className={styles.ingredient__container + " pr-4 pl-4"}>
@@ -23,8 +43,8 @@ export const IngredientItem = ({ data, onOpen }) => {
       <p className={styles.ingredient__name + " text text_type_main-default"}>
         {data.name}
       </p>
-      {Number(data.amount) ? (
-        <Counter count={data.amount} size="default" extraClass="m-1" />
+      {choiceOfIngredients() ? (
+        <Counter count={choiceOfIngredients()} size="default" extraClass="m-1" />
       ) : null}
     </li>
   );
