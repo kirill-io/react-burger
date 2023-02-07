@@ -43,8 +43,7 @@ export const BurgerConstructor = ({ onOpen }) => {
 
   const ingredientsId = () => {
     const id = selectedIngredients.map((item) => item._id);
-    id.push(selectedIngredients[0]._id);
-    return id;
+    return id.push(selectedIngredients[0]._id);
   };
 
   useEffect(() => {

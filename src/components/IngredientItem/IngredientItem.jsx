@@ -25,8 +25,6 @@ export const IngredientItem = ({ data, onOpen }) => {
     return null;
   };
 
-  choiceOfIngredients();
-
   return (
     <li className={styles.ingredient__item} onClick={() => onOpen(data)}>
       <div className={styles.ingredient__container + " pr-4 pl-4"}>
