@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./IngredientItem.module.css";
 import { propTypesData } from "../../utils/prop-types";
@@ -8,7 +9,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const IngredientItem = ({ data, onOpen }) => {
+  const id = data._id;
+  const type = data.type;
+
   const selectedIngredients = useSelector(store => store.burgerConstructor);
+
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: {id, type},
+
+  });
 
   const choiceOfIngredients = () => {
     if (data.type === 'bun') {
@@ -26,7 +36,7 @@ export const IngredientItem = ({ data, onOpen }) => {
   };
 
   return (
-    <li className={styles.ingredient__item} onClick={() => onOpen(data)}>
+    <li className={styles.ingredient__item} onClick={() => onOpen(data)} ref={dragRef}>
       <div className={styles.ingredient__container + " pr-4 pl-4"}>
         <img
           className={styles.ingredient__image + " mb-2"}

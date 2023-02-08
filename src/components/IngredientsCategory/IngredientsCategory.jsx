@@ -7,7 +7,7 @@ import { IngredientItem } from "../IngredientItem/IngredientItem";
 export const IngredientsCategory = ({ data, title, onOpen, goTo, setHeight }) => {
   useEffect(() => {
     setHeight(parseFloat(getComputedStyle(document.querySelector(`#${data[0].type}`)).height), 10);
-  }, []);
+  }, [data, setHeight]);
 
   return (
     <div id={data[0].type}>

@@ -1,3 +1,9 @@
+import {
+  ADDING_INGREDIENT,
+  REPLACEMENT_INGREDIENT,
+  DELETE_INGREDIENT
+} from '../actions/burgerConstructor';
+
 const initialState = [{
   "_id": "60d3b41abdacab0026a733c6",
   "name": "Краторная булка N-200i",
@@ -15,6 +21,24 @@ const initialState = [{
 
 export const burgerConstructor = (state = initialState, action) => {
   switch (action.type) {
+    case ADDING_INGREDIENT: {
+      return [
+        ...state,
+        action.ingredient
+      ];
+    }
+    case REPLACEMENT_INGREDIENT: {
+      state[0] = action.ingredient
+      return [
+        ...state
+      ];
+    }
+    case DELETE_INGREDIENT: {
+      state.splice(action.index, 1);
+      return [
+        ...state
+      ];
+    }
     default: {
       return state;
     }

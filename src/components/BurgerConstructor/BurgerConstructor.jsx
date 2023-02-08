@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
@@ -8,6 +9,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { setIngredientsId } from '../../services/actions/orderDetails';
+import { addingIngredient, deleteIngredient } from '../../services/actions/burgerConstructor';
 
 const ConstructorOrder = ({ totalPrice, onOpen }) => {
   return (
@@ -29,41 +31,54 @@ ConstructorOrder.propTypes = {
 };
 
 export const BurgerConstructor = ({ onOpen }) => {
+  const ingredientsAll = useSelector(store => store.ingredients.ingredients)
   const selectedIngredients = useSelector(store => store.burgerConstructor);
   const dispatch = useDispatch();
 
-  const bun = selectedIngredients.find((item) => item.type === "bun");
-  const ingredients = selectedIngredients.filter((item) => item.type !== "bun");
+  const[, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(itemIngredient) {
+      dispatch(addingIngredient(itemIngredient.type, ingredientsAll.find(item => item._id === itemIngredient.id)));
+    }
+  });
+
+  const bunDragged = selectedIngredients.find((item) => item.type === "bun");
+  const ingredientsDragged = selectedIngredients.filter((item) => item.type !== "bun");
 
   const totalPrice = useMemo(
     () =>
-      bun.price * 2 + ingredients.reduce((acc, item) => (acc += item.price), 0),
-    [bun, ingredients]
+    bunDragged.price * 2 + ingredientsDragged.reduce((acc, item) => (acc += item.price), 0),
+    [bunDragged, ingredientsDragged]
   );
 
   const ingredientsId = () => {
     const id = selectedIngredients.map((item) => item._id);
-    return id.push(selectedIngredients[0]._id);
+    id.push(selectedIngredients[0]._id);
+    return id;
+  };
+
+  const handleDeleteIngredient = (index) => {
+    dispatch(deleteIngredient(index));
   };
 
   useEffect(() => {
     dispatch(setIngredientsId(ingredientsId()));
-  }, [dispatch]); // eslint-disable-line
+  }, [dispatch, selectedIngredients]); // eslint-disable-line
 
   return (
     <section className={styles.constructor__container + " pt-25 pl-4"}>
-      <ul className={styles.constructor__list + " mb-10"}>
+      <ul className={styles.constructor__list + " mb-10"} ref={dropTarget}>
         <ConstructorItem
           type="top"
           isLocked={true}
           text=" (верх)"
-          data={bun}
+          data={bunDragged}
           noIcon={true}
         />
         <li className={styles.constructor__item_center}>
           <ul className={styles.list}>
-            {ingredients.map((item, i) => {
-              return <ConstructorItem data={item} key={item._id + i} />;
+            {ingredientsDragged.map((item, i) => {
+              return <ConstructorItem data={item} key={item._id + i} index={i + 1} onDelete={handleDeleteIngredient}/>;
             })}
           </ul>
         </li>
@@ -71,7 +86,7 @@ export const BurgerConstructor = ({ onOpen }) => {
           type="bottom"
           isLocked={true}
           text=" (низ)"
-          data={bun}
+          data={bunDragged}
           noIcon={true}
         />
       </ul>

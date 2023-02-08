@@ -62,7 +62,7 @@ export const BurgerIngredients = ({ onOpen }) => {
   const [bunHeight, setBunHeight] = useState(null);
   const [sauceHeight, setSauceHeight] = useState(null);
   const [mainHeight, setMainHeight] = useState(null);
-  const [selectedTab, setSelectedTab] = useState(null);
+  const [selectedTab, setSelectedTab] = useState('bun');
 
   useEffect(() => {
     setIngredientsPosition(document.querySelector('#ingredients').getBoundingClientRect().top);

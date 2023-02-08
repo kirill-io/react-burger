@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./App.module.css";
 import { AppHeader } from "../AppHeader/AppHeader";
 import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
@@ -41,14 +43,16 @@ export const App = () => {
     <>
       <AppHeader />
       {ingredientsLoading && (
-        <main className={styles.content}>
-          <div className={styles.container}>
-            <BurgerIngredients
-              onOpen={handleOpenModalIngredients}
-            />
-            <BurgerConstructor onOpen={handleOpenModalConstructor} />
-          </div>
-        </main>
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.content}>
+            <div className={styles.container}>
+              <BurgerIngredients
+                onOpen={handleOpenModalIngredients}
+              />
+              <BurgerConstructor onOpen={handleOpenModalConstructor} />
+            </div>
+          </main>
+        </DndProvider>
       )}
       {ingredientDetailsOpen && (
         <Modal onClose={handleCloseModalIngredients}>
