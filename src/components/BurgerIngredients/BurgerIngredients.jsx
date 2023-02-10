@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
 import { IngredientsCategory } from "../IngredientsCategory/IngredientsCategory";
@@ -52,20 +52,22 @@ TabList.propTypes = {
   bunClick: PropTypes.func.isRequired,
   mainsClick: PropTypes.func.isRequired,
   sauceClick: PropTypes.func.isRequired,
-  selectedTab: PropTypes.string.isRequired
+  selectedTab: PropTypes.string.isRequired,
 };
 
 export const BurgerIngredients = ({ onOpen }) => {
-  const { ingredients } = useSelector(store => store.ingredients);
+  const { ingredients } = useSelector((store) => store.ingredients);
 
   const [ingredientsPosition, setIngredientsPosition] = useState(null);
   const [bunHeight, setBunHeight] = useState(null);
   const [sauceHeight, setSauceHeight] = useState(null);
   const [mainHeight, setMainHeight] = useState(null);
-  const [selectedTab, setSelectedTab] = useState('bun');
+  const [selectedTab, setSelectedTab] = useState("bun");
 
   useEffect(() => {
-    setIngredientsPosition(document.querySelector('#ingredients').getBoundingClientRect().top);
+    setIngredientsPosition(
+      document.querySelector("#ingredients").getBoundingClientRect().top
+    );
   }, []);
 
   const buns = React.useMemo(() => {
@@ -95,18 +97,23 @@ export const BurgerIngredients = ({ onOpen }) => {
   };
 
   const scrollIngredients = (e) => {
-    const ingredientsContainerPosition = e.target.firstChild.getBoundingClientRect().top;
+    const ingredientsContainerPosition =
+      e.target.firstChild.getBoundingClientRect().top;
     const bunPosition = ingredientsPosition - bunHeight + 1;
     const saucePosition = bunPosition - sauceHeight;
     const mainPosition = saucePosition - mainHeight;
 
-    return ingredientsContainerPosition <= ingredientsPosition && ingredientsContainerPosition >= bunPosition
-      ? setSelectedTab('bun')
-        : ingredientsContainerPosition <= bunPosition && ingredientsContainerPosition >= saucePosition
-          ? setSelectedTab('sauce')
-            : ingredientsContainerPosition <= saucePosition && ingredientsContainerPosition >= mainPosition
-              ? setSelectedTab('main') : null;
-  }
+    return ingredientsContainerPosition <= ingredientsPosition &&
+      ingredientsContainerPosition >= bunPosition
+      ? setSelectedTab("bun")
+      : ingredientsContainerPosition <= bunPosition &&
+        ingredientsContainerPosition >= saucePosition
+      ? setSelectedTab("sauce")
+      : ingredientsContainerPosition <= saucePosition &&
+        ingredientsContainerPosition >= mainPosition
+      ? setSelectedTab("main")
+      : null;
+  };
 
   return (
     <section className={styles.container + " pt-10"}>
@@ -117,7 +124,11 @@ export const BurgerIngredients = ({ onOpen }) => {
         sauceClick={sauceClick}
         selectedTab={selectedTab}
       />
-      <div className={styles.ingredients} onScroll={scrollIngredients} id='ingredients'>
+      <div
+        className={styles.ingredients}
+        onScroll={scrollIngredients}
+        id="ingredients"
+      >
         <div className={styles.ingredients__container}>
           <IngredientsCategory
             data={buns}

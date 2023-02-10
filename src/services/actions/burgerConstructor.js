@@ -1,17 +1,18 @@
-export const ADDING_INGREDIENT = 'ADDING_INGREDIENT';
-export const REPLACEMENT_INGREDIENT = 'REPLACEMENT_INGREDIENT';
-export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
+export const ADDING_INGREDIENT = "ADDING_INGREDIENT";
+export const REPLACEMENT_INGREDIENT = "REPLACEMENT_INGREDIENT";
+export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const DROP_INGREDIENT = "DROP_INGREDIENT";
 
 export const addingIngredient = (type, ingredient) => (dispatch) => {
-  if (type === 'bun') {
+  if (type === "bun") {
     dispatch({
       type: REPLACEMENT_INGREDIENT,
-      ingredient: ingredient
+      ingredient: ingredient,
     });
   } else {
     dispatch({
       type: ADDING_INGREDIENT,
-      ingredient: ingredient
+      ingredient: ingredient,
     });
   }
 };
@@ -19,6 +20,14 @@ export const addingIngredient = (type, ingredient) => (dispatch) => {
 export const deleteIngredient = (index) => (dispatch) => {
   dispatch({
     type: DELETE_INGREDIENT,
-    index: index
+    index: index,
+  });
+};
+
+export const dropIngredient = (dragElement, dropIndex) => (dispatch) => {
+  dispatch({
+    type: DROP_INGREDIENT,
+    dragElement: dragElement,
+    dropIndex: dropIndex,
   });
 };

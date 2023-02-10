@@ -1,9 +1,14 @@
 .item {
-  display: flex;
   align-items: center;
   column-gap: 8px;
+  cursor: grab;
+  display: flex;
 }
 
 .item__exception {
   padding-left: 32px;
+}
+
+.item__exception:last-child {
+  margin-bottom: 0;
 }

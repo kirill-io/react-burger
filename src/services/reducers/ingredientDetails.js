@@ -1,11 +1,8 @@
-import {
-  ADDING_DATA,
-  DELETE_DATA
-} from '../actions/ingredientDetails';
+import { ADDING_DATA, DELETE_DATA } from "../actions/ingredientDetails";
 
 const initialState = {
   ingredient: null,
-  ingredientDetailsOpen: false
+  ingredientDetailsOpen: false,
 };
 
 export const ingredientDetails = (state = initialState, action) => {
@@ -13,16 +10,16 @@ export const ingredientDetails = (state = initialState, action) => {
     case ADDING_DATA: {
       return {
         ingredient: action.ingredient,
-        ingredientDetailsOpen: true
+        ingredientDetailsOpen: true,
       };
     }
     case DELETE_DATA: {
       return {
         ingredient: null,
-        ingredientDetailsOpen: false
+        ingredientDetailsOpen: false,
       };
     }
-    default:{
+    default: {
       return state;
     }
   }

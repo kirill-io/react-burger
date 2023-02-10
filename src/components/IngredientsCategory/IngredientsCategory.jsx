@@ -4,9 +4,20 @@ import styles from "./IngredientsCategory.module.css";
 import { propTypesData } from "../../utils/prop-types";
 import { IngredientItem } from "../IngredientItem/IngredientItem";
 
-export const IngredientsCategory = ({ data, title, onOpen, goTo, setHeight }) => {
+export const IngredientsCategory = ({
+  data,
+  title,
+  onOpen,
+  goTo,
+  setHeight,
+}) => {
   useEffect(() => {
-    setHeight(parseFloat(getComputedStyle(document.querySelector(`#${data[0].type}`)).height), 10);
+    setHeight(
+      parseFloat(
+        getComputedStyle(document.querySelector(`#${data[0].type}`)).height
+      ),
+      10
+    );
   }, [data, setHeight]);
 
   return (

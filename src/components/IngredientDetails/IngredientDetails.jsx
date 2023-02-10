@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import styles from "./IngredientDetails.module.css";
 
@@ -21,7 +21,7 @@ Property.propTypes = {
 };
 
 export const IngredientDetails = () => {
-  const { ingredient } = useSelector(store => store.ingredientDetails);
+  const { ingredient } = useSelector((store) => store.ingredientDetails);
 
   return (
     <>

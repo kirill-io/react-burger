@@ -1,13 +1,13 @@
 import {
   SET_ID,
   SET_ORDER_NUMBER,
-  HIDE_ORDER_MODAL
-} from '../actions/orderDetails';
+  HIDE_ORDER_MODAL,
+} from "../actions/orderDetails";
 
 const initialState = {
   ingredientsId: null,
   orderNumber: null,
-  orderDetailsOpen: false
+  orderDetailsOpen: false,
 };
 
 export const orderDetails = (state = initialState, action) => {
@@ -15,21 +15,21 @@ export const orderDetails = (state = initialState, action) => {
     case SET_ID: {
       return {
         ...state,
-        ingredientsId: action.ingredientsId
-      }
+        ingredientsId: action.ingredientsId,
+      };
     }
     case SET_ORDER_NUMBER: {
       return {
         ...state,
         orderNumber: action.orderNumber,
-        orderDetailsOpen: true
-      }
+        orderDetailsOpen: true,
+      };
     }
     case HIDE_ORDER_MODAL: {
       return {
         ...state,
-        orderDetailsOpen: false
-      }
+        orderDetailsOpen: false,
+      };
     }
     default: {
       return state;

@@ -12,7 +12,6 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   list-style: none;
   margin-top: 0;
   padding: 0;
@@ -25,7 +24,7 @@
 
 .constructor__item_center {
   flex: 1 1 auto;
-  max-height: 464px;
+  max-height: 480px;
   overflow: auto;
   position: relative;
   scrollbar-color: #8585ad #2f2f37;

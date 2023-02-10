@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
@@ -8,8 +8,12 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { setIngredientsId } from '../../services/actions/orderDetails';
-import { addingIngredient, deleteIngredient } from '../../services/actions/burgerConstructor';
+import { setIngredientsId } from "../../services/actions/orderDetails";
+import {
+  addingIngredient,
+  deleteIngredient,
+  dropIngredient,
+} from "../../services/actions/burgerConstructor";
 
 const ConstructorOrder = ({ totalPrice, onOpen }) => {
   return (
@@ -31,23 +35,41 @@ ConstructorOrder.propTypes = {
 };
 
 export const BurgerConstructor = ({ onOpen }) => {
-  const ingredientsAll = useSelector(store => store.ingredients.ingredients)
-  const selectedIngredients = useSelector(store => store.burgerConstructor);
+  const ingredientsAll = useSelector((store) => store.ingredients.ingredients);
+  const selectedIngredients = useSelector((store) => store.burgerConstructor);
   const dispatch = useDispatch();
+  const [dragElement, setDragElement] = useState(null);
+  const [dragElementIndex, setDragElementIndex] = useState(null);
 
-  const[, dropTarget] = useDrop({
-    accept: 'ingredient',
+  useEffect(() => {
+    dispatch(setIngredientsId(ingredientsId()));
+  }, [dispatch, selectedIngredients]); // eslint-disable-line
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
     drop(itemIngredient) {
-      dispatch(addingIngredient(itemIngredient.type, ingredientsAll.find(item => item._id === itemIngredient.id)));
-    }
+      dispatch(
+        addingIngredient(
+          itemIngredient.type,
+          ingredientsAll.find((item) => item._id === itemIngredient.id)
+        )
+      );
+    },
+  });
+
+  const [, dropIngredientTarget] = useDrop({
+    accept: "ingredientElement",
   });
 
   const bunDragged = selectedIngredients.find((item) => item.type === "bun");
-  const ingredientsDragged = selectedIngredients.filter((item) => item.type !== "bun");
+  const ingredientsDragged = selectedIngredients.filter(
+    (item) => item.type !== "bun"
+  );
 
   const totalPrice = useMemo(
     () =>
-    bunDragged.price * 2 + ingredientsDragged.reduce((acc, item) => (acc += item.price), 0),
+      bunDragged.price * 2 +
+      ingredientsDragged.reduce((acc, item) => (acc += item.price), 0),
     [bunDragged, ingredientsDragged]
   );
 
@@ -61,13 +83,24 @@ export const BurgerConstructor = ({ onOpen }) => {
     dispatch(deleteIngredient(index));
   };
 
-  useEffect(() => {
-    dispatch(setIngredientsId(ingredientsId()));
-  }, [dispatch, selectedIngredients]); // eslint-disable-line
+  const handleDragStart = (item, index) => {
+    setDragElement(item);
+    setDragElementIndex(index);
+  };
+
+  const handleDrop = (e, indexDrop) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(deleteIngredient(dragElementIndex));
+    dispatch(dropIngredient(dragElement, indexDrop));
+  };
 
   return (
-    <section className={styles.constructor__container + " pt-25 pl-4"}>
-      <ul className={styles.constructor__list + " mb-10"} ref={dropTarget}>
+    <section
+      className={styles.constructor__container + " pt-25 pl-4"}
+      ref={dropTarget}
+    >
+      <ul className={styles.constructor__list + " mb-10"}>
         <ConstructorItem
           type="top"
           isLocked={true}
@@ -75,10 +108,22 @@ export const BurgerConstructor = ({ onOpen }) => {
           data={bunDragged}
           noIcon={true}
         />
-        <li className={styles.constructor__item_center}>
+        <li
+          className={styles.constructor__item_center}
+          ref={dropIngredientTarget}
+        >
           <ul className={styles.list}>
             {ingredientsDragged.map((item, i) => {
-              return <ConstructorItem data={item} key={item._id + i} index={i + 1} onDelete={handleDeleteIngredient}/>;
+              return (
+                <ConstructorItem
+                  data={item}
+                  key={item._id + i}
+                  index={i + 1}
+                  onDelete={handleDeleteIngredient}
+                  dragStart={handleDragStart}
+                  drop={handleDrop}
+                />
+              );
             })}
           </ul>
         </li>
@@ -96,5 +141,5 @@ export const BurgerConstructor = ({ onOpen }) => {
 };
 
 BurgerConstructor.propTypes = {
-  onOpen: PropTypes.func.isRequired
+  onOpen: PropTypes.func.isRequired,
 };

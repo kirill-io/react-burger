@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./ConstructorItem.module.css";
 import {
@@ -6,29 +7,53 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const ConstructorItem = ({ type, isLocked, text, data, noIcon, index, onDelete }) => {
+export const ConstructorItem = ({
+  type,
+  isLocked,
+  text,
+  data,
+  noIcon,
+  index,
+  onDelete,
+  dragStart,
+  drop,
+}) => {
   const [indexNumber, setIndexNumber] = useState(null);
 
   useEffect(() => {
     if (index) {
       setIndexNumber(index);
     }
-  }, [])
+  }, [index]);
+
+  const [{ isDrag }, dragElementRef] = useDrag({
+    type: "ingredientElement",
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   return (
-    <li className={type ? styles.item__exception : styles.item}>
-      {!noIcon && <DragIcon type="primary" />}
-      <ConstructorElement
-        type={type}
-        isLocked={isLocked}
-        text={text ? data.name + text : data.name}
-        price={data.price}
-        thumbnail={data.image}
-        handleClose={() => {
-          onDelete(indexNumber);
-        }}
-      />
-    </li>
+    !isDrag && (
+      <li
+        className={"mb-4 " + (type ? styles.item__exception : styles.item)}
+        ref={dragElementRef}
+        onDragStart={() => dragStart(data, indexNumber)}
+        onDrop={(e) => drop(e, indexNumber)}
+      >
+        {!noIcon && <DragIcon type="primary" />}
+        <ConstructorElement
+          type={type}
+          isLocked={isLocked}
+          text={text ? data.name + text : data.name}
+          price={data.price}
+          thumbnail={data.image}
+          handleClose={() => {
+            onDelete(indexNumber);
+          }}
+        />
+      </li>
+    )
   );
 };
 
@@ -39,5 +64,7 @@ ConstructorItem.propTypes = {
   data: PropTypes.object.isRequired,
   noIcon: PropTypes.bool,
   index: PropTypes.number,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  dragStart: PropTypes.func,
+  drop: PropTypes.func,
 };

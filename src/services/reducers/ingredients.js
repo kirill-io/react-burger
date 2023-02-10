@@ -1,10 +1,8 @@
-import {
-  GET_INGREDIENT_SUCCESS
-} from '../actions/getIngredients';
+import { GET_INGREDIENT_SUCCESS } from "../actions/getIngredients";
 
 const initialState = {
   ingredients: [],
-  ingredientsLoading: false
+  ingredientsLoading: false,
 };
 
 export const ingredients = (state = initialState, action) => {
@@ -12,7 +10,7 @@ export const ingredients = (state = initialState, action) => {
     case GET_INGREDIENT_SUCCESS: {
       return {
         ingredients: action.data,
-        ingredientsLoading: true
+        ingredientsLoading: true,
       };
     }
     default: {

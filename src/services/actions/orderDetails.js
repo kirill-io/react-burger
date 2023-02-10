@@ -1,26 +1,26 @@
 import { getOrderNumberRequest } from "../../utils/burger-api";
-import { store } from '../../index.jsx';
+import { store } from "../../index.jsx";
 
-export const SET_ID = 'SET_ID';
-export const SET_ORDER_NUMBER = 'SET_ORDER_NUMBER';
-export const HIDE_ORDER_MODAL = 'HIDE_ORDER_MODAL';
+export const SET_ID = "SET_ID";
+export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
+export const HIDE_ORDER_MODAL = "HIDE_ORDER_MODAL";
 
 export const setIngredientsId = (ingredientsId) => (dispatch) => {
   dispatch({
     type: SET_ID,
-    ingredientsId: ingredientsId
-  })
+    ingredientsId: ingredientsId,
+  });
 };
 
 export const getOrderNumber = () => (dispatch) => {
   if (store.getState().orderDetails.ingredientsId.length === 2) {
-    alert('Выберите ингредиенты для Вашего бургера.');
+    alert("Выберите ингредиенты для Вашего бургера.");
   } else {
     getOrderNumberRequest(store.getState().orderDetails.ingredientsId)
       .then((res) => {
         dispatch({
           type: SET_ORDER_NUMBER,
-          orderNumber: res
+          orderNumber: res,
         });
       })
       .catch(() => alert("Во время формирования заказа произошла ошибка."));
@@ -29,6 +29,6 @@ export const getOrderNumber = () => (dispatch) => {
 
 export const hideOrederModal = () => (dispatch) => {
   dispatch({
-    type: HIDE_ORDER_MODAL
+    type: HIDE_ORDER_MODAL,
   });
 };
