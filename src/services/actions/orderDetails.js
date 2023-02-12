@@ -1,5 +1,6 @@
 import { getOrderNumberRequest } from "../../utils/burger-api";
 import { store } from "../../index.jsx";
+import { cleanIngredient } from "../actions/burgerConstructor";
 
 export const SET_ID = "SET_ID";
 export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
@@ -23,7 +24,8 @@ export const getOrderNumber = () => (dispatch) => {
           orderNumber: res,
         });
       })
-      .catch(() => alert("Во время формирования заказа произошла ошибка."));
+      .catch(() => alert("Во время формирования заказа произошла ошибка."))
+      .finally(() => dispatch(cleanIngredient()));
   }
 };
 

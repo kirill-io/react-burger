@@ -1,8 +1,11 @@
+import uuid from "react-uuid";
+import update from "immutability-helper";
 import {
   ADDING_INGREDIENT,
   REPLACEMENT_INGREDIENT,
+  MOVE_INGREDIENT,
   DELETE_INGREDIENT,
-  DROP_INGREDIENT,
+  CLEAN_INGREDIENT,
 } from "../actions/burgerConstructor";
 
 const initialState = [
@@ -25,19 +28,28 @@ const initialState = [
 export const burgerConstructor = (state = initialState, action) => {
   switch (action.type) {
     case ADDING_INGREDIENT: {
-      return [...state, action.ingredient];
+      return [...state, { ...action.ingredient, key: uuid() }];
     }
     case REPLACEMENT_INGREDIENT: {
-      state[0] = action.ingredient;
-      return [...state];
+      return [action.ingredient, ...state.slice(1)];
+    }
+    case MOVE_INGREDIENT: {
+      return update(state, {
+        $splice: [
+          [action.dragIndex + 1, 1],
+          [action.hoverIndex + 1, 0, state[action.dragIndex + 1]],
+        ],
+      });
     }
     case DELETE_INGREDIENT: {
-      state.splice(action.index, 1);
-      return [...state];
+      return [
+        ...state.filter((item) => {
+          return item.key !== action.elementKey;
+        }),
+      ];
     }
-    case DROP_INGREDIENT: {
-      state.splice(action.dropIndex, 0, action.dragElement);
-      return [...state];
+    case CLEAN_INGREDIENT: {
+      return [...initialState];
     }
     default: {
       return state;

@@ -1,7 +1,8 @@
 export const ADDING_INGREDIENT = "ADDING_INGREDIENT";
 export const REPLACEMENT_INGREDIENT = "REPLACEMENT_INGREDIENT";
+export const MOVE_INGREDIENT = "MOVE_INGREDIENT";
 export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
-export const DROP_INGREDIENT = "DROP_INGREDIENT";
+export const CLEAN_INGREDIENT = "CLEAN_INGREDIENT";
 
 export const addingIngredient = (type, ingredient) => (dispatch) => {
   if (type === "bun") {
@@ -17,17 +18,23 @@ export const addingIngredient = (type, ingredient) => (dispatch) => {
   }
 };
 
-export const deleteIngredient = (index) => (dispatch) => {
+export const moveIngredient = (dragIndex, hoverIndex) => (dispatch) => {
   dispatch({
-    type: DELETE_INGREDIENT,
-    index: index,
+    type: MOVE_INGREDIENT,
+    dragIndex: dragIndex,
+    hoverIndex: hoverIndex,
   });
 };
 
-export const dropIngredient = (dragElement, dropIndex) => (dispatch) => {
+export const deleteIngredient = (elementKey) => (dispatch) => {
   dispatch({
-    type: DROP_INGREDIENT,
-    dragElement: dragElement,
-    dropIndex: dropIndex,
+    type: DELETE_INGREDIENT,
+    elementKey: elementKey,
+  });
+};
+
+export const cleanIngredient = () => (dispatch) => {
+  dispatch({
+    type: CLEAN_INGREDIENT,
   });
 };

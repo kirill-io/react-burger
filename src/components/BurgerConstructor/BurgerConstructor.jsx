@@ -1,45 +1,21 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
-import {
-  CurrencyIcon,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorOrder } from "./ConstructorOrder/ConstructorOrder";
 import { setIngredientsId } from "../../services/actions/orderDetails";
 import {
   addingIngredient,
   deleteIngredient,
-  dropIngredient,
+  moveIngredient,
 } from "../../services/actions/burgerConstructor";
-
-const ConstructorOrder = ({ totalPrice, onOpen }) => {
-  return (
-    <div className={styles.constructor__order + " mr-4"}>
-      <div className={styles.constructor__price}>
-        <span className="text text_type_digits-medium">{totalPrice}</span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <Button htmlType="button" type="primary" size="large" onClick={onOpen}>
-        Оформить заказ
-      </Button>
-    </div>
-  );
-};
-
-ConstructorOrder.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
-  onOpen: PropTypes.func.isRequired,
-};
 
 export const BurgerConstructor = ({ onOpen }) => {
   const ingredientsAll = useSelector((store) => store.ingredients.ingredients);
   const selectedIngredients = useSelector((store) => store.burgerConstructor);
   const dispatch = useDispatch();
-  const [dragElement, setDragElement] = useState(null);
-  const [dragElementIndex, setDragElementIndex] = useState(null);
 
   useEffect(() => {
     dispatch(setIngredientsId(ingredientsId()));
@@ -57,20 +33,13 @@ export const BurgerConstructor = ({ onOpen }) => {
     },
   });
 
-  const [, dropIngredientTarget] = useDrop({
-    accept: "ingredientElement",
-  });
-
-  const bunDragged = selectedIngredients.find((item) => item.type === "bun");
-  const ingredientsDragged = selectedIngredients.filter(
-    (item) => item.type !== "bun"
-  );
+  const bun = selectedIngredients.find((item) => item.type === "bun");
+  const ingredients = selectedIngredients.filter((item) => item.type !== "bun");
 
   const totalPrice = useMemo(
     () =>
-      bunDragged.price * 2 +
-      ingredientsDragged.reduce((acc, item) => (acc += item.price), 0),
-    [bunDragged, ingredientsDragged]
+      bun.price * 2 + ingredients.reduce((acc, item) => (acc += item.price), 0),
+    [bun, ingredients]
   );
 
   const ingredientsId = () => {
@@ -79,21 +48,35 @@ export const BurgerConstructor = ({ onOpen }) => {
     return id;
   };
 
-  const handleDeleteIngredient = (index) => {
-    dispatch(deleteIngredient(index));
-  };
+  const handleDeleteIngredient = useCallback(
+    (index) => {
+      dispatch(deleteIngredient(index));
+    },
+    [dispatch]
+  );
 
-  const handleDragStart = (item, index) => {
-    setDragElement(item);
-    setDragElementIndex(index);
-  };
+  const moveElement = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch(moveIngredient(dragIndex, hoverIndex));
+    },
+    [dispatch]
+  );
 
-  const handleDrop = (e, indexDrop) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(deleteIngredient(dragElementIndex));
-    dispatch(dropIngredient(dragElement, indexDrop));
-  };
+  const renderIngredient = useCallback(
+    (item, index) => {
+      return (
+        <ConstructorItem
+          data={item}
+          key={item.key}
+          index={index}
+          keyString={item.key}
+          onDelete={handleDeleteIngredient}
+          moveElement={moveElement}
+        />
+      );
+    },
+    [handleDeleteIngredient, moveElement]
+  );
 
   return (
     <section
@@ -105,33 +88,19 @@ export const BurgerConstructor = ({ onOpen }) => {
           type="top"
           isLocked={true}
           text=" (верх)"
-          data={bunDragged}
+          data={bun}
           noIcon={true}
         />
-        <li
-          className={styles.constructor__item_center}
-          ref={dropIngredientTarget}
-        >
+        <li className={styles.constructor__item_center}>
           <ul className={styles.list}>
-            {ingredientsDragged.map((item, i) => {
-              return (
-                <ConstructorItem
-                  data={item}
-                  key={item._id + i}
-                  index={i + 1}
-                  onDelete={handleDeleteIngredient}
-                  dragStart={handleDragStart}
-                  drop={handleDrop}
-                />
-              );
-            })}
+            {ingredients.map((item, i) => renderIngredient(item, i))}
           </ul>
         </li>
         <ConstructorItem
           type="bottom"
           isLocked={true}
           text=" (низ)"
-          data={bunDragged}
+          data={bun}
           noIcon={true}
         />
       </ul>

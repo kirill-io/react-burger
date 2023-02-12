@@ -23,16 +23,3 @@ svg {
   display: flex;
   margin-right: auto;
 }
-
-.list {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.link {
-  color: #f2f2f3;
-  display: flex;
-  text-decoration: none;
-}
