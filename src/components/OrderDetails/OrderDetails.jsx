@@ -1,10 +1,9 @@
-import React from "react";
+import { useSelector } from "react-redux";
 import styles from "./OrderDetails.module.css";
-import { OrderNumberContext } from "../../services/orderNumberContext";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const OrderDetails = () => {
-  const orderNumber = React.useContext(OrderNumberContext);
+  const { orderNumber } = useSelector((store) => store.orderDetails);
 
   return (
     <>

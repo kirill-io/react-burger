@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import styles from "./Modal.module.css";
@@ -9,7 +9,7 @@ const modalRoot = document.getElementById("root");
 const ESC_KEYCODE = 27;
 
 export const Modal = ({ onClose, children }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("keydown", onCloseEscape);
 
     return () => {

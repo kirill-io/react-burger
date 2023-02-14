@@ -13,4 +13,4 @@ export const propTypesData = PropTypes.shape({
   type: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
   _id: PropTypes.string.isRequired,
-}).isRequired;
+});

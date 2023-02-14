@@ -6,10 +6,6 @@
   box-sizing: border-box;
 }
 
-.tabs {
-  display: flex;
-}
-
 .ingredients {
   flex: 1 1 auto;
   overflow: auto;

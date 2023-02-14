@@ -1,0 +1,12 @@
+.constructor__order {
+  align-self: flex-end;
+  column-gap: 40px;
+  display: flex;
+  margin-bottom: 42px;
+}
+
+.constructor__price {
+  align-items: center;
+  column-gap: 9.5px;
+  display: flex;
+}

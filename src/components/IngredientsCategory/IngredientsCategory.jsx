@@ -5,7 +5,7 @@ import { IngredientItem } from "../IngredientItem/IngredientItem";
 
 export const IngredientsCategory = ({ data, title, onOpen, goTo }) => {
   return (
-    <>
+    <div id={data[0].type} className="ingredient__category">
       <h2 className="subtitle text text_type_main-medium" ref={goTo}>
         {title}
       </h2>
@@ -14,12 +14,12 @@ export const IngredientsCategory = ({ data, title, onOpen, goTo }) => {
           return <IngredientItem data={item} key={item._id} onOpen={onOpen} />;
         })}
       </ul>
-    </>
+    </div>
   );
 };
 
 IngredientsCategory.propTypes = {
-  data: PropTypes.arrayOf(propTypesData).isRequired,
+  data: PropTypes.arrayOf(propTypesData.isRequired).isRequired,
   title: PropTypes.string.isRequired,
   onOpen: PropTypes.func.isRequired,
   goTo: PropTypes.object.isRequired,

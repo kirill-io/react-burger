@@ -1,102 +1,88 @@
-import React from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 import styles from "./BurgerConstructor.module.css";
-import { IngredientsContext } from "../../services/ingredientsContext";
 import { ConstructorItem } from "../ConstructorItem/ConstructorItem";
+import { ConstructorOrder } from "./ConstructorOrder/ConstructorOrder";
+import { setIngredientsId } from "../../services/actions/orderDetails";
 import {
-  CurrencyIcon,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+  addingIngredient,
+  deleteIngredient,
+  moveIngredient,
+} from "../../services/actions/burgerConstructor";
 
-const ConstructorOrder = ({ totalPrice, onOpen }) => {
-  return (
-    <div className={styles.constructor__order + " mr-4"}>
-      <div className={styles.constructor__price}>
-        <span className="text text_type_digits-medium">{totalPrice}</span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <Button htmlType="button" type="primary" size="large" onClick={onOpen}>
-        Оформить заказ
-      </Button>
-    </div>
-  );
-};
+export const BurgerConstructor = ({ onOpen }) => {
+  const ingredientsAll = useSelector((store) => store.ingredients.ingredients);
+  const selectedIngredients = useSelector((store) => store.burgerConstructor);
+  const dispatch = useDispatch();
 
-ConstructorOrder.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
-  onOpen: PropTypes.func.isRequired,
-};
+  useEffect(() => {
+    dispatch(setIngredientsId(ingredientsId()));
+  }, [dispatch, selectedIngredients]); // eslint-disable-line
 
-export const BurgerConstructor = ({ setIngredientsId, onOpen }) => {
-
-  const data = React.useContext(IngredientsContext);
-
-  const selectedIngredients = [{
-    "_id": "60d3b41abdacab0026a733c6",
-    "name": "Краторная булка N-200i",
-    "type": "bun",
-    "proteins": 80,
-    "fat": 24,
-    "carbohydrates": 53,
-    "calories": 420,
-    "price": 1255,
-    "image": "https://code.s3.yandex.net/react/code/bun-02.png",
-    "image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-    "image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
-    "__v": 0
-  },
-  {
-    "_id": "60d3b41abdacab0026a733cc",
-    "name": "Соус Spicy-X",
-    "type": "sauce",
-    "proteins": 30,
-    "fat": 20,
-    "carbohydrates": 40,
-    "calories": 30,
-    "price": 90,
-    "image": "https://code.s3.yandex.net/react/code/sauce-02.png",
-    "image_mobile": "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-    "image_large": "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-    "__v": 0
-  },
-  {
-    "_id": "60d3b41abdacab0026a733c8",
-    "name": "Филе Люминесцентного тетраодонтимформа",
-    "type": "main",
-    "proteins": 44,
-    "fat": 26,
-    "carbohydrates": 85,
-    "calories": 643,
-    "price": 988,
-    "image": "https://code.s3.yandex.net/react/code/meat-03.png",
-    "image_mobile": "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-    "image_large": "https://code.s3.yandex.net/react/code/meat-03-large.png",
-    "__v": 0
-  }
-  ];
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(itemIngredient) {
+      dispatch(
+        addingIngredient(
+          itemIngredient.type,
+          ingredientsAll.find((item) => item._id === itemIngredient.id)
+        )
+      );
+    },
+  });
 
   const bun = selectedIngredients.find((item) => item.type === "bun");
-
   const ingredients = selectedIngredients.filter((item) => item.type !== "bun");
 
-  const totalPrice = React.useMemo(
+  const totalPrice = useMemo(
     () =>
       bun.price * 2 + ingredients.reduce((acc, item) => (acc += item.price), 0),
     [bun, ingredients]
   );
 
-  // const ingredientsId = React.useMemo(() => {
-  //   selectedIngredients.map((item) => item._id);
-  // }, [selectedIngredients]);
+  const ingredientsId = () => {
+    const id = selectedIngredients.map((item) => item._id);
+    id.push(selectedIngredients[0]._id);
+    return id;
+  };
 
-  const ingredientsId = selectedIngredients.map((item) => item._id);
+  const handleDeleteIngredient = useCallback(
+    (index) => {
+      dispatch(deleteIngredient(index));
+    },
+    [dispatch]
+  );
 
-  React.useEffect(() => {
-    setIngredientsId(ingredientsId);
-  }, []);
+  const moveElement = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch(moveIngredient(dragIndex, hoverIndex));
+    },
+    [dispatch]
+  );
+
+  const renderIngredient = useCallback(
+    (item, index) => {
+      return (
+        <ConstructorItem
+          data={item}
+          key={item.key}
+          index={index}
+          keyString={item.key}
+          onDelete={handleDeleteIngredient}
+          moveElement={moveElement}
+        />
+      );
+    },
+    [handleDeleteIngredient, moveElement]
+  );
 
   return (
-    <section className={styles.constructor__container + " pt-25 pl-4"}>
+    <section
+      className={styles.constructor__container + " pt-25 pl-4"}
+      ref={dropTarget}
+    >
       <ul className={styles.constructor__list + " mb-10"}>
         <ConstructorItem
           type="top"
@@ -107,9 +93,7 @@ export const BurgerConstructor = ({ setIngredientsId, onOpen }) => {
         />
         <li className={styles.constructor__item_center}>
           <ul className={styles.list}>
-            {ingredients.map((item) => {
-              return <ConstructorItem data={item} key={item._id} />;
-            })}
+            {ingredients.map((item, i) => renderIngredient(item, i))}
           </ul>
         </li>
         <ConstructorItem
@@ -126,6 +110,5 @@ export const BurgerConstructor = ({ setIngredientsId, onOpen }) => {
 };
 
 BurgerConstructor.propTypes = {
-  setIngredientsId: PropTypes.func.isRequired,
-  onOpen: PropTypes.func.isRequired
+  onOpen: PropTypes.func.isRequired,
 };

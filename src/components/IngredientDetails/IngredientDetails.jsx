@@ -1,26 +1,10 @@
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import styles from "./IngredientDetails.module.css";
-import { propTypesData } from "../../utils/prop-types";
+import { Property } from "./Property/Property";
 
-const Property = ({ title, value }) => {
-  return (
-    <div
-      className={
-        styles.property + " text text_type_main-default text_color_inactive"
-      }
-    >
-      <div className={styles.property__title}>{title}</div>
-      <div className="text text_type_digits-default">{value}</div>
-    </div>
-  );
-};
+export const IngredientDetails = () => {
+  const { ingredient } = useSelector((store) => store.ingredientDetails);
 
-Property.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-export const IngredientDetails = ({ data }) => {
   return (
     <>
       <h2 className={styles.title + " text text_type_main-large"}>
@@ -28,22 +12,18 @@ export const IngredientDetails = ({ data }) => {
       </h2>
       <img
         className={styles.image + " mb-4"}
-        src={data.image_large}
-        alt={data.name}
+        src={ingredient.image_large}
+        alt={ingredient.name}
       />
       <h3 className={styles.subtitle + " text text_type_main-medium"}>
-        {data.name}
+        {ingredient.name}
       </h3>
       <div className={styles.properties}>
-        <Property title="Калории,ккал" value={data.calories} />
-        <Property title="Белки, г" value={data.proteins} />
-        <Property title="Жиры, г" value={data.fat} />
-        <Property title="Углеводы, г" value={data.carbohydrates} />
+        <Property title="Калории,ккал" value={ingredient.calories} />
+        <Property title="Белки, г" value={ingredient.proteins} />
+        <Property title="Жиры, г" value={ingredient.fat} />
+        <Property title="Углеводы, г" value={ingredient.carbohydrates} />
       </div>
     </>
   );
-};
-
-IngredientDetails.propTypes = {
-  data: propTypesData,
 };
