@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from "./App.module.css";
-import { AppHeader } from "../AppHeader/AppHeader";
-import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
-import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
-import { Modal } from "../Modal/Modal";
-import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-import { OrderDetails } from "../OrderDetails/OrderDetails";
-import { getIngredients } from "../../services/actions/getIngredients";
-import { setDataIngredient } from "../../services/actions/ingredientDetails";
+import styles from "./home.module.css";
+import { Header } from "../components/Header/Header";
+import { BurgerIngredients } from "../components/BurgerIngredients/BurgerIngredients";
+import { BurgerConstructor } from "../components/BurgerConstructor/BurgerConstructor";
+import { Modal } from "../components/Modal/Modal";
+import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
+import { OrderDetails } from "../components/OrderDetails/OrderDetails";
+import { getIngredients } from "../services/actions/getIngredients";
+import { setDataIngredient } from "../services/actions/ingredientDetails";
 import {
   getOrderNumber,
   hideOrederModal,
-} from "../../services/actions/orderDetails";
+} from "../services/actions/orderDetails";
 
-export const App = () => {
+export const HomePage = () => {
   const { ingredientsLoading } = useSelector((store) => store.ingredients);
   const { ingredientDetailsOpen } = useSelector(
     (store) => store.ingredientDetails
@@ -46,7 +46,7 @@ export const App = () => {
 
   return (
     <>
-      <AppHeader />
+      <Header />
       {ingredientsLoading && (
         <DndProvider backend={HTML5Backend}>
           <main className={styles.content}>

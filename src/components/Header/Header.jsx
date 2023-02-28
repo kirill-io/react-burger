@@ -1,4 +1,4 @@
-import styles from "./AppHeader.module.css";
+import styles from "./Header.module.css";
 import { Menu } from "./Menu/Menu";
 import { Link } from "./Link/Link";
 import {
@@ -6,7 +6,7 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const AppHeader = () => {
+export const Header = () => {
   return (
     <header className={styles.header + " pt-4 pb-4"}>
       <div className={styles.container}>
