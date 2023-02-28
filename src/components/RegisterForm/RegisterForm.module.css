@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  padding-top: 180px;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+}
+
+.link,
+.link:hover,
+.link:active {
+  color: #4C4CFF;
+  text-decoration: none;
+}

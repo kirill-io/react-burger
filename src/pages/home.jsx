@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./home.module.css";
-import { Header } from "../components/Header/Header";
 import { BurgerIngredients } from "../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../components/BurgerConstructor/BurgerConstructor";
 import { Modal } from "../components/Modal/Modal";
@@ -46,7 +45,6 @@ export const HomePage = () => {
 
   return (
     <>
-      <Header />
       {ingredientsLoading && (
         <DndProvider backend={HTML5Backend}>
           <main className={styles.content}>

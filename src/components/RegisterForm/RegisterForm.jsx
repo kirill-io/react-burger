@@ -1,16 +1,28 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import styles from "./SingInForm.module.css";
+import styles from "./RegisterForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const SingInForm = () => {
+export const RegisterForm = () => {
+  const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <h2 className="text text_type_main-medium mt-0 mb-6">Вход</h2>
+        <h2 className="text text_type_main-medium mt-0 mb-6">Регистрация</h2>
+        <Input
+          type={'text'}
+          placeholder={'Имя'}
+          onChange={e => setNameValue(e.target.value)}
+          value={nameValue}
+          name={'name'}
+          error={false}
+          errorText={'Введите корректное имя'}
+          size={'default'}
+          extraClass="mb-6"
+        />
         <Input
           type={'email'}
           placeholder={'E-mail'}
@@ -35,15 +47,11 @@ export const SingInForm = () => {
           extraClass="mb-6"
         />
         <Button htmlType="button" type="primary" size="medium"  extraClass="mb-20">
-          Войти
+          Зарегистрироваться
         </Button>
-        <div className="text text_type_main-default mb-4">
-          <span className="mr-2">Вы — новый пользователь?</span>
-          <Link to="/register" className={styles.link}>Зарегистрироваться</Link>
-        </div>
         <div className="text text_type_main-default">
-          <span className="mr-2">Забыли пароль?</span>
-          <Link to="/forgot-password" className={styles.link}>Восстановить пароль</Link>
+          <span className="mr-2">Уже зарегистрированы?</span>
+          <Link to="/login" className={styles.link}>Войти</Link>
         </div>
       </div>
     </div>
