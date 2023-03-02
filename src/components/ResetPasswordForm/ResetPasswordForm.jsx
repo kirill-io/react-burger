@@ -1,15 +1,20 @@
 import React, { useState, useRef } from "react";
 import { Link } from 'react-router-dom';
-import styles from "./SingInForm.module.css";
+import styles from "./ResetPasswordForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getResetPassword } from "../../utils/burger-api";
 
-export const SingInForm = () => {
-  const [emailValue, setEmailValue] = useState('');
+export const ResetPasswordForm = () => {
   const [passwordValue, setPasswordValue] = useState('');
+  const [codeValue, setCodeValue] = useState('');
   const [passwordIcon, setPasswordIcon] = useState('ShowIcon');
   const [passwordType, setPasswordType] = useState('password');
 
   const passwordRef = useRef(null);
+
+  const onClick = () => {
+    getResetPassword(passwordValue, codeValue);
+  };
 
   const onIconClick = () => {
     if (passwordRef.current.type === 'password') {
@@ -26,18 +31,7 @@ export const SingInForm = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <h2 className="text text_type_main-medium mt-0 mb-6">Вход</h2>
-        <Input
-          type={'email'}
-          placeholder={'E-mail'}
-          onChange={e => setEmailValue(e.target.value)}
-          value={emailValue}
-          name={'email'}
-          error={false}
-          errorText={'Введите корректный e-mail'}
-          size={'default'}
-          extraClass="mb-6"
-        />
+        <h2 className="text text_type_main-medium mt-0 mb-6">Восстановление пароля</h2>
         <Input
           type={passwordType}
           placeholder={'Пароль'}
@@ -52,16 +46,23 @@ export const SingInForm = () => {
           size={'default'}
           extraClass="mb-6"
         />
-        <Button htmlType="button" type="primary" size="medium"  extraClass="mb-20">
-          Войти
+        <Input
+          type={'text'}
+          placeholder={'Введите код из письма'}
+          onChange={e => setCodeValue(e.target.value)}
+          value={codeValue}
+          name={'code'}
+          error={false}
+          errorText={'Введите корректный код из письма'}
+          size={'default'}
+          extraClass="mb-6"
+        />
+        <Button onClick={onClick} htmlType="button" type="primary" size="medium"  extraClass="mb-20">
+        Сохранить
         </Button>
         <div className="text text_type_main-default mb-4">
-          <span className="mr-2">Вы — новый пользователь?</span>
-          <Link to="/register" className={styles.link}>Зарегистрироваться</Link>
-        </div>
-        <div className="text text_type_main-default">
-          <span className="mr-2">Забыли пароль?</span>
-          <Link to="/forgot-password" className={styles.link}>Восстановить пароль</Link>
+          <span className="mr-2">Вспомнили пароль?</span>
+          <Link to="/login" className={styles.link}>Войти</Link>
         </div>
       </div>
     </div>

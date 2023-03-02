@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import styles from "./ForgotPasswordForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getForgotPassword } from "../../utils/burger-api";
+
 
 export const ForgotPasswordForm = () => {
   const [emailValue, setEmailValue] = useState('');
+
+  const onClick = () => {
+    getForgotPassword(emailValue);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -21,7 +27,7 @@ export const ForgotPasswordForm = () => {
           size={'default'}
           extraClass="mb-6"
         />
-        <Button htmlType="button" type="primary" size="medium"  extraClass="mb-20">
+        <Button onClick={onClick} htmlType="button" type="primary" size="medium"  extraClass="mb-20">
           Восстановить
         </Button>
         <div className="text text_type_main-default">
