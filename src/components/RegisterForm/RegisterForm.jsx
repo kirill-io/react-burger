@@ -31,7 +31,7 @@ export const RegisterForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
+      <form className={styles.container}>
         <h2 className="text text_type_main-medium mt-0 mb-6">Регистрация</h2>
         <Input
           type={'text'}
@@ -76,7 +76,7 @@ export const RegisterForm = () => {
           <span className="mr-2">Уже зарегистрированы?</span>
           <Link to="/login" className={styles.link}>Войти</Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ForgotPasswordPage } from './pages/forgotPassword';
 import { ResetPasswordPage } from './pages/resetPassword';
+import { ProfilePage } from './pages/profile';
 
 export const App = () => {
   return (
@@ -16,6 +17,7 @@ export const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

@@ -25,7 +25,7 @@ export const SingInForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
+      <form className={styles.container}>
         <h2 className="text text_type_main-medium mt-0 mb-6">Вход</h2>
         <Input
           type={'email'}
@@ -63,7 +63,7 @@ export const SingInForm = () => {
           <span className="mr-2">Забыли пароль?</span>
           <Link to="/forgot-password" className={styles.link}>Восстановить пароль</Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 import { Menu } from "./Menu/Menu";
-import { Link } from "./Link/Link";
+import { PersonalAccountLink } from './PersonalAccountLink/PersonalAccountLink';
 import {
   ProfileIcon,
   Logo,
@@ -16,12 +16,14 @@ export const Header = () => {
         <div className={styles.logo}>
           <Logo />
         </div>
-        <Link
-          tag={<ProfileIcon type="secondary" />}
-          typeText="text text_type_main-default text_color_inactive"
+        <PersonalAccountLink
+          activeIcon={<ProfileIcon type="primary" />}
+          inactiveIcon={<ProfileIcon type="secondary" />}
+          activeStyle="text text_type_main-default"
+          inactiveStyle="text text_type_main-default text_color_inactive"
         >
           Личный кабинет
-        </Link>
+        </PersonalAccountLink>
       </div>
     </header>
   );

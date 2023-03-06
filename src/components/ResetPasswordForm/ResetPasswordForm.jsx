@@ -30,7 +30,7 @@ export const ResetPasswordForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
+      <form className={styles.container}>
         <h2 className="text text_type_main-medium mt-0 mb-6">Восстановление пароля</h2>
         <Input
           type={passwordType}
@@ -64,7 +64,7 @@ export const ResetPasswordForm = () => {
           <span className="mr-2">Вспомнили пароль?</span>
           <Link to="/login" className={styles.link}>Войти</Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
