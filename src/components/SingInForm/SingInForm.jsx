@@ -1,7 +1,11 @@
 import React, { useState, useRef } from "react";
-import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./SingInForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getAuthorization } from "../../services/actions/getAuthorization";
+import { getAuthorizationRequest } from "../../utils/burger-api";
+import { setCookie } from "../../utils/cookies";
 
 export const SingInForm = () => {
   const [emailValue, setEmailValue] = useState('');
@@ -9,7 +13,24 @@ export const SingInForm = () => {
   const [passwordIcon, setPasswordIcon] = useState('ShowIcon');
   const [passwordType, setPasswordType] = useState('password');
 
+  const dispatch = useDispatch();
   const passwordRef = useRef(null);
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    if (emailValue && passwordValue) {
+      getAuthorizationRequest(emailValue, passwordValue)
+        .then((res) => {
+          setCookie('accessToken', res.accessToken);
+          setCookie('refreshToken', res.refreshToken);
+          dispatch(getAuthorization(res.user.email, res.user.name));
+          navigate('/', { replace: true });
+        })
+        .catch(() => alert("При авторизации произошла ошибка."));
+    } else {
+      alert("Заполните поля E-mail и пароль.");
+    }
+  };
 
   const onIconClick = () => {
     if (passwordRef.current.type === 'password') {
@@ -52,7 +73,7 @@ export const SingInForm = () => {
           size={'default'}
           extraClass="mb-6"
         />
-        <Button htmlType="button" type="primary" size="medium"  extraClass="mb-20">
+        <Button onClick={onClick} htmlType="button" type="primary" size="medium"  extraClass="mb-20">
           Войти
         </Button>
         <div className="text text_type_main-default mb-4">

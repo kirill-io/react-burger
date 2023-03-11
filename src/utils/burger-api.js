@@ -56,7 +56,7 @@ export const getResetPassword = (password, token) => {
     body: JSON.stringify({
       "password": `${password}`,
       "token": `${token}`
-    } ),
+    }),
   })
     .then(checkResponse)
     .then((data) => {
@@ -65,7 +65,7 @@ export const getResetPassword = (password, token) => {
     });
 };
 
-export const getRegister = (email, password, name) => {
+export const getRegistrationRequest = (email, password, name) => {
   return fetch(`${BURGER_API_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -75,7 +75,59 @@ export const getRegister = (email, password, name) => {
       "email": `${email}`,
       "password": `${password}`,
       "name": `${name}`
-    } ),
+    }),
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+};
+
+export const getAuthorizationRequest = (email, password) => {
+  return fetch(`${BURGER_API_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "email": `${email}`,
+      "password": `${password}`
+    }),
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+};
+
+export const getRefreshToken = (refreshToken) => {
+  return fetch(`${BURGER_API_URL}/auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": `${refreshToken}`
+    }),
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+};
+
+export const getSingOut = (refreshToken) => {
+  return fetch(`${BURGER_API_URL}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": `${refreshToken}`
+    }),
   })
     .then(checkResponse)
     .then((data) => {

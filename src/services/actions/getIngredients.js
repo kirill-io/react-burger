@@ -1,7 +1,6 @@
 import { getIngredientsRequest } from "../../utils/burger-api";
 
 export const GET_INGREDIENT_SUCCESS = "GET_INGREDIENT_SUCCESS";
-export const SET_INGREDIENT_LOADING = "SET_INGREDIENT_LOADING";
 
 export const getIngredients = () => (dispatch) => {
   getIngredientsRequest()

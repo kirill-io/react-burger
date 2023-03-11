@@ -1,8 +1,11 @@
 import React, { useState, useRef } from "react";
-import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./RegisterForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getRegister } from "../../utils/burger-api";
+import { getRegistration } from "../../services/actions/getRegistration";
+import { getRegistrationRequest } from "../../utils/burger-api";
+import { setCookie } from "../../utils/cookies";
 
 export const RegisterForm = () => {
   const [nameValue, setNameValue] = useState('');
@@ -11,10 +14,23 @@ export const RegisterForm = () => {
   const [passwordIcon, setPasswordIcon] = useState('ShowIcon');
   const [passwordType, setPasswordType] = useState('password');
 
+  const dispatch = useDispatch();
   const passwordRef = useRef(null);
+  const navigate = useNavigate();
 
   const onClick = () => {
-    getRegister(emailValue, passwordValue, nameValue);
+    if (nameValue && emailValue && passwordValue) {
+      getRegistrationRequest(emailValue, passwordValue, nameValue)
+        .then((res) => {
+          setCookie('accessToken', res.accessToken);
+          setCookie('refreshToken', res.refreshToken);
+          dispatch(getRegistration(res.user.email, res.user.name));
+          navigate('/', { replace: true });
+        })
+        .catch(() => alert("При регистрации произошла ошибка."));
+    } else {
+      alert("Заполните поля Имя, E-mail и Пароль");
+    }
   };
 
   const onIconClick = () => {
