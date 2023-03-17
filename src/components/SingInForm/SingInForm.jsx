@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./SingInForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getAuthorization } from "../../services/actions/getAuthorization";
+import { getLogin } from "../../services/actions/login";
 import { getAuthorizationRequest } from "../../utils/burger-api";
-import { setCookie } from "../../utils/cookies";
+import { deleteBearer, setCookie } from "../../utils/cookies";
 
 export const SingInForm = () => {
   const [emailValue, setEmailValue] = useState('');
@@ -21,9 +21,9 @@ export const SingInForm = () => {
     if (emailValue && passwordValue) {
       getAuthorizationRequest(emailValue, passwordValue)
         .then((res) => {
-          setCookie('accessToken', res.accessToken);
+          setCookie('accessToken', deleteBearer(res.accessToken), 20);
           setCookie('refreshToken', res.refreshToken);
-          dispatch(getAuthorization(res.user.email, res.user.name));
+          dispatch(getLogin(res.user.email, res.user.name));
           navigate('/', { replace: true });
         })
         .catch(() => alert("При авторизации произошла ошибка."));

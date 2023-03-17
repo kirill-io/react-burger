@@ -1,48 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./ProfileInputs.module.css";
-import { EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { getUserData, updateUserData } from "../../services/actions/getUserData";
+import { updateName, updateLogin } from "../../services/actions/login";
 
 export const ProfileInputs = () => {
-  const [nameValue, setNameValue] = useState('Марк');
-  const [emailValue, setEmailValue] = useState('mail@stellar.burgers');
+  const { email, name } = useSelector((store) => store.login);
+  const dispatch = useDispatch();
+
   const [passwordValue, setPasswordValue] = useState('******');
 
+  useEffect(()=> {
+    dispatch(getUserData());
+  }, [dispatch]);
+
   const onChangeName = (e) => {
-    setNameValue(e.target.value);
+    dispatch(updateName(e.target.value));
   };
-  const onChangeEmail = (e) => {
-    setEmailValue(e.target.value);
+
+  const onChangeLogin = (e) => {
+    dispatch(updateLogin(e.target.value));
   };
-  const onChangePassword = (e) => {
-    setPasswordValue(e.target.value);
+
+  const onClickButtonCancel = () => {
+    dispatch(getUserData());
+  };
+
+  const onClickButtonSave = () => {
+    dispatch(updateUserData());
   };
 
   return (
     <div className={styles.container}>
-     <EmailInput
+      <EmailInput
         onChange={onChangeName}
-        value={nameValue}
-        name={'prodileName'}
-        placeholder="Имя"
+        value={name}
+        name={'name'}
+        placeholder={'Имя'}
         isIcon={true}
         extraClass="mb-6"
+        error={false}
       />
       <EmailInput
-        onChange={onChangeEmail}
-        value={emailValue}
-        name={'prodileEmail'}
-        placeholder="Логин"
+        onChange={onChangeLogin}
+        value={email}
+        name={'login'}
+        placeholder={'Логин'}
         isIcon={true}
         extraClass="mb-6"
+        error={false}
       />
       <EmailInput
-        onChange={onChangePassword}
+        onChange={e => setPasswordValue(e.target.value)}
         value={passwordValue}
         name={'prodilePassword'}
         placeholder="Пароль"
         isIcon={true}
+        extraClass="mb-6"
+        error={false}
       />
+      <div className={styles.button}>
+        <Button htmlType="button" type="secondary" size="medium" onClick={onClickButtonCancel}>
+          Отмена
+        </Button>
+        <Button htmlType="button" type="primary" size="medium" onClick={onClickButtonSave}>
+          Сохранить
+        </Button>
+      </div>
     </div>
   );
 };

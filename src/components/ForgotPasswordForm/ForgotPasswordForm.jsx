@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import styles from "./ForgotPasswordForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getForgotPassword } from "../../utils/burger-api";
+import { getForgotPasswordRequest } from "../../utils/burger-api";
 
 
 export const ForgotPasswordForm = () => {
   const [emailValue, setEmailValue] = useState('');
 
   const onClick = () => {
-    getForgotPassword(emailValue);
+    getForgotPasswordRequest(emailValue);
   };
 
   return (

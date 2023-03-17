@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Link } from 'react-router-dom';
 import styles from "./ResetPasswordForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getResetPassword } from "../../utils/burger-api";
+import { getResetPasswordRequest } from "../../utils/burger-api";
 
 export const ResetPasswordForm = () => {
   const [passwordValue, setPasswordValue] = useState('');
@@ -13,7 +13,7 @@ export const ResetPasswordForm = () => {
   const passwordRef = useRef(null);
 
   const onClick = () => {
-    getResetPassword(passwordValue, codeValue);
+    getResetPasswordRequest(passwordValue, codeValue);
   };
 
   const onIconClick = () => {

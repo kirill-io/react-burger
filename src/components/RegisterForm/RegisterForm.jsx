@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./RegisterForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getRegistration } from "../../services/actions/getRegistration";
+import { getLogin } from "../../services/actions/login";
 import { getRegistrationRequest } from "../../utils/burger-api";
-import { setCookie } from "../../utils/cookies";
+import { deleteBearer, setCookie } from "../../utils/cookies";
 
 export const RegisterForm = () => {
   const [nameValue, setNameValue] = useState('');
@@ -22,9 +22,9 @@ export const RegisterForm = () => {
     if (nameValue && emailValue && passwordValue) {
       getRegistrationRequest(emailValue, passwordValue, nameValue)
         .then((res) => {
-          setCookie('accessToken', res.accessToken);
+          setCookie('accessToken', deleteBearer(res.accessToken), 20);
           setCookie('refreshToken', res.refreshToken);
-          dispatch(getRegistration(res.user.email, res.user.name));
+          dispatch(getLogin(res.user.email, res.user.name));
           navigate('/', { replace: true });
         })
         .catch(() => alert("При регистрации произошла ошибка."));

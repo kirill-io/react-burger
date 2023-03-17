@@ -1,5 +1,18 @@
-export const setCookie = (name, value) => {
-  let valueToken = (value.indexOf('Bearer') === 0) ? value.split('Bearer ')[1] : value;
+export const deleteBearer = (token) => {
+  return token.split('Bearer ')[1];
+};
 
-  document.cookie = name + '=' + valueToken;
+export const setCookie = (name, value, time = 0) => {
+  if (time) {
+    document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${time*60}`;
+  } else {
+    document.cookie = `${name}=${encodeURIComponent(value)}`;
+  }
+};
+
+export const getCookie = (nameCookie) => {
+  const matches = document.cookie.match(
+    new RegExp('(?:^|; )' + nameCookie.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)') // eslint-disable-line
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 };

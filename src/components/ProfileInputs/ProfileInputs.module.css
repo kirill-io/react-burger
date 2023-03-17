@@ -3,3 +3,8 @@
   flex-direction: column;
   width: 480px;
 }
+
+.button {
+  display: flex;
+  justify-content: end;
+}
