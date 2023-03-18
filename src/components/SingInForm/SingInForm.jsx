@@ -23,6 +23,7 @@ export const SingInForm = () => {
         .then((res) => {
           setCookie('accessToken', deleteBearer(res.accessToken), 20);
           setCookie('refreshToken', res.refreshToken);
+          setCookie('isAuthenticated', 'true');
           dispatch(getLogin(res.user.email, res.user.name));
           navigate('/', { replace: true });
         })

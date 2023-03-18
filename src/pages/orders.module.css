@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  widows: 100%;
+}
+
+.container {
+  padding-top: 120px;
+  width: 1240px;
+  display: flex;
+}
