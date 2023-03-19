@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./IngredientDetails.module.css";
 import { Modal } from "../Modal/Modal";
 import { IngredientContent } from "./IngredientContent/IngredientContent";
@@ -10,20 +10,20 @@ export const IngredientDetails = () => {
 
   const { ingredients } = useSelector((store) => store.ingredients);
 
-  const id = location.pathname.split('/')[2];
+  const id = location.pathname.split("/")[2];
 
-  const ingredient = ingredients.find(item => item._id === id)
+  const ingredient = ingredients.find((item) => item._id === id);
 
-  const titleCenterStyle = {alignSelf: "center"};
+  const titleCenterStyle = { alignSelf: "center" };
 
   const handleCloseModalIngredients = () => {
-    navigate('/');
+    navigate("/");
   };
 
-  if (location.key === 'default') {
+  if (location.key === "default") {
     return (
       <div className={styles.conatainer}>
-        <IngredientContent ingredient={ingredient} style={titleCenterStyle}/>
+        <IngredientContent ingredient={ingredient} style={titleCenterStyle} />
       </div>
     );
   }

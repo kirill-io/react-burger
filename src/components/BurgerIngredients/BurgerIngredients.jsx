@@ -77,21 +77,9 @@ export const BurgerIngredients = () => {
       />
       <div className={styles.ingredients} id="ingredients">
         <div className={styles.ingredients__container}>
-          <IngredientsCategory
-            data={buns}
-            title="Булки"
-            goTo={bunRef}
-          />
-          <IngredientsCategory
-            data={sauces}
-            title="Соусы"
-            goTo={sauceRef}
-          />
-          <IngredientsCategory
-            data={mains}
-            title="Начинки"
-            goTo={mainsRef}
-          />
+          <IngredientsCategory data={buns} title="Булки" goTo={bunRef} />
+          <IngredientsCategory data={sauces} title="Соусы" goTo={sauceRef} />
+          <IngredientsCategory data={mains} title="Начинки" goTo={mainsRef} />
         </div>
       </div>
     </section>

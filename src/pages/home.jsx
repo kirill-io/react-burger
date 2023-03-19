@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from "react-router-dom";
 import styles from "./home.module.css";
 import { BurgerIngredients } from "../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../components/BurgerConstructor/BurgerConstructor";
@@ -26,8 +26,8 @@ export const HomePage = () => {
   }, [dispatch]);
 
   const handleOpenModalConstructor = () => {
-    if (!getCookie('isAuthenticated')) {
-      navigate('/login');
+    if (!getCookie("isAuthenticated")) {
+      navigate("/login");
     } else {
       dispatch(getOrderNumber());
     }
@@ -43,7 +43,7 @@ export const HomePage = () => {
         <DndProvider backend={HTML5Backend}>
           <main className={styles.content}>
             <div className={styles.container}>
-              <BurgerIngredients/>
+              <BurgerIngredients />
               <BurgerConstructor onOpen={handleOpenModalConstructor} />
             </div>
             <Outlet />

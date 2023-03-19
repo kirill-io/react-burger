@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import styles from "./IngredientItem.module.css";
 import { propTypesData } from "../../utils/prop-types";
 import {

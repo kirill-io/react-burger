@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 import { Menu } from "./Menu/Menu";
-import { PersonalAccountLink } from './PersonalAccountLink/PersonalAccountLink';
+import { PersonalAccountLink } from "./PersonalAccountLink/PersonalAccountLink";
 import {
   ProfileIcon,
   Logo,

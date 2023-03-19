@@ -1,10 +1,14 @@
+import PropTypes from "prop-types";
 import styles from "./IngredientContent.module.css";
 import { Property } from "../Property/Property";
 
 export const IngredientContent = ({ ingredient, style }) => {
   return (
     <>
-      <h2 className={styles.title + " text text_type_main-large"} style={style ? style : null}>
+      <h2
+        className={styles.title + " text text_type_main-large"}
+        style={style ? style : null}
+      >
         Детали ингредиента
       </h2>
       <img
@@ -23,4 +27,9 @@ export const IngredientContent = ({ ingredient, style }) => {
       </div>
     </>
   );
+};
+
+IngredientContent.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  style: PropTypes.object,
 };

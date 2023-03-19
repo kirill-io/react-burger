@@ -6,9 +6,9 @@ export const ProfilePage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <ProfileMenu margin="mr-15"/>
+        <ProfileMenu margin="mr-15" />
         <ProfileInputs />
       </div>
     </div>
-  )
+  );
 };

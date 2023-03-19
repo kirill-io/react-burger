@@ -6,20 +6,20 @@ export const getLogin = (email, name) => (dispatch) => {
   dispatch({
     type: GET_LOGIN,
     email: email,
-    name: name
+    name: name,
   });
 };
 
 export const updateName = (name) => (dispatch) => {
   dispatch({
     type: UPDATE_NAME,
-    name: name
+    name: name,
   });
 };
 
 export const updateLogin = (login) => (dispatch) => {
   dispatch({
     type: UPDATE_LOGIN,
-    email: login
+    email: login,
   });
 };

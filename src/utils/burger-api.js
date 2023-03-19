@@ -18,20 +18,20 @@ export const getIngredientsRequest = () => {
 export const getOrderNumberRequest = async (ingredientsId) => {
   let accessToken;
 
-  if (!getCookie('accessToken')) {
-    await getRefreshTokenRequest(getCookie('refreshToken'))
+  if (!getCookie("accessToken")) {
+    await getRefreshTokenRequest(getCookie("refreshToken"))
       .then((res) => {
         accessToken = deleteBearer(res.accessToken);
       })
       .catch(() => alert("При обновления токена произошла ошибка."));
   } else {
-    accessToken = getCookie('accessToken');
+    accessToken = getCookie("accessToken");
   }
 
   return fetch(`${BURGER_API_URL}/orders`, {
     method: "POST",
     headers: {
-      "authorization": "Bearer " + accessToken,
+      authorization: "Bearer " + accessToken,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -52,7 +52,7 @@ export const getForgotPasswordRequest = (email) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "email": `${email}`
+      email: `${email}`,
     }),
   })
     .then(checkResponse)
@@ -69,8 +69,8 @@ export const getResetPasswordRequest = (password, token) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "password": `${password}`,
-      "token": `${token}`
+      password: `${password}`,
+      token: `${token}`,
     }),
   })
     .then(checkResponse)
@@ -87,9 +87,9 @@ export const getRegistrationRequest = (email, password, name) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "email": `${email}`,
-      "password": `${password}`,
-      "name": `${name}`
+      email: `${email}`,
+      password: `${password}`,
+      name: `${name}`,
     }),
   })
     .then(checkResponse)
@@ -106,8 +106,8 @@ export const getAuthorizationRequest = (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "email": `${email}`,
-      "password": `${password}`
+      email: `${email}`,
+      password: `${password}`,
     }),
   })
     .then(checkResponse)
@@ -124,18 +124,18 @@ export const getRefreshTokenRequest = (refreshToken) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "token": `${refreshToken}`
+      token: `${refreshToken}`,
     }),
   })
     .then(checkResponse)
     .then((data) => {
       if (data?.success) {
-        setCookie('accessToken', deleteBearer(data.accessToken), 20);
-        setCookie('refreshToken', data.refreshToken);
+        setCookie("accessToken", deleteBearer(data.accessToken), 20);
+        setCookie("refreshToken", data.refreshToken);
         return data;
       }
       return Promise.reject(data);
-    })
+    });
 };
 
 export const getSingOutRequest = (refreshToken) => {
@@ -145,7 +145,7 @@ export const getSingOutRequest = (refreshToken) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "token": `${refreshToken}`
+      token: `${refreshToken}`,
     }),
   })
     .then(checkResponse)
@@ -158,57 +158,57 @@ export const getSingOutRequest = (refreshToken) => {
 export const getUserDataRequest = async () => {
   let accessToken;
 
-  if (!getCookie('accessToken')) {
-    await getRefreshTokenRequest(getCookie('refreshToken'))
+  if (!getCookie("accessToken")) {
+    await getRefreshTokenRequest(getCookie("refreshToken"))
       .then((res) => {
         accessToken = deleteBearer(res.accessToken);
       })
       .catch(() => alert("При обновления токена произошла ошибка."));
   } else {
-    accessToken = getCookie('accessToken');
+    accessToken = getCookie("accessToken");
   }
 
   return fetch(`${BURGER_API_URL}/auth/user`, {
-        method: "GET",
-        headers: {
-          "authorization": "Bearer " + accessToken
-        }
-      })
-        .then(checkResponse)
-        .then((data) => {
-          if (data?.success) return data;
-          return Promise.reject(data);
-        });
+    method: "GET",
+    headers: {
+      authorization: "Bearer " + accessToken,
+    },
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 };
 
 export const updateUserDataRequest = async (email, name) => {
   let accessToken;
 
-  if (!getCookie('accessToken')) {
-    await getRefreshTokenRequest(getCookie('refreshToken'))
+  if (!getCookie("accessToken")) {
+    await getRefreshTokenRequest(getCookie("refreshToken"))
       .then((res) => {
         accessToken = deleteBearer(res.accessToken);
       })
       .catch(() => alert("При обновления токена произошла ошибка."));
   } else {
-    accessToken = getCookie('accessToken');
+    accessToken = getCookie("accessToken");
   }
 
   return fetch(`${BURGER_API_URL}/auth/user`, {
-        method: "PATCH",
-        headers: {
-          "authorization": "Bearer " + accessToken,
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-          "email": `${email}`,
-          "name": `${name}`,
-          "password": "toyota"
-         }),
-      })
-        .then(checkResponse)
-        .then((data) => {
-          if (data?.success) return data;
-          return Promise.reject(data);
-        });
+    method: "PATCH",
+    headers: {
+      authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({
+      email: `${email}`,
+      name: `${name}`,
+      password: "toyota",
+    }),
+  })
+    .then(checkResponse)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 };

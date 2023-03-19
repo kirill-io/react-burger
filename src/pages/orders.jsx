@@ -5,8 +5,8 @@ export const OrdersPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <ProfileMenu margin="mr-15"/>
+        <ProfileMenu margin="mr-15" />
       </div>
     </div>
-  )
+  );
 };
