@@ -1,29 +1,36 @@
 import { useSelector } from "react-redux";
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from "./IngredientDetails.module.css";
-import { Property } from "./Property/Property";
+import { Modal } from "../Modal/Modal";
+import { IngredientContent } from "./IngredientContent/IngredientContent";
 
 export const IngredientDetails = () => {
-  const { ingredient } = useSelector((store) => store.ingredientDetails);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { ingredients } = useSelector((store) => store.ingredients);
+
+  const id = location.pathname.split('/')[2];
+
+  const ingredient = ingredients.find(item => item._id === id)
+
+  const titleCenterStyle = {alignSelf: "center"};
+
+  const handleCloseModalIngredients = () => {
+    navigate('/');
+  };
+
+  if (location.key === 'default') {
+    return (
+      <div className={styles.conatainer}>
+        <IngredientContent ingredient={ingredient} style={titleCenterStyle}/>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <h2 className={styles.title + " text text_type_main-large"}>
-        Детали ингредиента
-      </h2>
-      <img
-        className={styles.image + " mb-4"}
-        src={ingredient.image_large}
-        alt={ingredient.name}
-      />
-      <h3 className={styles.subtitle + " text text_type_main-medium"}>
-        {ingredient.name}
-      </h3>
-      <div className={styles.properties}>
-        <Property title="Калории,ккал" value={ingredient.calories} />
-        <Property title="Белки, г" value={ingredient.proteins} />
-        <Property title="Жиры, г" value={ingredient.fat} />
-        <Property title="Углеводы, г" value={ingredient.carbohydrates} />
-      </div>
-    </>
+    <Modal onClose={handleCloseModalIngredients}>
+      <IngredientContent ingredient={ingredient} />
+    </Modal>
   );
 };

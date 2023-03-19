@@ -8,10 +8,11 @@ import {
 
 export const Menu = () => {
   const matchConstructor = useMatch('/');
+  const matchIngredient = useMatch('/ingredients/:id');
   const matchOrderFeed = useMatch('/order-feed');
 
-  const constructorIcon = matchConstructor ? <BurgerIcon type="primary" /> : <BurgerIcon type="secondary" />;
-  const constructorStyle = matchConstructor ? "text text_type_main-default" : "text text_type_main-default text_color_inactive";
+  const constructorIcon = matchConstructor || matchIngredient ? <BurgerIcon type="primary" /> : <BurgerIcon type="secondary" />;
+  const constructorStyle = matchConstructor || matchIngredient ? "text text_type_main-default" : "text text_type_main-default text_color_inactive";
 
   const orderFeedIcon = matchOrderFeed ? <ListIcon type="primary" /> : <ListIcon type="secondary" />;
   const orderFeedStyle = matchOrderFeed ? "text text_type_main-default" : "text text_type_main-default text_color_inactive";

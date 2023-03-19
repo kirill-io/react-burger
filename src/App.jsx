@@ -7,6 +7,7 @@ import { ForgotPasswordPage } from './pages/forgotPassword';
 import { ResetPasswordPage } from './pages/resetPassword';
 import { ProfilePage } from './pages/profile';
 import { OrdersPage } from './pages/orders';
+import { IngredientDetails } from './components/IngredientDetails/IngredientDetails';
 import { ProtectedRouteElement } from './components/ProtectedRouteElement/ProtectedRouteElement';
 
 export const App = () => {
@@ -14,7 +15,9 @@ export const App = () => {
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage />}>
+          <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        </Route>
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />}/>} />
         <Route path="/orders" element={<ProtectedRouteElement element={<OrdersPage />}/>} />
         <Route path="/login" element={<LoginPage />} />

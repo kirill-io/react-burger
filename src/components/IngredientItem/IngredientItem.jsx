@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import PropTypes from "prop-types";
+import { Link } from 'react-router-dom';
 import styles from "./IngredientItem.module.css";
 import { propTypesData } from "../../utils/prop-types";
 import {
@@ -8,7 +8,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const IngredientItem = ({ data, onOpen }) => {
+export const IngredientItem = ({ data }) => {
   const id = data._id;
   const type = data.type;
 
@@ -37,37 +37,38 @@ export const IngredientItem = ({ data, onOpen }) => {
   };
 
   return (
-    <li
-      className={styles.ingredient__item}
-      onClick={() => onOpen(data)}
-      ref={dragRef}
-    >
-      <div className={styles.ingredient__container + " pr-4 pl-4"}>
-        <img
-          className={styles.ingredient__image + " mb-2"}
-          src={data.image}
-          alt={data.name}
-        />
-        <div className={styles.ingredient__price + " mb-2"}>
-          <span className="text text_type_digits-default">{data.price}</span>
-          <CurrencyIcon type="primary" />
+    <li>
+      <Link
+        className={styles.ingredient__item}
+        ref={dragRef}
+        to={`/ingredients/${data._id}`}
+      >
+        <div className={styles.ingredient__container + " pr-4 pl-4"}>
+          <img
+            className={styles.ingredient__image + " mb-2"}
+            src={data.image}
+            alt={data.name}
+          />
+          <div className={styles.ingredient__price + " mb-2"}>
+            <span className="text text_type_digits-default">{data.price}</span>
+            <CurrencyIcon type="primary" />
+          </div>
         </div>
-      </div>
-      <p className={styles.ingredient__name + " text text_type_main-default"}>
-        {data.name}
-      </p>
-      {choiceOfIngredients() ? (
-        <Counter
-          count={choiceOfIngredients()}
-          size="default"
-          extraClass="m-1"
-        />
-      ) : null}
+        <p className={styles.ingredient__name + " text text_type_main-default"}>
+          {data.name}
+        </p>
+        {choiceOfIngredients() ? (
+          <Counter
+            count={choiceOfIngredients()}
+            size="default"
+            extraClass="m-1"
+          />
+        ) : null}
+      </Link>
     </li>
   );
 };
 
 IngredientItem.propTypes = {
   data: propTypesData,
-  onOpen: PropTypes.func.isRequired,
 };

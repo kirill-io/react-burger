@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import styles from "./ProfileMenu.module.css";
-import { ProtectedRouteElement } from '../ProtectedRouteElement/ProtectedRouteElement';
 
 export const ProfileMenu = ({ margin }) => {
   const active = {

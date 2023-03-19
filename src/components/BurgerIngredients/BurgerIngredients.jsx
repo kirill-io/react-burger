@@ -1,11 +1,10 @@
 import React, { useState, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import styles from "./BurgerIngredients.module.css";
 import { TabList } from "./TabList/TabList";
 import { IngredientsCategory } from "../IngredientsCategory/IngredientsCategory";
 
-export const BurgerIngredients = ({ onOpen }) => {
+export const BurgerIngredients = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
 
   const [selectedTab, setSelectedTab] = useState("bun");
@@ -80,19 +79,16 @@ export const BurgerIngredients = ({ onOpen }) => {
         <div className={styles.ingredients__container}>
           <IngredientsCategory
             data={buns}
-            onOpen={onOpen}
             title="Булки"
             goTo={bunRef}
           />
           <IngredientsCategory
             data={sauces}
-            onOpen={onOpen}
             title="Соусы"
             goTo={sauceRef}
           />
           <IngredientsCategory
             data={mains}
-            onOpen={onOpen}
             title="Начинки"
             goTo={mainsRef}
           />
@@ -100,8 +96,4 @@ export const BurgerIngredients = ({ onOpen }) => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  onOpen: PropTypes.func.isRequired,
 };
