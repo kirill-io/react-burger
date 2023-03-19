@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./ResetPasswordForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getResetPasswordRequest } from "../../utils/burger-api";
+import { setCookie } from "../../utils/cookies";
 
 export const ResetPasswordForm = () => {
   const [passwordValue, setPasswordValue] = useState('');
@@ -11,9 +12,19 @@ export const ResetPasswordForm = () => {
   const [passwordType, setPasswordType] = useState('password');
 
   const passwordRef = useRef(null);
+  const navigate = useNavigate();
 
   const onClick = () => {
-    getResetPasswordRequest(passwordValue, codeValue);
+    if (passwordValue && codeValue) {
+      getResetPasswordRequest(passwordValue, codeValue)
+        .then(() => {
+          setCookie('forgotPassword', 'false', -1);
+          navigate('/login', { replace: true });
+        })
+        .catch(() => alert("При восстановлении пароля произошла ошибка."));
+    } else {
+      alert("Заполните поле пароль и введите код из письма.");
+    }
   };
 
   const onIconClick = () => {

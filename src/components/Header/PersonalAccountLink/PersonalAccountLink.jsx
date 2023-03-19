@@ -4,9 +4,21 @@ import { CustomLink } from "../CustomLink/CustomLink";
 export const PersonalAccountLink = ({ activeIcon, inactiveIcon, activeStyle, inactiveStyle, children }) => {
   const matchProfile = useMatch('/profile');
   const matchOrders = useMatch('/orders');
+  const matchLogin= useMatch('/login');
+  const matchRegister = useMatch('/register');
+  const matchForgotPassword = useMatch('/forgot-password');
+  const matchResetPassword = useMatch('/reset-password');
 
-  const icon = (matchProfile || matchOrders) ? activeIcon : inactiveIcon;
-  const style = (matchProfile || matchOrders) ? activeStyle : inactiveStyle;
+  const checkMatch = () => {
+    if (matchProfile || matchOrders || matchLogin || matchRegister || matchForgotPassword || matchResetPassword) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const icon = (checkMatch()) ? activeIcon : inactiveIcon;
+  const style = (checkMatch()) ? activeStyle : inactiveStyle;
 
   return (
     <CustomLink

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import styles from "./home.module.css";
 import { BurgerIngredients } from "../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../components/BurgerConstructor/BurgerConstructor";
@@ -13,18 +13,24 @@ import {
   getOrderNumber,
   hideOrederModal,
 } from "../services/actions/orderDetails";
+import { getCookie } from "../utils/cookies";
 
 export const HomePage = () => {
   const { ingredientsLoading } = useSelector((store) => store.ingredients);
   const { orderDetailsOpen } = useSelector((store) => store.orderDetails);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
   const handleOpenModalConstructor = () => {
-    dispatch(getOrderNumber());
+    if (!getCookie('isAuthenticated')) {
+      navigate('/login');
+    } else {
+      dispatch(getOrderNumber());
+    }
   };
 
   const handleCloseModalConstructor = () => {

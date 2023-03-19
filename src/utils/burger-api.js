@@ -15,10 +15,23 @@ export const getIngredientsRequest = () => {
     });
 };
 
-export const getOrderNumberRequest = (ingredientsId) => {
+export const getOrderNumberRequest = async (ingredientsId) => {
+  let accessToken;
+
+  if (!getCookie('accessToken')) {
+    await getRefreshTokenRequest(getCookie('refreshToken'))
+      .then((res) => {
+        accessToken = deleteBearer(res.accessToken);
+      })
+      .catch(() => alert("При обновления токена произошла ошибка."));
+  } else {
+    accessToken = getCookie('accessToken');
+  }
+
   return fetch(`${BURGER_API_URL}/orders`, {
     method: "POST",
     headers: {
+      "authorization": "Bearer " + accessToken,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({

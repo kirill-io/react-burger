@@ -1,15 +1,26 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./ForgotPasswordForm.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getForgotPasswordRequest } from "../../utils/burger-api";
+import { setCookie } from "../../utils/cookies";
 
 
 export const ForgotPasswordForm = () => {
   const [emailValue, setEmailValue] = useState('');
+  const navigate = useNavigate();
 
   const onClick = () => {
-    getForgotPasswordRequest(emailValue);
+    if (emailValue) {
+      getForgotPasswordRequest(emailValue)
+      .then(() => {
+        setCookie('forgotPassword', 'true');
+        navigate('/reset-password', { replace: true });
+      })
+      .catch(() => alert("При восстановлении пароля произошла ошибка."));
+    } else {
+      alert("Заполните поле E-mail.");
+    }
   };
 
   return (
