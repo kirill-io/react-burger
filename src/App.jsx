@@ -7,6 +7,7 @@ import { ForgotPasswordPage } from './pages/forgotPassword';
 import { ResetPasswordPage } from './pages/resetPassword';
 import { ProfilePage } from './pages/profile';
 import { OrdersPage } from './pages/orders';
+import { NotFoundPage } from './pages/notFoundPage';
 import { IngredientDetails } from './components/IngredientDetails/IngredientDetails';
 import { ProtectedRouteElement } from './components/ProtectedRouteElement/ProtectedRouteElement';
 
@@ -24,6 +25,7 @@ export const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
