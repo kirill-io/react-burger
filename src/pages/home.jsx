@@ -12,12 +12,15 @@ import { getIngredients } from "../services/actions/getIngredients";
 import {
   getOrderNumber,
   hideOrederModal,
+  setOrderLoad,
 } from "../services/actions/orderDetails";
 import { getCookie } from "../utils/cookies";
 
 export const HomePage = () => {
   const { ingredientsLoading } = useSelector((store) => store.ingredients);
-  const { orderDetailsOpen } = useSelector((store) => store.orderDetails);
+  const { orderDetailsOpen, orderDetailsLoading } = useSelector(
+    (store) => store.orderDetails
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,6 +32,7 @@ export const HomePage = () => {
     if (!getCookie("isAuthenticated")) {
       navigate("/login");
     } else {
+      dispatch(setOrderLoad());
       dispatch(getOrderNumber());
     }
   };
@@ -51,8 +55,17 @@ export const HomePage = () => {
         </DndProvider>
       )}
       {orderDetailsOpen && (
-        <Modal onClose={handleCloseModalConstructor}>
+        <Modal
+          onClose={handleCloseModalConstructor}
+          modalClose={true}
+          buttonClose={true}
+        >
           <OrderDetails />
+        </Modal>
+      )}
+      {orderDetailsLoading && (
+        <Modal modalClose={false} buttonClose={false}>
+          <p className="text text_type_main-large">Загрузка...</p>
         </Modal>
       )}
     </>

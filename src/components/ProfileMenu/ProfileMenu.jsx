@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./ProfileMenu.module.css";
+import { CustomProfileLink } from "./CustomProfileLink/CustomProfileLink";
 import { setCookie } from "../../utils/cookies";
 
 export const ProfileMenu = ({ margin }) => {
@@ -42,16 +43,9 @@ export const ProfileMenu = ({ margin }) => {
           </NavLink>
         </li>
         <li>
-          <NavLink
-            to={"/login"}
-            onClick={onClickExitHandler}
-            className={
-              styles.link + " text text_type_main-medium text_color_inactive"
-            }
-            style={setActive}
-          >
+          <CustomProfileLink onClick={onClickExitHandler}>
             Выход
-          </NavLink>
+          </CustomProfileLink>
         </li>
       </ul>
     </nav>

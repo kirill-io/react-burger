@@ -11,9 +11,13 @@ import {
   deleteIngredient,
   moveIngredient,
 } from "../../services/actions/burgerConstructor";
+import { selectionStart } from "../../services/actions/getIngredients";
 
 export const BurgerConstructor = ({ onOpen }) => {
   const ingredientsAll = useSelector((store) => store.ingredients.ingredients);
+  const selectionStarted = useSelector(
+    (store) => store.ingredients.selectionStarted
+  );
   const selectedIngredients = useSelector((store) => store.burgerConstructor);
   const dispatch = useDispatch();
 
@@ -24,6 +28,7 @@ export const BurgerConstructor = ({ onOpen }) => {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(itemIngredient) {
+      dispatch(selectionStart());
       dispatch(
         addingIngredient(
           itemIngredient.type,
@@ -83,28 +88,44 @@ export const BurgerConstructor = ({ onOpen }) => {
       className={styles.constructor__container + " pt-25 pl-4"}
       ref={dropTarget}
     >
-      <ul className={styles.constructor__list + " mb-10"}>
-        <ConstructorItem
-          type="top"
-          isLocked={true}
-          text=" (верх)"
-          data={bun}
-          noIcon={true}
-        />
-        <li className={styles.constructor__item_center}>
-          <ul className={styles.list}>
-            {ingredients.map((item, i) => renderIngredient(item, i))}
+      {selectionStarted && (
+        <>
+          <ul className={styles.constructor__list + " mb-10"}>
+            <ConstructorItem
+              type="top"
+              isLocked={true}
+              text=" (верх)"
+              data={bun}
+              noIcon={true}
+            />
+            <li className={styles.constructor__item_center}>
+              <ul className={styles.list}>
+                {ingredients.map((item, i) => renderIngredient(item, i))}
+              </ul>
+            </li>
+            <ConstructorItem
+              type="bottom"
+              isLocked={true}
+              text=" (низ)"
+              data={bun}
+              noIcon={true}
+            />
           </ul>
-        </li>
-        <ConstructorItem
-          type="bottom"
-          isLocked={true}
-          text=" (низ)"
-          data={bun}
-          noIcon={true}
-        />
-      </ul>
-      <ConstructorOrder totalPrice={totalPrice} onOpen={onOpen} />
+          <ConstructorOrder totalPrice={totalPrice} onOpen={onOpen} />
+        </>
+      )}
+      {!selectionStarted && (
+        <div className={styles.wrapper}>
+          <p
+            className={
+              styles.text + " text text_type_main-medium text_color_inactive"
+            }
+          >
+            Пожалуйста, для создания заказа перенесите сюда понравившиеся Вам
+            булку и ингредиенты!
+          </p>
+        </div>
+      )}
     </section>
   );
 };

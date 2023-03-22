@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./SingInForm.module.css";
 import {
   Input,
@@ -19,6 +19,9 @@ export const SingInForm = () => {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage = location.state?.from?.pathname || "/";
 
   const onClick = () => {
     if (emailValue && passwordValue) {
@@ -28,7 +31,7 @@ export const SingInForm = () => {
           setCookie("refreshToken", res.refreshToken);
           setCookie("isAuthenticated", "true");
           dispatch(getLogin(res.user.email, res.user.name));
-          navigate("/", { replace: true });
+          navigate(`${fromPage}`, { replace: true });
         })
         .catch(() => alert("При авторизации произошла ошибка."));
     } else {

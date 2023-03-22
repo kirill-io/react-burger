@@ -12,6 +12,9 @@ export const IngredientItem = ({ data }) => {
   const id = data._id;
   const type = data.type;
 
+  const selectionStarted = useSelector(
+    (store) => store.ingredients.selectionStarted
+  );
   const selectedIngredients = useSelector((store) => store.burgerConstructor);
 
   const [, dragRef] = useDrag({
@@ -42,6 +45,7 @@ export const IngredientItem = ({ data }) => {
         className={styles.ingredient__item}
         ref={dragRef}
         to={`/ingredients/${data._id}`}
+        state={{ modal: true }}
       >
         <div className={styles.ingredient__container + " pr-4 pl-4"}>
           <img
@@ -57,7 +61,7 @@ export const IngredientItem = ({ data }) => {
         <p className={styles.ingredient__name + " text text_type_main-default"}>
           {data.name}
         </p>
-        {choiceOfIngredients() ? (
+        {choiceOfIngredients() && selectionStarted ? (
           <Counter
             count={choiceOfIngredients()}
             size="default"

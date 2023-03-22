@@ -1,16 +1,15 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import styles from "./IngredientDetails.module.css";
 import { Modal } from "../Modal/Modal";
 import { IngredientContent } from "./IngredientContent/IngredientContent";
 
-export const IngredientDetails = () => {
+export const IngredientDetails = ({ modal }) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { id } = useParams();
 
   const { ingredients } = useSelector((store) => store.ingredients);
-
-  const id = location.pathname.split("/")[2];
 
   const ingredient = ingredients.find((item) => item._id === id);
 
@@ -20,17 +19,25 @@ export const IngredientDetails = () => {
     navigate("/");
   };
 
-  if (location.key === "default") {
+  if (modal) {
     return (
-      <div className={styles.conatainer}>
-        <IngredientContent ingredient={ingredient} style={titleCenterStyle} />
-      </div>
+      <Modal
+        onClose={handleCloseModalIngredients}
+        modalClose={true}
+        buttonClose={true}
+      >
+        <IngredientContent ingredient={ingredient} />
+      </Modal>
     );
   }
 
   return (
-    <Modal onClose={handleCloseModalIngredients}>
-      <IngredientContent ingredient={ingredient} />
-    </Modal>
+    <div className={styles.conatainer}>
+      <IngredientContent ingredient={ingredient} style={titleCenterStyle} />
+    </div>
   );
+};
+
+IngredientDetails.propTypes = {
+  modal: PropTypes.bool.isRequired,
 };

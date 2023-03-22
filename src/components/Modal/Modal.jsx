@@ -8,28 +8,32 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 const modalRoot = document.getElementById("root");
 const ESC_KEYCODE = 27;
 
-export const Modal = ({ onClose, children }) => {
+export const Modal = ({ onClose, modalClose, children, buttonClose }) => {
   useEffect(() => {
-    document.addEventListener("keydown", onCloseEscape);
+    if (modalClose) {
+      document.addEventListener("keydown", onCloseEscape);
 
-    return () => {
-      document.removeEventListener("keydown", onCloseEscape);
-    };
+      return () => {
+        document.removeEventListener("keydown", onCloseEscape);
+      };
+    }
   }, []); // eslint-disable-line
 
   const onCloseEscape = (e) => {
-    if (e.keyCode === ESC_KEYCODE) {
+    if (e.keyCode === ESC_KEYCODE && modalClose) {
       onClose();
     }
   };
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={onClose} modalClose={modalClose} />
       <div className={styles.modal + " p-10 pb-15"}>
-        <button className={styles.button__close} onClick={onClose}>
-          <CloseIcon type="primary" />
-        </button>
+        {buttonClose && (
+          <button className={styles.button__close} onClick={onClose}>
+            <CloseIcon type="primary" />
+          </button>
+        )}
         <div className={styles.container}>{children}</div>
       </div>
     </>,
@@ -38,6 +42,7 @@ export const Modal = ({ onClose, children }) => {
 };
 
 Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   children: PropTypes.element.isRequired,
+  buttonClose: PropTypes.bool.isRequired,
 };

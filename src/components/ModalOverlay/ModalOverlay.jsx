@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 import styles from "./ModalOverlay.module.css";
 
-export const ModalOverlay = ({ onClose }) => {
+export const ModalOverlay = ({ onClose, modalClose }) => {
   const onCloseOverlay = () => {
-    onClose();
+    if (modalClose) {
+      onClose();
+    }
   };
 
   return (
@@ -12,5 +14,6 @@ export const ModalOverlay = ({ onClose }) => {
 };
 
 ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
+  modalClose: PropTypes.bool.isRequired,
 };

@@ -14,7 +14,7 @@ export const setCookie = (name, value, time = 0) => {
 
 export const getCookie = (nameCookie) => {
   const matches = document.cookie.match(
-    new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)') // eslint-disable-line
+    new RegExp('(?:^|; )' + nameCookie.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)') // eslint-disable-line
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
