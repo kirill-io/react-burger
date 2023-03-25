@@ -1,3 +1,5 @@
+import uuid from "react-uuid";
+
 export const ADDING_INGREDIENT = "ADDING_INGREDIENT";
 export const REPLACEMENT_INGREDIENT = "REPLACEMENT_INGREDIENT";
 export const MOVE_INGREDIENT = "MOVE_INGREDIENT";
@@ -14,6 +16,7 @@ export const addingIngredient = (type, ingredient) => (dispatch) => {
     dispatch({
       type: ADDING_INGREDIENT,
       ingredient: ingredient,
+      key: uuid(),
     });
   }
 };

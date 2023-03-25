@@ -1,4 +1,3 @@
-import uuid from "react-uuid";
 import update from "immutability-helper";
 import {
   ADDING_INGREDIENT,
@@ -28,7 +27,7 @@ const initialState = [
 export const burgerConstructor = (state = initialState, action) => {
   switch (action.type) {
     case ADDING_INGREDIENT: {
-      return [...state, { ...action.ingredient, key: uuid() }];
+      return [...state, { ...action.ingredient, key: action.key }];
     }
     case REPLACEMENT_INGREDIENT: {
       return [action.ingredient, ...state.slice(1)];
