@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -8,7 +7,6 @@ import { BurgerIngredients } from "../components/BurgerIngredients/BurgerIngredi
 import { BurgerConstructor } from "../components/BurgerConstructor/BurgerConstructor";
 import { Modal } from "../components/Modal/Modal";
 import { OrderDetails } from "../components/OrderDetails/OrderDetails";
-import { getIngredients } from "../services/actions/getIngredients";
 import {
   getOrderNumber,
   hideOrederModal,
@@ -23,10 +21,6 @@ export const HomePage = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const handleOpenModalConstructor = () => {
     if (!getCookie("isAuthenticated")) {

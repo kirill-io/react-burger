@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "../Header/Header";
 import { HomePage } from "../../pages/home";
@@ -10,9 +12,15 @@ import { OrdersPage } from "../../pages/orders";
 import { NotFoundPage } from "../../pages/notFoundPage";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
 import { ProtectedRouteElement } from "../ProtectedRouteElement/ProtectedRouteElement";
+import { getIngredients } from "../../services/actions/getIngredients";
 
 export const App = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   const modal = location?.state?.modal;
 

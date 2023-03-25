@@ -30,14 +30,6 @@ export const ProfileInputs = () => {
     dispatch(updateLogin(e.target.value));
   };
 
-  const onClickButtonCancel = () => {
-    dispatch(getUserData());
-  };
-
-  const onClickButtonSave = () => {
-    dispatch(updateUserData());
-  };
-
   const onSubmitFormHandler = e => {
     e.preventDefault();
     if (submitButton === 'cancel') {
