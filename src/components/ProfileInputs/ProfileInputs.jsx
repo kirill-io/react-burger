@@ -15,6 +15,7 @@ export const ProfileInputs = () => {
   const { email, name } = useSelector((store) => store.login);
   const dispatch = useDispatch();
 
+  const [submitButton, setSubmitButton] = useState(null);
   const [passwordValue, setPasswordValue] = useState("******");
 
   useEffect(() => {
@@ -37,8 +38,17 @@ export const ProfileInputs = () => {
     dispatch(updateUserData());
   };
 
+  const onSubmitFormHandler = e => {
+    e.preventDefault();
+    if (submitButton === 'cancel') {
+      dispatch(getUserData());
+    } else if (submitButton === 'save') {
+      dispatch(updateUserData());
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <form className={styles.container} onSubmit={onSubmitFormHandler}>
       <EmailInput
         onChange={onChangeName}
         value={name}
@@ -68,22 +78,22 @@ export const ProfileInputs = () => {
       />
       <div className={styles.button}>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="secondary"
           size="medium"
-          onClick={onClickButtonCancel}
+          onClick={() => setSubmitButton('cancel')}
         >
           Отмена
         </Button>
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
-          onClick={onClickButtonSave}
+          onClick={() => setSubmitButton('save')}
         >
           Сохранить
         </Button>
       </div>
-    </div>
+    </form>
   );
 };

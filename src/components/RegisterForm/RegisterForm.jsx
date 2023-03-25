@@ -21,7 +21,8 @@ export const RegisterForm = () => {
   const passwordRef = useRef(null);
   const navigate = useNavigate();
 
-  const onClick = () => {
+  const onSubmitFormHandler = e => {
+    e.preventDefault();
     if (nameValue && emailValue && passwordValue) {
       getRegistrationRequest(emailValue, passwordValue, nameValue)
         .then((res) => {
@@ -51,7 +52,7 @@ export const RegisterForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.container}>
+      <form className={styles.container} onSubmit={onSubmitFormHandler}>
         <h2 className="text text_type_main-medium mt-0 mb-6">Регистрация</h2>
         <Input
           type={"text"}
@@ -90,8 +91,7 @@ export const RegisterForm = () => {
           extraClass="mb-6"
         />
         <Button
-          onClick={onClick}
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
           extraClass="mb-20"

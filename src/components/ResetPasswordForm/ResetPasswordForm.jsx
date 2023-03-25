@@ -17,7 +17,8 @@ export const ResetPasswordForm = () => {
   const passwordRef = useRef(null);
   const navigate = useNavigate();
 
-  const onClick = () => {
+  const onSubmitFormHandler = e => {
+    e.preventDefault();
     if (passwordValue && codeValue) {
       getResetPasswordRequest(passwordValue, codeValue)
         .then(() => {
@@ -44,7 +45,7 @@ export const ResetPasswordForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.container}>
+      <form className={styles.container} onSubmit={onSubmitFormHandler}>
         <h2 className="text text_type_main-medium mt-0 mb-6">
           Восстановление пароля
         </h2>
@@ -74,8 +75,7 @@ export const ResetPasswordForm = () => {
           extraClass="mb-6"
         />
         <Button
-          onClick={onClick}
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
           extraClass="mb-20"

@@ -23,7 +23,8 @@ export const SingInForm = () => {
 
   const fromPage = location.state?.from?.pathname || "/";
 
-  const onClick = () => {
+  const onSubmitFormHandler = e => {
+    e.preventDefault();
     if (emailValue && passwordValue) {
       getAuthorizationRequest(emailValue, passwordValue)
         .then((res) => {
@@ -53,7 +54,7 @@ export const SingInForm = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.container}>
+      <form className={styles.container} onSubmit={onSubmitFormHandler}>
         <h2 className="text text_type_main-medium mt-0 mb-6">Вход</h2>
         <Input
           type={"email"}
@@ -81,8 +82,7 @@ export const SingInForm = () => {
           extraClass="mb-6"
         />
         <Button
-          onClick={onClick}
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
           extraClass="mb-20"
