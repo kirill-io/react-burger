@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { Menu } from "./Menu/Menu";
 import { PersonalAccountLink } from "./PersonalAccountLink/PersonalAccountLink";
@@ -14,7 +15,9 @@ export const Header = () => {
           <Menu />
         </div>
         <div className={styles.logo}>
-          <Logo />
+          <Link to='/'>
+            <Logo />
+          </Link>
         </div>
         <PersonalAccountLink
           activeIcon={<ProfileIcon type="primary" />}
