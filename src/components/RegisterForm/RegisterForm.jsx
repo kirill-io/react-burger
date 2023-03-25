@@ -7,7 +7,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getLogin } from "../../services/actions/login";
-import { getRegistrationRequest } from "../../utils/burger-api";
+import { request } from "../../utils/burger-api";
 import { deleteBearer, setCookie } from "../../utils/cookies";
 
 export const RegisterForm = () => {
@@ -24,7 +24,17 @@ export const RegisterForm = () => {
   const onSubmitFormHandler = e => {
     e.preventDefault();
     if (nameValue && emailValue && passwordValue) {
-      getRegistrationRequest(emailValue, passwordValue, nameValue)
+      request("/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: `${emailValue}`,
+          password: `${passwordValue}`,
+          name: `${nameValue}`,
+        }),
+      })
         .then((res) => {
           setCookie("accessToken", deleteBearer(res.accessToken), 20);
           setCookie("refreshToken", res.refreshToken);

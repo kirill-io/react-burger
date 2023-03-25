@@ -7,7 +7,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getLogin } from "../../services/actions/login";
-import { getAuthorizationRequest } from "../../utils/burger-api";
+import { request } from "../../utils/burger-api";
 import { deleteBearer, setCookie } from "../../utils/cookies";
 
 export const SingInForm = () => {
@@ -26,7 +26,16 @@ export const SingInForm = () => {
   const onSubmitFormHandler = e => {
     e.preventDefault();
     if (emailValue && passwordValue) {
-      getAuthorizationRequest(emailValue, passwordValue)
+      request("/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: `${emailValue}`,
+          password: `${passwordValue}`,
+        }),
+      })
         .then((res) => {
           setCookie("accessToken", deleteBearer(res.accessToken), 20);
           setCookie("refreshToken", res.refreshToken);

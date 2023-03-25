@@ -39,7 +39,7 @@ export const getOrderNumber = () => (dispatch) => {
         dispatch(unsetOrderLoad());
         dispatch({
           type: SET_ORDER_NUMBER,
-          orderNumber: res,
+          orderNumber: res.order.number,
         });
       })
       .catch(() => alert("Во время формирования заказа произошла ошибка."))
