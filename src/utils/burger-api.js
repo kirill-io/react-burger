@@ -68,12 +68,12 @@ export const getUserDataRequest = async () => {
 
   if (!getCookie("accessToken")) {
     await getRefreshTokenRequest(getCookie("refreshToken"))
-    .then((res) => {
-      setCookie("accessToken", deleteBearer(res.accessToken), 20);
-      setCookie("refreshToken", res.refreshToken);
-      accessToken = deleteBearer(res.accessToken);
-    })
-    .catch(() => alert("При обновления токена произошла ошибка."));
+      .then((res) => {
+        setCookie("accessToken", deleteBearer(res.accessToken), 20);
+        setCookie("refreshToken", res.refreshToken);
+        accessToken = deleteBearer(res.accessToken);
+      })
+      .catch(() => alert("При обновления токена произошла ошибка."));
   } else {
     accessToken = getCookie("accessToken");
   }
@@ -91,12 +91,12 @@ export const updateUserDataRequest = async (email, name) => {
 
   if (!getCookie("accessToken")) {
     await getRefreshTokenRequest(getCookie("refreshToken"))
-    .then((res) => {
-      setCookie("accessToken", deleteBearer(res.accessToken), 20);
-      setCookie("refreshToken", res.refreshToken);
-      accessToken = deleteBearer(res.accessToken);
-    })
-    .catch(() => alert("При обновления токена произошла ошибка."));
+      .then((res) => {
+        setCookie("accessToken", deleteBearer(res.accessToken), 20);
+        setCookie("refreshToken", res.refreshToken);
+        accessToken = deleteBearer(res.accessToken);
+      })
+      .catch(() => alert("При обновления токена произошла ошибка."));
   } else {
     accessToken = getCookie("accessToken");
   }

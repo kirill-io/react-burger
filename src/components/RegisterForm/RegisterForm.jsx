@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./RegisterForm.module.css";
 import {
   Input,
@@ -9,11 +9,11 @@ import {
 import { getLogin } from "../../services/actions/login";
 import { request } from "../../utils/burger-api";
 import { deleteBearer, setCookie } from "../../utils/cookies";
+import { useForm } from "../../hooks/useForm";
 
 export const RegisterForm = () => {
-  const [nameValue, setNameValue] = useState("");
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { values, handleChange } = useForm({});
+
   const [passwordIcon, setPasswordIcon] = useState("ShowIcon");
   const [passwordType, setPasswordType] = useState("password");
 
@@ -21,18 +21,22 @@ export const RegisterForm = () => {
   const passwordRef = useRef(null);
   const navigate = useNavigate();
 
-  const onSubmitFormHandler = e => {
+  const location = useLocation();
+
+  const fromPage = location.state?.from || "/";
+
+  const onSubmitFormHandler = (e) => {
     e.preventDefault();
-    if (nameValue && emailValue && passwordValue) {
+    if (values.name && values.email && values.password) {
       request("/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: `${emailValue}`,
-          password: `${passwordValue}`,
-          name: `${nameValue}`,
+          email: `${values.email}`,
+          password: `${values.password}`,
+          name: `${values.name}`,
         }),
       })
         .then((res) => {
@@ -40,7 +44,7 @@ export const RegisterForm = () => {
           setCookie("refreshToken", res.refreshToken);
           setCookie("isAuthenticated", "true");
           dispatch(getLogin(res.user.email, res.user.name));
-          navigate("/", { replace: true });
+          navigate(`${fromPage}`, { replace: true });
         })
         .catch(() => alert("При регистрации произошла ошибка."));
     } else {
@@ -67,8 +71,8 @@ export const RegisterForm = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setNameValue(e.target.value)}
-          value={nameValue}
+          onChange={(e) => handleChange(e)}
+          value={values.name || ""}
           name={"name"}
           error={false}
           errorText={"Введите корректное имя"}
@@ -78,8 +82,8 @@ export const RegisterForm = () => {
         <Input
           type={"email"}
           placeholder={"E-mail"}
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
+          onChange={(e) => handleChange(e)}
+          value={values.email || ""}
           name={"email"}
           error={false}
           errorText={"Введите корректный e-mail"}
@@ -89,9 +93,9 @@ export const RegisterForm = () => {
         <Input
           type={passwordType}
           placeholder={"Пароль"}
-          onChange={(e) => setPasswordValue(e.target.value)}
+          onChange={(e) => handleChange(e)}
           icon={passwordIcon}
-          value={passwordValue}
+          value={values.password || ""}
           name={"password"}
           error={false}
           ref={passwordRef}

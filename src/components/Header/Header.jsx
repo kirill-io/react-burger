@@ -15,7 +15,7 @@ export const Header = () => {
           <Menu />
         </div>
         <div className={styles.logo}>
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </div>

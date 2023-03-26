@@ -9,10 +9,11 @@ import {
 import { getLogin } from "../../services/actions/login";
 import { request } from "../../utils/burger-api";
 import { deleteBearer, setCookie } from "../../utils/cookies";
+import { useForm } from "../../hooks/useForm";
 
 export const SingInForm = () => {
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { values, handleChange } = useForm({});
+
   const [passwordIcon, setPasswordIcon] = useState("ShowIcon");
   const [passwordType, setPasswordType] = useState("password");
 
@@ -21,19 +22,19 @@ export const SingInForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fromPage = location.state?.from?.pathname || "/";
+  const fromPage = location.state?.from?.pathname || location.state || "/";
 
-  const onSubmitFormHandler = e => {
+  const onSubmitFormHandler = (e) => {
     e.preventDefault();
-    if (emailValue && passwordValue) {
+    if (values.email && values.password) {
       request("/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: `${emailValue}`,
-          password: `${passwordValue}`,
+          email: `${values.email}`,
+          password: `${values.password}`,
         }),
       })
         .then((res) => {
@@ -68,8 +69,8 @@ export const SingInForm = () => {
         <Input
           type={"email"}
           placeholder={"E-mail"}
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
+          onChange={(e) => handleChange(e)}
+          value={values.email || ""}
           name={"email"}
           error={false}
           errorText={"Введите корректный e-mail"}
@@ -79,9 +80,9 @@ export const SingInForm = () => {
         <Input
           type={passwordType}
           placeholder={"Пароль"}
-          onChange={(e) => setPasswordValue(e.target.value)}
+          onChange={(e) => handleChange(e)}
           icon={passwordIcon}
-          value={passwordValue}
+          value={values.password || ""}
           name={"password"}
           error={false}
           ref={passwordRef}
@@ -100,13 +101,21 @@ export const SingInForm = () => {
         </Button>
         <div className="text text_type_main-default mb-4">
           <span className="mr-2">Вы — новый пользователь?</span>
-          <Link to="/register" className={styles.link}>
+          <Link
+            to="/register"
+            state={{ from: fromPage }}
+            className={styles.link}
+          >
             Зарегистрироваться
           </Link>
         </div>
         <div className="text text_type_main-default">
           <span className="mr-2">Забыли пароль?</span>
-          <Link to="/forgot-password" className={styles.link}>
+          <Link
+            to="/forgot-password"
+            state={{ from: fromPage }}
+            className={styles.link}
+          >
             Восстановить пароль
           </Link>
         </div>

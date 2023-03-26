@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./ForgotPasswordForm.module.css";
 import {
   Input,
@@ -7,26 +6,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { request } from "../../utils/burger-api";
 import { setCookie } from "../../utils/cookies";
+import { useForm } from "../../hooks/useForm";
 
 export const ForgotPasswordForm = () => {
-  const [emailValue, setEmailValue] = useState("");
-  const navigate = useNavigate();
+  const { values, handleChange } = useForm({});
 
-  const onSubmitFormHandler = e => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage = location.state?.from || "/";
+
+  const onSubmitFormHandler = (e) => {
     e.preventDefault();
-    if (emailValue) {
+    if (values.email) {
       request("/password-reset", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: `${emailValue}`,
+          email: `${values.email}`,
         }),
       })
         .then(() => {
           setCookie("forgotPassword", "true");
-          navigate("/reset-password", { replace: true });
+          navigate("/reset-password", { replace: true, state: fromPage });
         })
         .catch(() => alert("При восстановлении пароля произошла ошибка."));
     } else {
@@ -43,8 +47,8 @@ export const ForgotPasswordForm = () => {
         <Input
           type={"email"}
           placeholder={"Укажите E-mail"}
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
+          onChange={(e) => handleChange(e)}
+          value={values.email || ""}
           name={"email"}
           error={false}
           errorText={"Введите корректный e-mail"}

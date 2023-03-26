@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./ResetPasswordForm.module.css";
 import {
   Input,
@@ -7,32 +7,36 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { request } from "../../utils/burger-api";
 import { setCookie } from "../../utils/cookies";
+import { useForm } from "../../hooks/useForm";
 
 export const ResetPasswordForm = () => {
-  const [passwordValue, setPasswordValue] = useState("");
-  const [codeValue, setCodeValue] = useState("");
+  const { values, handleChange } = useForm({});
+
   const [passwordIcon, setPasswordIcon] = useState("ShowIcon");
   const [passwordType, setPasswordType] = useState("password");
 
   const passwordRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const onSubmitFormHandler = e => {
+  const fromPage = location.state || "/";
+
+  const onSubmitFormHandler = (e) => {
     e.preventDefault();
-    if (passwordValue && codeValue) {
+    if (values.password && values.code) {
       request("/password-reset/reset", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          password: `${passwordValue}`,
-          token: `${codeValue}`,
+          password: `${values.password}`,
+          token: `${values.code}`,
         }),
       })
         .then(() => {
           setCookie("forgotPassword", "false", -1);
-          navigate("/login", { replace: true });
+          navigate("/login", { replace: true, state: fromPage });
         })
         .catch(() => alert("При восстановлении пароля произошла ошибка."));
     } else {
@@ -61,9 +65,9 @@ export const ResetPasswordForm = () => {
         <Input
           type={passwordType}
           placeholder={"Пароль"}
-          onChange={(e) => setPasswordValue(e.target.value)}
+          onChange={(e) => handleChange(e)}
           icon={passwordIcon}
-          value={passwordValue}
+          value={values.password || ""}
           name={"password"}
           error={false}
           ref={passwordRef}
@@ -75,8 +79,8 @@ export const ResetPasswordForm = () => {
         <Input
           type={"text"}
           placeholder={"Введите код из письма"}
-          onChange={(e) => setCodeValue(e.target.value)}
-          value={codeValue}
+          onChange={(e) => handleChange(e)}
+          value={values.code || ""}
           name={"code"}
           error={false}
           errorText={"Введите корректный код из письма"}

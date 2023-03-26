@@ -30,11 +30,11 @@ export const ProfileInputs = () => {
     dispatch(updateLogin(e.target.value));
   };
 
-  const onSubmitFormHandler = e => {
+  const onSubmitFormHandler = (e) => {
     e.preventDefault();
-    if (submitButton === 'cancel') {
+    if (submitButton === "cancel") {
       dispatch(getUserData());
-    } else if (submitButton === 'save') {
+    } else if (submitButton === "save") {
       dispatch(updateUserData());
     }
   };
@@ -73,7 +73,7 @@ export const ProfileInputs = () => {
           htmlType="submit"
           type="secondary"
           size="medium"
-          onClick={() => setSubmitButton('cancel')}
+          onClick={() => setSubmitButton("cancel")}
         >
           Отмена
         </Button>
@@ -81,7 +81,7 @@ export const ProfileInputs = () => {
           htmlType="submit"
           type="primary"
           size="medium"
-          onClick={() => setSubmitButton('save')}
+          onClick={() => setSubmitButton("save")}
         >
           Сохранить
         </Button>
