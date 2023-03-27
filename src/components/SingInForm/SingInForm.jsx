@@ -6,8 +6,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getLogin } from "../../services/actions/login";
-import { request } from "../../utils/burger-api";
+import { getLogin, singIn } from "../../services/actions/login";
 import { deleteBearer, setCookie } from "../../utils/cookies";
 import { useForm } from "../../hooks/useForm";
 
@@ -27,16 +26,7 @@ export const SingInForm = () => {
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
     if (values.email && values.password) {
-      request("/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: `${values.email}`,
-          password: `${values.password}`,
-        }),
-      })
+      singIn(values.email, values.password)
         .then((res) => {
           setCookie("accessToken", deleteBearer(res.accessToken), 20);
           setCookie("refreshToken", res.refreshToken);

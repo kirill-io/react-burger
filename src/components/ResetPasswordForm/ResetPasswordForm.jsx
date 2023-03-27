@@ -5,7 +5,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { request } from "../../utils/burger-api";
+import { resetPassword } from "../../services/actions/login";
 import { setCookie } from "../../utils/cookies";
 import { useForm } from "../../hooks/useForm";
 
@@ -24,16 +24,7 @@ export const ResetPasswordForm = () => {
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
     if (values.password && values.code) {
-      request("/password-reset/reset", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: `${values.password}`,
-          token: `${values.code}`,
-        }),
-      })
+      resetPassword(values.password, values.code)
         .then(() => {
           setCookie("forgotPassword", "false", -1);
           navigate("/login", { replace: true, state: fromPage });
