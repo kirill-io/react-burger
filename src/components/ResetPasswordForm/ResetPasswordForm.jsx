@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./ResetPasswordForm.module.css";
 import {
@@ -6,7 +7,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../../services/actions/login";
-import { setCookie } from "../../utils/cookies";
 import { useForm } from "../../hooks/useForm";
 
 export const ResetPasswordForm = () => {
@@ -15,6 +15,7 @@ export const ResetPasswordForm = () => {
   const [passwordIcon, setPasswordIcon] = useState("ShowIcon");
   const [passwordType, setPasswordType] = useState("password");
 
+  const dispatch = useDispatch();
   const passwordRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,11 +25,8 @@ export const ResetPasswordForm = () => {
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
     if (values.password && values.code) {
-      resetPassword(values.password, values.code)
-        .then(() => {
-          setCookie("forgotPassword", "false", -1);
-          navigate("/login", { replace: true, state: fromPage });
-        })
+      dispatch(resetPassword(values.password, values.code))
+        .then(() => navigate("/login", { replace: true, state: fromPage }))
         .catch(() => alert("При восстановлении пароля произошла ошибка."));
     } else {
       alert("Заполните поле пароль и введите код из письма.");

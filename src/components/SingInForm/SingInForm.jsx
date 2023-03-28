@@ -6,8 +6,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getLogin, singIn } from "../../services/actions/login";
-import { deleteBearer, setCookie } from "../../utils/cookies";
+import { singIn } from "../../services/actions/login";
 import { useForm } from "../../hooks/useForm";
 
 export const SingInForm = () => {
@@ -26,14 +25,8 @@ export const SingInForm = () => {
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
     if (values.email && values.password) {
-      singIn(values.email, values.password)
-        .then((res) => {
-          setCookie("accessToken", deleteBearer(res.accessToken), 20);
-          setCookie("refreshToken", res.refreshToken);
-          setCookie("isAuthenticated", "true");
-          dispatch(getLogin(res.user.email, res.user.name));
-          navigate(`${fromPage}`, { replace: true });
-        })
+      dispatch(singIn(values.email, values.password))
+        .then(() => navigate(`${fromPage}`, { replace: true }))
         .catch(() => alert("При авторизации произошла ошибка."));
     } else {
       alert("Заполните поля E-mail и пароль.");

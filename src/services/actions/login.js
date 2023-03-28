@@ -1,5 +1,5 @@
 import { request } from "../../utils/burger-api";
-import { getCookie } from "../../utils/cookies";
+import { getCookie, setCookie, deleteBearer } from "../../utils/cookies";
 
 export const GET_LOGIN = "GET_LOGIN";
 export const UPDATE_NAME = "UPDATE_NAME";
@@ -13,7 +13,7 @@ export const getLogin = (email, name) => (dispatch) => {
   });
 };
 
-export const singIn = (email, password) => {
+export const singIn = (email, password) => (dispatch) => {
   return (
     request("/auth/login", {
       method: "POST",
@@ -25,10 +25,16 @@ export const singIn = (email, password) => {
         password: `${password}`,
       })
     })
+      .then((res) => {
+        setCookie("accessToken", deleteBearer(res.accessToken), 20);
+        setCookie("refreshToken", res.refreshToken);
+        setCookie("isAuthenticated", "true");
+        dispatch(getLogin(res.user.email, res.user.name));
+      })
   );
 };
 
-export const resetPassword = (password, code) => {
+export const resetPassword = (password, code) => (dispatch) => {
   return (
     request("/password-reset/reset", {
       method: "POST",
@@ -40,10 +46,13 @@ export const resetPassword = (password, code) => {
         token: `${code}`,
       }),
     })
+      .then(() => {
+        setCookie("forgotPassword", "false", -1);
+      })
   );
 };
 
-export const forgotPassword = (email) => {
+export const forgotPassword = (email) => (dispatch) => {
   return (
     request("/password-reset", {
       method: "POST",
@@ -54,10 +63,13 @@ export const forgotPassword = (email) => {
         email: `${email}`,
       }),
     })
+      .then(() => {
+        setCookie("forgotPassword", "true");
+      })
   );
 };
 
-export const singOut = () => {
+export const singOut = () => (dispatch) => {
   return(
     request("/auth/logout", {
       method: "POST",
@@ -68,6 +80,11 @@ export const singOut = () => {
         token: getCookie("refreshToken"),
       }),
     })
+      .then(() => {
+        setCookie("accessToken", "", -1);
+        setCookie("refreshToken", "", -1);
+        setCookie("isAuthenticated", "", -1);
+      })
   );
 };
 

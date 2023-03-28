@@ -1,12 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./ProfileMenu.module.css";
 import { CustomProfileLink } from "./CustomProfileLink/CustomProfileLink";
 import { singOut } from "../../services/actions/login";
-// import { request } from "../../utils/burger-api";
-import { setCookie } from "../../utils/cookies";
 
 export const ProfileMenu = ({ margin }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const active = {
     color: "#F2F2F3",
   };
@@ -14,12 +17,8 @@ export const ProfileMenu = ({ margin }) => {
   const setActive = ({ isActive }) => (isActive ? active : undefined);
 
   const onClickExitHandler = () => {
-    singOut()
-      .then(() => {
-        setCookie("accessToken", "", -1);
-        setCookie("refreshToken", "", -1);
-        setCookie("isAuthenticated", "", -1);
-      })
+    dispatch(singOut())
+      .then(() => navigate("/login", { replace: true, state: { from: location } }))
       .catch(() => alert("При выходе произошла ошибка."));
   };
 

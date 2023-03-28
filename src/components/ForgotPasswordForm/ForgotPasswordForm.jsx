@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./ForgotPasswordForm.module.css";
 import {
@@ -5,12 +6,12 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { forgotPassword } from "../../services/actions/login";
-import { setCookie } from "../../utils/cookies";
 import { useForm } from "../../hooks/useForm";
 
 export const ForgotPasswordForm = () => {
   const { values, handleChange } = useForm({});
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,11 +20,8 @@ export const ForgotPasswordForm = () => {
   const onSubmitFormHandler = (e) => {
     e.preventDefault();
     if (values.email) {
-      forgotPassword(values.email)
-        .then(() => {
-          setCookie("forgotPassword", "true");
-          navigate("/reset-password", { replace: true, state: fromPage });
-        })
+      dispatch(forgotPassword(values.email))
+        .then(() => navigate("/reset-password", { replace: true, state: fromPage }))
         .catch(() => alert("При восстановлении пароля произошла ошибка."));
     } else {
       alert("Заполните поле E-mail.");
