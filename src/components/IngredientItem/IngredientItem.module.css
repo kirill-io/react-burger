@@ -6,6 +6,8 @@
   flex-direction: column;
   max-width: 272px;
   position: relative;
+  color: #f2f2f3;
+  text-decoration: none;
 }
 
 .ingredient__container {

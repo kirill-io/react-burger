@@ -1,29 +1,43 @@
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import styles from "./IngredientDetails.module.css";
-import { Property } from "./Property/Property";
+import { Modal } from "../Modal/Modal";
+import { IngredientContent } from "./IngredientContent/IngredientContent";
 
-export const IngredientDetails = () => {
-  const { ingredient } = useSelector((store) => store.ingredientDetails);
+export const IngredientDetails = ({ modal }) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { ingredients } = useSelector((store) => store.ingredients);
+
+  const ingredient = ingredients.find((item) => item._id === id);
+
+  const titleCenterStyle = { alignSelf: "center" };
+
+  const handleCloseModalIngredients = () => {
+    navigate("/");
+  };
+
+  if (modal) {
+    return (
+      <Modal
+        onClose={handleCloseModalIngredients}
+        modalClose={true}
+        buttonClose={true}
+      >
+        <IngredientContent ingredient={ingredient} />
+      </Modal>
+    );
+  }
 
   return (
-    <>
-      <h2 className={styles.title + " text text_type_main-large"}>
-        Детали ингредиента
-      </h2>
-      <img
-        className={styles.image + " mb-4"}
-        src={ingredient.image_large}
-        alt={ingredient.name}
-      />
-      <h3 className={styles.subtitle + " text text_type_main-medium"}>
-        {ingredient.name}
-      </h3>
-      <div className={styles.properties}>
-        <Property title="Калории,ккал" value={ingredient.calories} />
-        <Property title="Белки, г" value={ingredient.proteins} />
-        <Property title="Жиры, г" value={ingredient.fat} />
-        <Property title="Углеводы, г" value={ingredient.carbohydrates} />
-      </div>
-    </>
+    <div className={styles.conatainer}>
+      <IngredientContent ingredient={ingredient} style={titleCenterStyle} />
+    </div>
   );
+};
+
+IngredientDetails.propTypes = {
+  modal: PropTypes.bool.isRequired,
 };

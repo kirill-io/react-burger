@@ -39,8 +39,8 @@ export const ConstructorItem = ({
         return;
       }
 
-      const dragIndex = item.index; ///перетаскиваемы элемент
-      const hoverIndex = index; ///элемент под перетаскиваемым
+      const dragIndex = item.index;
+      const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
         return;

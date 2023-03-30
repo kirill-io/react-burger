@@ -1,0 +1,12 @@
+.menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.link {
+  width: 320px;
+  display: block;
+  text-decoration: none;
+  padding: 17px 0 17px;
+}

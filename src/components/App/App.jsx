@@ -1,72 +1,60 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from "./App.module.css";
-import { AppHeader } from "../AppHeader/AppHeader";
-import { BurgerIngredients } from "../BurgerIngredients/BurgerIngredients";
-import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
-import { Modal } from "../Modal/Modal";
+import { useDispatch } from "react-redux";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { Header } from "../Header/Header";
+import { HomePage } from "../../pages/home";
+import { LoginPage } from "../../pages/login";
+import { RegisterPage } from "../../pages/register";
+import { ForgotPasswordPage } from "../../pages/forgotPassword";
+import { ResetPasswordPage } from "../../pages/resetPassword";
+import { ProfilePage } from "../../pages/profile";
+import { OrdersPage } from "../../pages/orders";
+import { NotFoundPage } from "../../pages/notFoundPage";
 import { IngredientDetails } from "../IngredientDetails/IngredientDetails";
-import { OrderDetails } from "../OrderDetails/OrderDetails";
+import { ProtectedRouteElement } from "../ProtectedRouteElement/ProtectedRouteElement";
 import { getIngredients } from "../../services/actions/getIngredients";
-import { setDataIngredient } from "../../services/actions/ingredientDetails";
-import {
-  getOrderNumber,
-  hideOrederModal,
-} from "../../services/actions/orderDetails";
 
 export const App = () => {
-  const { ingredientsLoading } = useSelector((store) => store.ingredients);
-  const { ingredientDetailsOpen } = useSelector(
-    (store) => store.ingredientDetails
-  );
-  const { orderDetailsOpen } = useSelector((store) => store.orderDetails);
+  const location = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const handleOpenModalIngredients = (data) => {
-    dispatch(setDataIngredient(data));
-  };
-
-  const handleCloseModalIngredients = () => {
-    dispatch(setDataIngredient());
-  };
-
-  const handleOpenModalConstructor = () => {
-    dispatch(getOrderNumber());
-  };
-
-  const handleCloseModalConstructor = () => {
-    dispatch(hideOrederModal());
-  };
+  const modal = location?.state?.modal;
 
   return (
     <>
-      <AppHeader />
-      {ingredientsLoading && (
-        <DndProvider backend={HTML5Backend}>
-          <main className={styles.content}>
-            <div className={styles.container}>
-              <BurgerIngredients onOpen={handleOpenModalIngredients} />
-              <BurgerConstructor onOpen={handleOpenModalConstructor} />
-            </div>
-          </main>
-        </DndProvider>
-      )}
-      {ingredientDetailsOpen && (
-        <Modal onClose={handleCloseModalIngredients}>
-          <IngredientDetails />
-        </Modal>
-      )}
-      {orderDetailsOpen && (
-        <Modal onClose={handleCloseModalConstructor}>
-          <OrderDetails />
-        </Modal>
-      )}
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />}>
+          {modal ? (
+            <Route
+              path="ingredients/:id"
+              element={<IngredientDetails modal={true} />}
+            />
+          ) : (
+            <Route
+              path="ingredients/:id"
+              element={<IngredientDetails modal={false} />}
+            />
+          )}
+        </Route>
+        <Route
+          path="profile"
+          element={<ProtectedRouteElement element={<ProfilePage />} />}
+        />
+        <Route
+          path="orders"
+          element={<ProtectedRouteElement element={<OrdersPage />} />}
+        />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="reset-password" element={<ResetPasswordPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </>
   );
 };
