@@ -1,0 +1,38 @@
+.wrapper {
+  box-sizing: border-box;
+  padding: 40px 0 40px;
+  width: 100%;
+}
+
+.container {
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
+}
+
+.container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

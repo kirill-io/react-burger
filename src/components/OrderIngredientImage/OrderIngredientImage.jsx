@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+import { propTypesDataAndCount } from "../../utils/prop-types";
 import styles from "./OrderIngredientImage.module.css";
 
 export const OrderIngredientImage = ({ data, count }) => {
@@ -22,4 +24,9 @@ export const OrderIngredientImage = ({ data, count }) => {
       </div>
     );
   }
+};
+
+OrderIngredientImage.propTypes = {
+  data: propTypesDataAndCount.isRequired,
+  count: PropTypes.bool.isRequired,
 };

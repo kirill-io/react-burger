@@ -56,7 +56,12 @@ export const App = () => {
         <Route
           path="orders"
           element={<ProtectedRouteElement element={<OrdersPage />} />}
-        />
+        >
+          <Route
+            path="/orders/:id"
+            element={<Feed />}
+          />
+        </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="forgot-password" element={<ForgotPasswordPage />} />

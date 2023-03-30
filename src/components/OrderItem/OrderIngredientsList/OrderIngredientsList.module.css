@@ -3,9 +3,9 @@
   margin: 0;
   padding: 0;
   display: flex;
-  width: 430px;
+  width: 80%;
   flex-direction: row-reverse;
-  justify-content: start;
+  justify-content: flex-end;
   flex-wrap: wrap;
   row-gap: 5px;
 }

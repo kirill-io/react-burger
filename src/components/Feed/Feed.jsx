@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import uuid from "react-uuid";
 import styles from "./Feed.module.css";
+import { Status } from "../Status/Status";
 import { OrderIngredientImage } from "../OrderIngredientImage/OrderIngredientImage";
 import { Price } from "../Price/Price";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -26,11 +27,9 @@ export const Feed = () => {
       <div className={styles.container}>
         <p className={styles.order_id + " text text_type_digits-default mb-10"}>#{orderData._id}</p>
         <h2 className="text text_type_main-medium mb-3">{orderData.name}</h2>
-        {
-          orderData.status === "done" ?
-            <p className={styles.done + " text text_type_main-default mb-10"}>Выполнен</p> :
-            <p className="text text_type_main-default mb-10">В работе</p>
-        }
+        <div className="mb-10">
+          <Status status={orderData.status} />
+        </div>
         <h3 className="text text_type_main-medium mb-6">Состав:</h3>
         <div className={styles.list_container + " mb-10"}>
           <ul className={styles.list}>

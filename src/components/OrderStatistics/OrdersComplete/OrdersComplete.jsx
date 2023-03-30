@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./OrdersComplete.module.css";
 
 export const OrdersComplete = ({ data, title }) => {
@@ -7,4 +8,9 @@ export const OrdersComplete = ({ data, title }) => {
       <p className={styles.text + " text text_type_digits-large"}>{data}</p>
     </div>
   );
+};
+
+OrdersComplete.propTypes = {
+  data: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
 };

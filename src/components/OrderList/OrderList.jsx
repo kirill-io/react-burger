@@ -1,5 +1,5 @@
 import styles from "./OrderList.module.css";
-import { OrderItem } from "./OrderItem/OrderItem";
+import { OrderItem } from "../OrderItem/OrderItem";
 
 import { testData } from "../../utils/testData";
 
@@ -10,7 +10,7 @@ export const OrderList = () => {
     <div className={styles.container}>
         <ul className={styles.list}>
           {testData.orders.map(item => {
-            return <OrderItem data={item} itemWidth={itemWidth} key={item._id} />;
+            return <OrderItem data={item} itemWidth={itemWidth} status={false} to={'/feed/'} key={item._id} />;
           })}
         </ul>
       </div>

@@ -102,6 +102,6 @@ export const testData = {
       "updatedAt": "2021-06-23T14:43:22.603Z"
     }
   ],
-  total: 3,
+  total: 5,
   totalToday: 2
 }

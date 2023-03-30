@@ -6,7 +6,7 @@ export const ProfilePage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <ProfileMenu margin="mr-15" />
+        <ProfileMenu />
         <ProfileInputs />
       </div>
     </div>

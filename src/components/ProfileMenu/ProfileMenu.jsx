@@ -5,7 +5,7 @@ import styles from "./ProfileMenu.module.css";
 import { CustomProfileLink } from "./CustomProfileLink/CustomProfileLink";
 import { singOut } from "../../services/actions/login";
 
-export const ProfileMenu = ({ margin }) => {
+export const ProfileMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +23,7 @@ export const ProfileMenu = ({ margin }) => {
   };
 
   return (
-    <nav className={margin}>
+    <nav className={styles.nav + " mr-15"}>
       <ul className={styles.menu}>
         <li>
           <NavLink
@@ -55,8 +55,4 @@ export const ProfileMenu = ({ margin }) => {
       </ul>
     </nav>
   );
-};
-
-ProfileMenu.propTypes = {
-  margin: PropTypes.string.isRequired,
 };

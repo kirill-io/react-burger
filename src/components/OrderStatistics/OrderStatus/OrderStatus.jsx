@@ -1,4 +1,5 @@
 import uuid from "react-uuid";
+import PropTypes from "prop-types";
 import styles from "./OrderStatus.module.css";
 
 export const OrderStatus = ({ data, title, style }) => {
@@ -12,4 +13,10 @@ export const OrderStatus = ({ data, title, style }) => {
       </ul>
     </div>
   );
+};
+
+OrderStatus.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  title: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
 };
