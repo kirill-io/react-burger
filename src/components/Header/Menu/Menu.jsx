@@ -9,7 +9,8 @@ import {
 export const Menu = () => {
   const matchConstructor = useMatch("/");
   const matchIngredient = useMatch("/ingredients/:id");
-  const matchOrderFeed = useMatch("/order-feed");
+  const matchOrderFeed = useMatch("/feed");
+  const matchFeed = useMatch("/feed/:id");
 
   const constructorIcon =
     matchConstructor || matchIngredient ? (
@@ -22,14 +23,18 @@ export const Menu = () => {
       ? "text text_type_main-default"
       : "text text_type_main-default text_color_inactive";
 
-  const orderFeedIcon = matchOrderFeed ? (
-    <ListIcon type="primary" />
-  ) : (
-    <ListIcon type="secondary" />
-  );
-  const orderFeedStyle = matchOrderFeed
-    ? "text text_type_main-default"
-    : "text text_type_main-default text_color_inactive";
+  const orderFeedIcon =
+    matchOrderFeed || matchFeed
+      ? (
+        <ListIcon type="primary" />
+      ) : (
+        <ListIcon type="secondary" />
+      );
+
+  const orderFeedStyle =
+    matchOrderFeed || matchFeed
+      ? "text text_type_main-default"
+      : "text text_type_main-default text_color_inactive";
 
   return (
     <nav className="menu">
@@ -41,7 +46,7 @@ export const Menu = () => {
         </li>
         <li className="menu__item">
           <CustomLink
-            to="order-feed"
+            to="feed"
             icon={orderFeedIcon}
             style={orderFeedStyle}
           >

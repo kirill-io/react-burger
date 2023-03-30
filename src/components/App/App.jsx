@@ -7,6 +7,8 @@ import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
 import { ForgotPasswordPage } from "../../pages/forgotPassword";
 import { ResetPasswordPage } from "../../pages/resetPassword";
+import { FeedPage } from "../../pages/feed";
+import { Feed } from "../Feed/Feed";
 import { ProfilePage } from "../../pages/profile";
 import { OrdersPage } from "../../pages/orders";
 import { NotFoundPage } from "../../pages/notFoundPage";
@@ -40,6 +42,12 @@ export const App = () => {
               element={<IngredientDetails modal={false} />}
             />
           )}
+        </Route>
+        <Route path="feed" element={<FeedPage />}>
+          <Route
+            path="/feed/:id"
+            element={<Feed />}
+          />
         </Route>
         <Route
           path="profile"
