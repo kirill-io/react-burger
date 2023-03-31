@@ -6,9 +6,13 @@ export const Status = ({ status }) => {
     return (
       <p className={styles.done + " text text_type_main-default"}>Выполнен</p>
     );
-  } else if (status === "work") {
+  } else if (status === "created") {
     return (
       <p className="text text_type_main-default">В работе</p>
+    );
+  } else if (status === "pending") {
+    return (
+      <p className="text text_type_main-default">В ожидании</p>
     );
   }
 };

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { propTypesItem } from "../../utils/prop-types";
 import styles from "./OrderItem.module.css";
 import { Status } from "../Status/Status";
 import { OrderIngredientsList } from "./OrderIngredientsList/OrderIngredientsList";
@@ -18,9 +19,9 @@ export const OrderItem = ({ data, itemWidth, status, to }) => {
 
   return (
     <li>
-      <Link to={to + `${data._id}`} className={styles.link + " p-6"} style={itemWidth}>
+      <Link to={to + `${data.number}`} className={styles.link + " p-6"} style={itemWidth}>
         <div className={styles.order_id}>
-          <div className="text text_type_digits-default">#{data._id}</div>
+          <div className="text text_type_digits-default">#{data.number}</div>
           <div>
             <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(data.createdAt)} />
             <span className="text text_type_main-default text_color_inactive"> i-GMT{timeZone}</span>
@@ -42,7 +43,7 @@ export const OrderItem = ({ data, itemWidth, status, to }) => {
 };
 
 OrderItem.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: propTypesItem,
   itemWidth: PropTypes.object.isRequired,
   status: PropTypes.bool.isRequired,
   to: PropTypes.string.isRequired,

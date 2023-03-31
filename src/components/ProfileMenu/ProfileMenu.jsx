@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import styles from "./ProfileMenu.module.css";
 import { CustomProfileLink } from "./CustomProfileLink/CustomProfileLink";
 import { singOut } from "../../services/actions/login";

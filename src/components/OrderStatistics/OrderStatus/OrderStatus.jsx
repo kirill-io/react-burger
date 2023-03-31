@@ -16,7 +16,7 @@ export const OrderStatus = ({ data, title, style }) => {
 };
 
 OrderStatus.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  data: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   title: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
 };

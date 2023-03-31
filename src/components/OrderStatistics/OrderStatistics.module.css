@@ -28,7 +28,6 @@
   top: 0;
 }
 
-.status {
-  display: flex;
-  gap: 112px;
+.block {
+  width: 572px;
 }
