@@ -16,7 +16,7 @@ export const IngredientContent = () => {
     <div className={styles.container}>
       <h2
         className={styles.title + " text text_type_main-large"}
-        style={modal ? {alignSelf: "start"} : {alignSelf: "center"}}
+        style={modal ? { alignSelf: "start" } : { alignSelf: "center" }}
       >
         Детали ингредиента
       </h2>

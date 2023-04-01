@@ -13,11 +13,14 @@ export const OrdersPage = () => {
   const location = useLocation();
   const data = useSelector((store) => store.data.messages[0]?.orders.reverse());
 
-  const modal = location?.state?.modal
+  const modal = location?.state?.modal;
 
   useEffect(() => {
     checkToken().then((res) => {
-      dispatch({ type: wsActions.wsInit, payload: `${WS_URL_ORDERS_USER}?token=${res}` });
+      dispatch({
+        type: wsActions.wsInit,
+        payload: `${WS_URL_ORDERS_USER}?token=${res}`,
+      });
     });
 
     return () => {

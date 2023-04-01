@@ -29,10 +29,16 @@ export const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />}>
-          <Route path="ingredients/:id" element={<ModalWrapper element={<IngredientContent />} />} />
+          <Route
+            path="ingredients/:id"
+            element={<ModalWrapper element={<IngredientContent />} />}
+          />
         </Route>
         <Route path="feed" element={<FeedPage />}>
-          <Route path="/feed/:id" element={<ModalWrapper element={<Feed />} />} />
+          <Route
+            path="/feed/:id"
+            element={<ModalWrapper element={<Feed />} />}
+          />
         </Route>
         <Route
           path="profile"
@@ -42,7 +48,10 @@ export const App = () => {
           path="orders"
           element={<ProtectedRouteElement element={<OrdersPage />} />}
         >
-          <Route path="/orders/:id" element={<ModalWrapper element={<Feed />} />} />
+          <Route
+            path="/orders/:id"
+            element={<ModalWrapper element={<Feed />} />}
+          />
         </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />

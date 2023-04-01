@@ -11,19 +11,11 @@ export const ModalWrapper = ({ element }) => {
 
   if (location?.state?.modal) {
     return (
-      <Modal
-        onClose={handleCloseModal}
-        modalClose={true}
-        buttonClose={true}
-      >
+      <Modal onClose={handleCloseModal} modalClose={true} buttonClose={true}>
         {element}
       </Modal>
     );
   }
 
-  return (
-    <>
-      {element}
-    </>
-  );
+  return <>{element}</>;
 };

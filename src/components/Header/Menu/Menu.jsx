@@ -44,7 +44,12 @@ export const Menu = () => {
           </CustomLink>
         </li>
         <li className="menu__item">
-          <CustomLink to="feed" icon={orderFeedIcon} style={orderFeedStyle} state={true}>
+          <CustomLink
+            to="feed"
+            icon={orderFeedIcon}
+            style={orderFeedStyle}
+            state={true}
+          >
             Лента заказов
           </CustomLink>
         </li>

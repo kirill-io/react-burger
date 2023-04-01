@@ -24,7 +24,7 @@ export const HomePage = () => {
   const location = useLocation();
   let modal = false;
 
-  if (location.pathname === '/' || location?.state?.modal) {
+  if (location.pathname === "/" || location?.state?.modal) {
     modal = true;
   }
 
@@ -46,12 +46,12 @@ export const HomePage = () => {
       {ingredientsLoading && (
         <DndProvider backend={HTML5Backend}>
           <main className={styles.content}>
-            {modal &&
+            {modal && (
               <div className={styles.container}>
                 <BurgerIngredients />
                 <BurgerConstructor onOpen={handleOpenModalConstructor} />
               </div>
-            }
+            )}
             <Outlet />
           </main>
         </DndProvider>

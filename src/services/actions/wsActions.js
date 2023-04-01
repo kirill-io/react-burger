@@ -11,7 +11,7 @@ export const wsActions = {
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
-  onMessage: WS_GET_MESSAGE
+  onMessage: WS_GET_MESSAGE,
 };
 
 export const wsConnectionSuccess = () => {
