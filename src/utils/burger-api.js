@@ -24,7 +24,7 @@ export const request = (endpoint, options) => {
     .then(checkSuccess);
 };
 
-const getRefreshTokenRequest = (refreshToken) => {
+export const getRefreshTokenRequest = (refreshToken) => {
   return request("/auth/token", {
     method: "POST",
     headers: {
