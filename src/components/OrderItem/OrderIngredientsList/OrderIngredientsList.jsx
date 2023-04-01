@@ -1,4 +1,3 @@
-import uuid from "react-uuid";
 import PropTypes from "prop-types";
 import { propTypesDataAndCount } from "../../../utils/prop-types";
 import styles from "./OrderIngredientsList.module.css";
@@ -9,7 +8,7 @@ export const OrderIngredientsList = ({ orderIngredients }) => {
     <ul className={styles.list}>
       {orderIngredients.map((item) => {
         return (
-          <li key={uuid()} className={styles.item}>
+          <li key={item._id} className={styles.item}>
             <OrderIngredientImage data={item} count={true} />
           </li>
         );

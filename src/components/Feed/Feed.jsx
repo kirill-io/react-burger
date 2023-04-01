@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import uuid from "react-uuid";
 import styles from "./Feed.module.css";
 import { Status } from "../Status/Status";
 import { OrderIngredientImage } from "../OrderIngredientImage/OrderIngredientImage";
@@ -73,7 +72,7 @@ export const Feed = () => {
             <ul className={styles.list}>
               {orderIngredients.map((item) => {
                 return (
-                  <li key={uuid()} className={styles.item}>
+                  <li key={item._id} className={styles.item}>
                     <div className={styles.image_container}>
                       <OrderIngredientImage data={item} count={false} />
                     </div>

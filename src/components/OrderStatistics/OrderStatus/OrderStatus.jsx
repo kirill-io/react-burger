@@ -1,4 +1,3 @@
-import uuid from "react-uuid";
 import PropTypes from "prop-types";
 import styles from "./OrderStatus.module.css";
 
@@ -12,7 +11,7 @@ export const OrderStatus = ({ data, title, style }) => {
             <li
               className="text text_type_digits-default"
               style={style}
-              key={uuid()}
+              key={item}
             >
               {item}
             </li>
