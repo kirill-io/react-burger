@@ -4,13 +4,9 @@ import { Outlet, useLocation } from "react-router-dom";
 import styles from "./orders.module.css";
 import { ProfileMenu } from "../components/ProfileMenu/ProfileMenu";
 import { Orders } from "../components/Orders/Orders";
-import { entryOrderPage, exitOrderPage } from "../services/actions/orderPage";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../services/actions/wsActions";
-
+import { wsActions } from "../services/actions/wsActions";
 import { checkToken } from "../utils/check-token";
+import { WS_URL_ORDERS_USER } from "../utils/burger-api";
 
 export const OrdersPage = () => {
   const dispatch = useDispatch();
@@ -20,14 +16,12 @@ export const OrdersPage = () => {
   const modal = location?.state?.modal
 
   useEffect(() => {
-    dispatch(entryOrderPage());
-    checkToken().then(() => {
-      dispatch({ type: WS_CONNECTION_START });
+    checkToken().then((res) => {
+      dispatch({ type: wsActions.wsInit, payload: `${WS_URL_ORDERS_USER}?token=${res}` });
     });
 
     return () => {
-      dispatch(exitOrderPage());
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: wsActions.onClose });
     };
   }, [dispatch]);
 

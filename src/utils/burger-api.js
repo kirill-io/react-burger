@@ -1,5 +1,7 @@
 import { getCookie, setCookie, deleteBearer } from "./cookies";
 
+export const WS_URL_ORDERS_ALL = "wss://norma.nomoreparties.space/orders/all";
+export const WS_URL_ORDERS_USER = "wss://norma.nomoreparties.space/orders";
 const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 
 const checkResponse = (res) => {

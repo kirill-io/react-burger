@@ -4,10 +4,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import styles from "./feed.module.css";
 import { OrderList } from "../components/OrderList/OrderList";
 import { OrderStatistics } from "../components/OrderStatistics/OrderStatistics";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../services/actions/wsActions";
+import { wsActions } from "../services/actions/wsActions";
+import { WS_URL_ORDERS_ALL } from "../utils/burger-api";
 
 export const FeedPage = () => {
   const location = useLocation();
@@ -17,10 +15,10 @@ export const FeedPage = () => {
   const modal = location?.state?.modal;
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch({ type: wsActions.wsInit, payload: WS_URL_ORDERS_ALL });
 
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: wsActions.onClose });
     };
   }, [dispatch]);
 

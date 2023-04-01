@@ -8,9 +8,7 @@ import "./index.css";
 import { App } from "./components/App/App";
 import { rootReducer } from "./services/rootReducer";
 import { socketMiddleware } from "./services/middleware/socketMiddleware";
-
-const wsUrlOrdersAll = "wss://norma.nomoreparties.space/orders/all";
-const wsUrlOrdersUser = "wss://norma.nomoreparties.space/orders";
+import { wsActions } from "./services/actions/wsActions";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -18,7 +16,7 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, socketMiddleware(wsUrlOrdersAll, wsUrlOrdersUser))
+  applyMiddleware(thunk, socketMiddleware(wsActions))
 );
 export const store = createStore(rootReducer, enhancer);
 
