@@ -31,7 +31,6 @@ export const propTypesDataAndCount = PropTypes.shape({
   _id: PropTypes.string.isRequired,
 });
 
-
 export const propTypesItem = PropTypes.shape({
   createdAt: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,

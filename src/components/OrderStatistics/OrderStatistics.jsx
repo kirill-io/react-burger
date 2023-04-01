@@ -6,7 +6,7 @@ import { OrdersComplete } from "./OrdersComplete/OrdersComplete";
 
 export const OrderStatistics = ({ data }) => {
   const orderDone = data.orders.reduce((prevValue, item) => {
-    if (item.status === 'done') {
+    if (item.status === "done") {
       prevValue.push(item.number);
     }
 
@@ -14,7 +14,7 @@ export const OrderStatistics = ({ data }) => {
   }, []);
 
   const orderWork = data.orders.reduce((prevValue, item) => {
-    if (item.status === 'created' || item.status === 'pending') {
+    if (item.status === "created" || item.status === "pending") {
       prevValue.push(item.number);
     }
 
@@ -24,10 +24,21 @@ export const OrderStatistics = ({ data }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <OrderStatus data={orderDone} title={"Готовы:"} style={{color: "#00CCCC"}} />
-        <OrderStatus data={orderWork} title={"В работе:"} style={{color: "#F2F2F3"}} />
-        <OrdersComplete data={data.total} title={"Выполнено за все время:"}/>
-        <OrdersComplete data={data.totalToday} title={"Выполнено за сегодня:"}/>
+        <OrderStatus
+          data={orderDone}
+          title={"Готовы:"}
+          style={{ color: "#00CCCC" }}
+        />
+        <OrderStatus
+          data={orderWork}
+          title={"В работе:"}
+          style={{ color: "#F2F2F3" }}
+        />
+        <OrdersComplete data={data.total} title={"Выполнено за все время:"} />
+        <OrdersComplete
+          data={data.totalToday}
+          title={"Выполнено за сегодня:"}
+        />
       </div>
     </div>
   );
@@ -38,4 +49,4 @@ OrderStatistics.propTypes = PropTypes.shape({
   success: PropTypes.bool.isRequired,
   total: PropTypes.number.isRequired,
   totalToday: PropTypes.number.isRequired,
-}).isRequired
+}).isRequired;

@@ -14,78 +14,66 @@ export const getLogin = (email, name) => (dispatch) => {
 };
 
 export const singIn = (email, password) => (dispatch) => {
-  return (
-    request("/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: `${email}`,
-        password: `${password}`,
-      })
-    })
-      .then((res) => {
-        setCookie("accessToken", deleteBearer(res.accessToken), 20);
-        setCookie("refreshToken", res.refreshToken);
-        setCookie("isAuthenticated", "true");
-        dispatch(getLogin(res.user.email, res.user.name));
-      })
-  );
+  return request("/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: `${email}`,
+      password: `${password}`,
+    }),
+  }).then((res) => {
+    setCookie("accessToken", deleteBearer(res.accessToken), 20);
+    setCookie("refreshToken", res.refreshToken);
+    setCookie("isAuthenticated", "true");
+    dispatch(getLogin(res.user.email, res.user.name));
+  });
 };
 
 export const resetPassword = (password, code) => (dispatch) => {
-  return (
-    request("/password-reset/reset", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        password: `${password}`,
-        token: `${code}`,
-      }),
-    })
-      .then(() => {
-        setCookie("forgotPassword", "false", -1);
-      })
-  );
+  return request("/password-reset/reset", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      password: `${password}`,
+      token: `${code}`,
+    }),
+  }).then(() => {
+    setCookie("forgotPassword", "false", -1);
+  });
 };
 
 export const forgotPassword = (email) => (dispatch) => {
-  return (
-    request("/password-reset", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: `${email}`,
-      }),
-    })
-      .then(() => {
-        setCookie("forgotPassword", "true");
-      })
-  );
+  return request("/password-reset", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: `${email}`,
+    }),
+  }).then(() => {
+    setCookie("forgotPassword", "true");
+  });
 };
 
 export const singOut = () => (dispatch) => {
-  return(
-    request("/auth/logout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: getCookie("refreshToken"),
-      }),
-    })
-      .then(() => {
-        setCookie("accessToken", "", -1);
-        setCookie("refreshToken", "", -1);
-        setCookie("isAuthenticated", "", -1);
-      })
-  );
+  return request("/auth/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: getCookie("refreshToken"),
+    }),
+  }).then(() => {
+    setCookie("accessToken", "", -1);
+    setCookie("refreshToken", "", -1);
+    setCookie("isAuthenticated", "", -1);
+  });
 };
 
 export const updateName = (name) => (dispatch) => {

@@ -19,5 +19,6 @@ export const OrderIngredientsList = ({ orderIngredients }) => {
 };
 
 OrderIngredientsList.propTypes = {
-  orderIngredients: PropTypes.arrayOf(propTypesDataAndCount.isRequired).isRequired,
+  orderIngredients: PropTypes.arrayOf(propTypesDataAndCount.isRequired)
+    .isRequired,
 };

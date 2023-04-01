@@ -44,10 +44,7 @@ export const App = () => {
           )}
         </Route>
         <Route path="feed" element={<FeedPage />}>
-          <Route
-            path="/feed/:id"
-            element={<Feed />}
-          />
+          <Route path="/feed/:id" element={<Feed />} />
         </Route>
         <Route
           path="profile"
@@ -57,10 +54,7 @@ export const App = () => {
           path="orders"
           element={<ProtectedRouteElement element={<OrdersPage />} />}
         >
-          <Route
-            path="/orders/:id"
-            element={<Feed />}
-          />
+          <Route path="/orders/:id" element={<Feed />} />
         </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />

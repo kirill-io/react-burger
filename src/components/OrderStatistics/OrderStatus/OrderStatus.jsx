@@ -7,8 +7,16 @@ export const OrderStatus = ({ data, title, style }) => {
     <div className={styles.container}>
       <h3 className={styles.title + " text text_type_main-medium"}>{title}</h3>
       <ul className={styles.list}>
-        {data.map(item => {
-          return <li className="text text_type_digits-default" style={style} key={uuid()}>{item}</li>;
+        {data.map((item) => {
+          return (
+            <li
+              className="text text_type_digits-default"
+              style={style}
+              key={uuid()}
+            >
+              {item}
+            </li>
+          );
         })}
       </ul>
     </div>

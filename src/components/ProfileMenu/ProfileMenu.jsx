@@ -17,7 +17,9 @@ export const ProfileMenu = () => {
 
   const onClickExitHandler = () => {
     dispatch(singOut())
-      .then(() => navigate("/login", { replace: true, state: { from: location } }))
+      .then(() =>
+        navigate("/login", { replace: true, state: { from: location } })
+      )
       .catch(() => alert("При выходе произошла ошибка."));
   };
 

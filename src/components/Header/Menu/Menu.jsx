@@ -24,12 +24,11 @@ export const Menu = () => {
       : "text text_type_main-default text_color_inactive";
 
   const orderFeedIcon =
-    matchOrderFeed || matchFeed
-      ? (
-        <ListIcon type="primary" />
-      ) : (
-        <ListIcon type="secondary" />
-      );
+    matchOrderFeed || matchFeed ? (
+      <ListIcon type="primary" />
+    ) : (
+      <ListIcon type="secondary" />
+    );
 
   const orderFeedStyle =
     matchOrderFeed || matchFeed
@@ -45,11 +44,7 @@ export const Menu = () => {
           </CustomLink>
         </li>
         <li className="menu__item">
-          <CustomLink
-            to="feed"
-            icon={orderFeedIcon}
-            style={orderFeedStyle}
-          >
+          <CustomLink to="feed" icon={orderFeedIcon} style={orderFeedStyle}>
             Лента заказов
           </CustomLink>
         </li>

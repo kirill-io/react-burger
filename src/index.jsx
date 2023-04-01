@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
 import { App } from "./components/App/App";
 import { rootReducer } from "./services/rootReducer";
-import { socketMiddleware } from './services/middleware/socketMiddleware';
+import { socketMiddleware } from "./services/middleware/socketMiddleware";
 
 const wsUrlOrdersAll = "wss://norma.nomoreparties.space/orders/all";
 const wsUrlOrdersUser = "wss://norma.nomoreparties.space/orders";
@@ -17,7 +17,9 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrlOrdersAll, wsUrlOrdersUser)));
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk, socketMiddleware(wsUrlOrdersAll, wsUrlOrdersUser))
+);
 export const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

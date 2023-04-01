@@ -13,25 +13,39 @@ import { useTimeZone } from "../../hooks/useTimeZone";
 export const OrderItem = ({ data, itemWidth, status, to }) => {
   const { ingredients } = useSelector((store) => store.ingredients);
 
-  const { orderIngredientsReverse, orderPrice } = useSort(data.ingredients, ingredients, true);
+  const { orderIngredientsReverse, orderPrice } = useSort(
+    data.ingredients,
+    ingredients,
+    true
+  );
 
   const timeZone = useTimeZone(data.createdAt);
 
   return (
     <li>
-      <Link to={to + `${data.number}`} className={styles.link + " p-6"} style={itemWidth}>
+      <Link
+        to={to + `${data.number}`}
+        className={styles.link + " p-6"}
+        style={itemWidth}
+      >
         <div className={styles.order_id}>
           <div className="text text_type_digits-default">#{data.number}</div>
           <div>
-            <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(data.createdAt)} />
-            <span className="text text_type_main-default text_color_inactive"> i-GMT{timeZone}</span>
+            <FormattedDate
+              className="text text_type_main-default text_color_inactive"
+              date={new Date(data.createdAt)}
+            />
+            <span className="text text_type_main-default text_color_inactive">
+              {" "}
+              i-GMT{timeZone}
+            </span>
           </div>
         </div>
         <div className={styles.title_container}>
-          <h3 className={styles.title + " text text_type_main-medium"}>{data.name}</h3>
-          {status &&
-            <Status status={data.status} />
-          }
+          <h3 className={styles.title + " text text_type_main-medium"}>
+            {data.name}
+          </h3>
+          {status && <Status status={data.status} />}
         </div>
         <div className={styles.ingredients}>
           <OrderIngredientsList orderIngredients={orderIngredientsReverse} />

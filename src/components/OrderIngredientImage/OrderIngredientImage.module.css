@@ -1,5 +1,5 @@
 .wrapper {
-  background: linear-gradient(to bottom left, #4C4CFF, #801AB2);
+  background: linear-gradient(to bottom left, #4c4cff, #801ab2);
   border-radius: 50%;
   box-sizing: border-box;
   height: 64px;
@@ -36,7 +36,7 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(28, 28, 33, .6);
+  background-color: rgba(28, 28, 33, 0.6);
 }
 
 .count {

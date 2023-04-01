@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import uuid from "react-uuid";
@@ -21,7 +21,7 @@ export const Feed = () => {
 
   useEffect(() => {
     if (data[0]) {
-      setOrderData(data[0].orders.find(item => item.number === Number(id)));
+      setOrderData(data[0].orders.find((item) => item.number === Number(id)));
     }
   }, [id, data]);
 
@@ -43,7 +43,10 @@ export const Feed = () => {
         return prevValue;
       }, []);
 
-      const orderPrice = orderIngredients.reduce((prevValue, item) => prevValue + item.price * item.count, 0);
+      const orderPrice = orderIngredients.reduce(
+        (prevValue, item) => prevValue + item.price * item.count,
+        0
+      );
 
       setOrderIngredients(orderIngredients);
       setOrderPrice(orderPrice);
@@ -54,9 +57,13 @@ export const Feed = () => {
 
   return (
     <section className={styles.wrapper}>
-      {orderIngredients && orderPrice &&
+      {orderIngredients && orderPrice && (
         <div className={styles.container}>
-          <p className={styles.order_id + " text text_type_digits-default mb-10"}>#{orderData.number}</p>
+          <p
+            className={styles.order_id + " text text_type_digits-default mb-10"}
+          >
+            #{orderData.number}
+          </p>
           <h2 className="text text_type_main-medium mb-3">{orderData.name}</h2>
           <div className="mb-10">
             <Status status={orderData.status} />
@@ -64,13 +71,17 @@ export const Feed = () => {
           <h3 className="text text_type_main-medium mb-6">Состав:</h3>
           <div className={styles.list_container + " mb-10"}>
             <ul className={styles.list}>
-              {orderIngredients.map(item => {
+              {orderIngredients.map((item) => {
                 return (
                   <li key={uuid()} className={styles.item}>
                     <div className={styles.image_container}>
                       <OrderIngredientImage data={item} count={false} />
                     </div>
-                    <p className={styles.title + " text text_type_main-default"}>{item.name}</p>
+                    <p
+                      className={styles.title + " text text_type_main-default"}
+                    >
+                      {item.name}
+                    </p>
                     <Price price={item.price} count={item.count} />
                   </li>
                 );
@@ -79,13 +90,19 @@ export const Feed = () => {
           </div>
           <div className={styles.info}>
             <div>
-              <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(orderData.createdAt)} />
-              <span className="text text_type_main-default text_color_inactive"> i-GMT{timeZone}</span>
+              <FormattedDate
+                className="text text_type_main-default text_color_inactive"
+                date={new Date(orderData.createdAt)}
+              />
+              <span className="text text_type_main-default text_color_inactive">
+                {" "}
+                i-GMT{timeZone}
+              </span>
             </div>
             <Price price={orderPrice} />
           </div>
         </div>
-      }
+      )}
     </section>
   );
 };
