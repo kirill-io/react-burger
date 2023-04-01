@@ -72,7 +72,7 @@ export const Feed = () => {
             <ul className={styles.list}>
               {orderIngredients.map((item) => {
                 return (
-                  <li key={item._id} className={styles.item}>
+                  <li key={item._id} className={styles.item + " mr-6"}>
                     <div className={styles.image_container}>
                       <OrderIngredientImage data={item} count={false} />
                     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styles from "./orders.module.css";
 import { ProfileMenu } from "../components/ProfileMenu/ProfileMenu";
 import { Orders } from "../components/Orders/Orders";
@@ -13,9 +13,11 @@ import {
 import { checkToken } from "../utils/check-token";
 
 export const OrdersPage = () => {
-  const { id } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
   const data = useSelector((store) => store.data.messages[0]?.orders.reverse());
+
+  const modal = location?.state?.modal
 
   useEffect(() => {
     dispatch(entryOrderPage());
@@ -31,7 +33,7 @@ export const OrdersPage = () => {
 
   return (
     <div className={styles.wrapper}>
-      {!id && data && (
+      {data && modal && (
         <div className={styles.container}>
           <ProfileMenu margin="mr-15" />
           <Orders data={data} />

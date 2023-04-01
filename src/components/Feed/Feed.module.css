@@ -26,17 +26,15 @@
 }
 
 .list_container::-webkit-scrollbar {
-  width: 32px;
+  width: 8px;
 }
 
 .list_container::-webkit-scrollbar-track {
   background: #2f2f37;
-  border-left: solid 24px #131316;
 }
 
 .list_container::-webkit-scrollbar-thumb {
   background: #8585ad;
-  border-left: solid 24px #131316;
 }
 
 .list {

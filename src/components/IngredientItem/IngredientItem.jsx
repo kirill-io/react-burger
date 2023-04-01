@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./IngredientItem.module.css";
 import { propTypesData } from "../../utils/prop-types";
 import {
@@ -11,8 +11,6 @@ import {
 export const IngredientItem = ({ data }) => {
   const id = data._id;
   const type = data.type;
-
-  const location = useLocation();
 
   const selectionStarted = useSelector(
     (store) => store.ingredients.selectionStarted
@@ -47,7 +45,7 @@ export const IngredientItem = ({ data }) => {
         className={styles.ingredient__item}
         ref={dragRef}
         to={`/ingredients/${data._id}`}
-        state={{ modal: location }}
+        state={{ modal: true }}
       >
         <div className={styles.ingredient__container + " pr-4 pl-4"}>
           <img

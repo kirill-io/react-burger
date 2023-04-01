@@ -44,6 +44,7 @@ export const ProfileMenu = () => {
               styles.link + " text text_type_main-medium text_color_inactive"
             }
             style={setActive}
+            state={{modal: true}}
           >
             История заказов
           </NavLink>

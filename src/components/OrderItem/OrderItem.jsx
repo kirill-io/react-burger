@@ -27,6 +27,7 @@ export const OrderItem = ({ data, itemWidth, status, to }) => {
         to={to + `${data.number}`}
         className={styles.link + " p-6"}
         style={itemWidth}
+        state={{modal: true}}
       >
         <div className={styles.order_id}>
           <div className="text text_type_digits-default">#{data.number}</div>

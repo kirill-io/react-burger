@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styles from "./feed.module.css";
 import { OrderList } from "../components/OrderList/OrderList";
 import { OrderStatistics } from "../components/OrderStatistics/OrderStatistics";
@@ -10,9 +10,11 @@ import {
 } from "../services/actions/wsActions";
 
 export const FeedPage = () => {
-  const { id } = useParams();
+  const location = useLocation();
   const dispatch = useDispatch();
   const data = useSelector((store) => store.data.messages);
+
+  const modal = location?.state?.modal;
 
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });
@@ -24,7 +26,7 @@ export const FeedPage = () => {
 
   return (
     <main className={styles.wrapper}>
-      {!id && data[0] && (
+      {data[0] && modal && (
         <div className={styles.container}>
           <h2 className={styles.title + " text text_type_main-large"}>
             Лента заказов
