@@ -1,0 +1,47 @@
+.wrapper {
+  background: linear-gradient(to bottom left, #4c4cff, #801ab2);
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 64px;
+  position: absolute;
+  width: 64px;
+}
+
+.container {
+  background-color: #131316;
+  border-radius: 50%;
+  height: 60px;
+  left: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+}
+
+.image {
+  height: 56px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 112px;
+}
+
+.wrapper_count {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(28, 28, 33, 0.6);
+}
+
+.count {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

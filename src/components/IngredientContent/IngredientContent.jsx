@@ -1,13 +1,22 @@
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { useParams, useLocation } from "react-router-dom";
 import styles from "./IngredientContent.module.css";
-import { Property } from "../Property/Property";
+import { Property } from "./Property/Property";
 
-export const IngredientContent = ({ ingredient, style }) => {
+export const IngredientContent = () => {
+  const { id } = useParams();
+  const location = useLocation();
+  const modal = location?.state?.modal;
+
+  const { ingredients } = useSelector((store) => store.ingredients);
+
+  const ingredient = ingredients.find((item) => item._id === id);
+
   return (
-    <>
+    <div className={styles.container}>
       <h2
         className={styles.title + " text text_type_main-large"}
-        style={style ? style : null}
+        style={modal ? { alignSelf: "start" } : { alignSelf: "center" }}
       >
         Детали ингредиента
       </h2>
@@ -25,11 +34,6 @@ export const IngredientContent = ({ ingredient, style }) => {
         <Property title="Жиры, г" value={ingredient.fat} />
         <Property title="Углеводы, г" value={ingredient.carbohydrates} />
       </div>
-    </>
+    </div>
   );
-};
-
-IngredientContent.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  style: PropTypes.object,
 };

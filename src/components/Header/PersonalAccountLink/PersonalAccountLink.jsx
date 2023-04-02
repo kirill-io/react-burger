@@ -11,6 +11,7 @@ export const PersonalAccountLink = ({
 }) => {
   const matchProfile = useMatch("/profile");
   const matchOrders = useMatch("/orders");
+  const matchOrdersElement = useMatch("/orders/:id");
   const matchLogin = useMatch("/login");
   const matchRegister = useMatch("/register");
   const matchForgotPassword = useMatch("/forgot-password");
@@ -20,6 +21,7 @@ export const PersonalAccountLink = ({
     if (
       matchProfile ||
       matchOrders ||
+      matchOrdersElement ||
       matchLogin ||
       matchRegister ||
       matchForgotPassword ||

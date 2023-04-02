@@ -21,7 +21,9 @@ export const ForgotPasswordForm = () => {
     e.preventDefault();
     if (values.email) {
       dispatch(forgotPassword(values.email))
-        .then(() => navigate("/reset-password", { replace: true, state: fromPage }))
+        .then(() =>
+          navigate("/reset-password", { replace: true, state: fromPage })
+        )
         .catch(() => alert("При восстановлении пароля произошла ошибка."));
     } else {
       alert("Заполните поле E-mail.");

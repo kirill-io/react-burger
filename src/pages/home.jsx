@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import styles from "./home.module.css";
 import { BurgerIngredients } from "../components/BurgerIngredients/BurgerIngredients";
 import { BurgerConstructor } from "../components/BurgerConstructor/BurgerConstructor";
@@ -21,6 +21,12 @@ export const HomePage = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  let modal = false;
+
+  if (location.pathname === "/" || location?.state?.modal) {
+    modal = true;
+  }
 
   const handleOpenModalConstructor = () => {
     if (!getCookie("isAuthenticated")) {
@@ -40,10 +46,12 @@ export const HomePage = () => {
       {ingredientsLoading && (
         <DndProvider backend={HTML5Backend}>
           <main className={styles.content}>
-            <div className={styles.container}>
-              <BurgerIngredients />
-              <BurgerConstructor onOpen={handleOpenModalConstructor} />
-            </div>
+            {modal && (
+              <div className={styles.container}>
+                <BurgerIngredients />
+                <BurgerConstructor onOpen={handleOpenModalConstructor} />
+              </div>
+            )}
             <Outlet />
           </main>
         </DndProvider>

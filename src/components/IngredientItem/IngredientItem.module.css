@@ -1,12 +1,12 @@
 .ingredient__item {
   align-items: center;
   box-sizing: border-box;
+  color: #f2f2f3;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   max-width: 272px;
   position: relative;
-  color: #f2f2f3;
   text-decoration: none;
 }
 

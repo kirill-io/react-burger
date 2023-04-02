@@ -1,0 +1,33 @@
+.wrapper {
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.block {
+  width: 572px;
+}

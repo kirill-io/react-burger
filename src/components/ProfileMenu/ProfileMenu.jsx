@@ -1,11 +1,10 @@
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import styles from "./ProfileMenu.module.css";
 import { CustomProfileLink } from "./CustomProfileLink/CustomProfileLink";
 import { singOut } from "../../services/actions/login";
 
-export const ProfileMenu = ({ margin }) => {
+export const ProfileMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,12 +17,14 @@ export const ProfileMenu = ({ margin }) => {
 
   const onClickExitHandler = () => {
     dispatch(singOut())
-      .then(() => navigate("/login", { replace: true, state: { from: location } }))
+      .then(() =>
+        navigate("/login", { replace: true, state: { from: location } })
+      )
       .catch(() => alert("При выходе произошла ошибка."));
   };
 
   return (
-    <nav className={margin}>
+    <nav className={styles.nav + " mr-15"}>
       <ul className={styles.menu}>
         <li>
           <NavLink
@@ -43,6 +44,7 @@ export const ProfileMenu = ({ margin }) => {
               styles.link + " text text_type_main-medium text_color_inactive"
             }
             style={setActive}
+            state={{ modal: true }}
           >
             История заказов
           </NavLink>
@@ -55,8 +57,4 @@ export const ProfileMenu = ({ margin }) => {
       </ul>
     </nav>
   );
-};
-
-ProfileMenu.propTypes = {
-  margin: PropTypes.string.isRequired,
 };
