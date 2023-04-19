@@ -4,7 +4,9 @@ export const WS_URL_ORDERS_ALL = "wss://norma.nomoreparties.space/orders/all";
 export const WS_URL_ORDERS_USER = "wss://norma.nomoreparties.space/orders";
 const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 
-const checkResponse = (res) => {
+type TPromise = Promise<object | string>;
+
+const checkResponse = (res: any): TPromise => {
   if (res.ok) {
     return res.json();
   }
@@ -12,7 +14,7 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-const checkSuccess = (res) => {
+const checkSuccess = (res: any): TPromise => {
   if (res && res.success) {
     return res;
   }
@@ -20,13 +22,13 @@ const checkSuccess = (res) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const request = (endpoint, options) => {
+export const request = (endpoint: string, options?: any): TPromise => {
   return fetch(`${BURGER_API_URL}${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess);
 };
 
-export const getRefreshTokenRequest = (refreshToken) => {
+export const getRefreshTokenRequest = (refreshToken: string | undefined): TPromise => {
   return request("/auth/token", {
     method: "POST",
     headers: {
@@ -38,12 +40,12 @@ export const getRefreshTokenRequest = (refreshToken) => {
   });
 };
 
-export const getOrderNumberRequest = async (ingredientsId) => {
+export const getOrderNumberRequest = async (ingredientsId: Array<string>): TPromise => {
   let accessToken;
 
   if (!getCookie("accessToken")) {
     await getRefreshTokenRequest(getCookie("refreshToken"))
-      .then((res) => {
+      .then((res: any) => {
         setCookie("accessToken", deleteBearer(res.accessToken), 20);
         setCookie("refreshToken", res.refreshToken);
         accessToken = deleteBearer(res.accessToken);
@@ -65,12 +67,12 @@ export const getOrderNumberRequest = async (ingredientsId) => {
   });
 };
 
-export const getUserDataRequest = async () => {
+export const getUserDataRequest = async (): TPromise => {
   let accessToken;
 
   if (!getCookie("accessToken")) {
     await getRefreshTokenRequest(getCookie("refreshToken"))
-      .then((res) => {
+      .then((res: any) => {
         setCookie("accessToken", deleteBearer(res.accessToken), 20);
         setCookie("refreshToken", res.refreshToken);
         accessToken = deleteBearer(res.accessToken);
@@ -88,12 +90,12 @@ export const getUserDataRequest = async () => {
   });
 };
 
-export const updateUserDataRequest = async (email, name) => {
+export const updateUserDataRequest = async (email: string, name: string): TPromise => {
   let accessToken;
 
   if (!getCookie("accessToken")) {
     await getRefreshTokenRequest(getCookie("refreshToken"))
-      .then((res) => {
+      .then((res: any) => {
         setCookie("accessToken", deleteBearer(res.accessToken), 20);
         setCookie("refreshToken", res.refreshToken);
         accessToken = deleteBearer(res.accessToken);
