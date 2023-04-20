@@ -1,4 +1,4 @@
-export const useTimeZone = (createTime) => {
+export const useTimeZone = (createTime: string) => {
   const orderData = new Date(Date.parse(createTime));
   const timeZone = orderData.getTimezoneOffset() / 60;
 

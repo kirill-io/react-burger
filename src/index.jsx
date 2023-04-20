@@ -10,6 +10,11 @@ import { rootReducer } from "./services/rootReducer";
 import { socketMiddleware } from "./services/middleware/socketMiddleware";
 import { wsActions } from "./services/actions/wsActions";
 
+// const composeEnhancers =
+//   typeof window === "object" && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+//     : compose;
+
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -20,6 +25,7 @@ const enhancer = composeEnhancers(
 );
 export const store = createStore(rootReducer, enhancer);
 
+// const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

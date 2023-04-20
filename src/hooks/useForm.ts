@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export const useForm = (inputValues) => {
+export const useForm = (inputValues: Object) => {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };
