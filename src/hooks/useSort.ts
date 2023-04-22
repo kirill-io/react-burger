@@ -18,7 +18,7 @@ export const useSort = (orderData: Array<string>, ingredients: Array<IIngredient
   }, []);
 
   const orderPrice = orderIngredients.reduce(
-    (prevValue: number, item: IIngredient) => prevValue + item.price * (item?.count ?? 1),
+    (prevValue: number, item: IIngredient) => prevValue + item.price * (item.count ?? 1),
     0
   );
 

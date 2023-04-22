@@ -1,12 +1,19 @@
 import { GET_LOGIN, UPDATE_NAME, UPDATE_LOGIN } from "../actions/login";
 import { GET_USER_DATA, UPDATE_USER_DATA } from "../actions/getUserData";
+import { TLoginActions } from "../actions/login";
+import { TGetUserDataActions } from "../actions/getUserData";
 
-const initialState = {
+type TLoginState = {
+  email: string;
+  name: string;
+};
+
+const initialState: TLoginState = {
   email: "",
   name: "",
 };
 
-export const login = (state = initialState, action) => {
+export const login = (state = initialState, action: TLoginActions | TGetUserDataActions): TLoginState => {
   switch (action.type) {
     case GET_LOGIN: {
       return {

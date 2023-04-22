@@ -1,3 +1,6 @@
+import { IWsGetData } from "../../utils/types";
+import { TWsActions } from "../actions/wsActions";
+
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
@@ -5,12 +8,17 @@ import {
   WS_GET_MESSAGE,
 } from "../actions/wsActions";
 
-const initialState = {
+export type TWsReducerState = {
+  wsConnected: boolean;
+  messages: ReadonlyArray<IWsGetData>;
+};
+
+const initialState: TWsReducerState = {
   wsConnected: false,
   messages: [],
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TWsActions): TWsReducerState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

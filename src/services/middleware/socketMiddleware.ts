@@ -1,8 +1,12 @@
-export const socketMiddleware = (wsActions) => {
-  return (store) => {
-    let socket = null;
+import { IWsActions } from "../actions/wsActions";
+import { TWsActions } from "../actions/wsActions";
 
-    return (next) => (action) => {
+
+export const socketMiddleware = (wsActions: IWsActions) => {
+  return (store: any) => {
+    let socket: any = null;
+
+    return (next: any) => (action: any) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
@@ -13,20 +17,21 @@ export const socketMiddleware = (wsActions) => {
       }
 
       if (socket) {
-        socket.onopen = (event) => {
+        socket.onopen = (event: any) => {
+          console.log(event)
           dispatch({ type: onOpen, payload: event });
         };
 
-        socket.onerror = (event) => {
+        socket.onerror = (event: any) => {
           dispatch({ type: onError, payload: event });
         };
 
-        socket.onmessage = (event) => {
+        socket.onmessage = (event: any) => {
           const { data } = event;
           dispatch({ type: onMessage, payload: JSON.parse(data) });
         };
 
-        socket.onclose = (event) => {
+        socket.onclose = (event: any) => {
           dispatch({ type: onClose, payload: event });
         };
 

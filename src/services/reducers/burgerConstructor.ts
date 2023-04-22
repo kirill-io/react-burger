@@ -6,8 +6,12 @@ import {
   DELETE_INGREDIENT,
   CLEAN_INGREDIENT,
 } from "../actions/burgerConstructor";
+import { IIngredientData } from "../../utils/types";
+import { TBurgerConstructorActions } from "../actions/burgerConstructor";
 
-const initialState = [
+type TBurgerConstructorState = ReadonlyArray<IIngredientData>;
+
+const initialState: TBurgerConstructorState = [
   {
     _id: "60d3b41abdacab0026a733c6",
     name: "Краторная булка N-200i",
@@ -24,7 +28,7 @@ const initialState = [
   },
 ];
 
-export const burgerConstructor = (state = initialState, action) => {
+export const burgerConstructor = (state = initialState, action: TBurgerConstructorActions): TBurgerConstructorState => {
   switch (action.type) {
     case ADDING_INGREDIENT: {
       return [...state, { ...action.ingredient, key: action.key }];

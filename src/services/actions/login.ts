@@ -1,11 +1,34 @@
+import { AppDispatch } from "../types";
 import { request } from "../../utils/burger-api";
 import { getCookie, setCookie, deleteBearer } from "../../utils/cookies";
 
-export const GET_LOGIN = "GET_LOGIN";
-export const UPDATE_NAME = "UPDATE_NAME";
-export const UPDATE_LOGIN = "UPDATE_LOGIN";
+export const GET_LOGIN: "GET_LOGIN" = "GET_LOGIN";
+export const UPDATE_NAME: "UPDATE_NAME" = "UPDATE_NAME";
+export const UPDATE_LOGIN: "UPDATE_LOGIN" = "UPDATE_LOGIN";
 
-export const getLogin = (email, name) => (dispatch) => {
+export interface IGetLogin {
+  readonly type: typeof GET_LOGIN;
+  email: string;
+  name: string;
+}
+
+export interface IUpdateName {
+  readonly type: typeof UPDATE_NAME;
+  name: string;
+}
+
+export interface IUpdateLogin {
+  readonly type: typeof UPDATE_LOGIN;
+  email: string;
+}
+
+export type TLoginActions =
+ | IGetLogin
+ | IUpdateName
+ | IUpdateLogin;
+
+
+export const getLogin = (email: string, name: string) => (dispatch: AppDispatch) => {
   dispatch({
     type: GET_LOGIN,
     email: email,
@@ -13,17 +36,17 @@ export const getLogin = (email, name) => (dispatch) => {
   });
 };
 
-export const singIn = (email, password) => (dispatch) => {
+export const singIn = (email: string, password: string) => (dispatch: AppDispatch) => {
   return request("/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: `${email}`,
-      password: `${password}`,
+      email: email,
+      password: password,
     }),
-  }).then((res) => {
+  }).then((res: any) => {
     setCookie("accessToken", deleteBearer(res.accessToken), 20);
     setCookie("refreshToken", res.refreshToken);
     setCookie("isAuthenticated", "true");
@@ -31,36 +54,36 @@ export const singIn = (email, password) => (dispatch) => {
   });
 };
 
-export const resetPassword = (password, code) => (dispatch) => {
+export const resetPassword = (password: string, code: string) => (dispatch: AppDispatch) => {
   return request("/password-reset/reset", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      password: `${password}`,
-      token: `${code}`,
+      password: password,
+      token: code,
     }),
   }).then(() => {
     setCookie("forgotPassword", "false", -1);
   });
 };
 
-export const forgotPassword = (email) => (dispatch) => {
+export const forgotPassword = (email: string) => (dispatch: AppDispatch) => {
   return request("/password-reset", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: `${email}`,
+      email: email,
     }),
   }).then(() => {
     setCookie("forgotPassword", "true");
   });
 };
 
-export const singOut = () => (dispatch) => {
+export const singOut = () => (dispatch: AppDispatch) => {
   return request("/auth/logout", {
     method: "POST",
     headers: {
@@ -76,14 +99,14 @@ export const singOut = () => (dispatch) => {
   });
 };
 
-export const updateName = (name) => (dispatch) => {
+export const updateName = (name: string) => (dispatch: AppDispatch) => {
   dispatch({
     type: UPDATE_NAME,
     name: name,
   });
 };
 
-export const updateLogin = (login) => (dispatch) => {
+export const updateLogin = (login: string) => (dispatch: AppDispatch) => {
   dispatch({
     type: UPDATE_LOGIN,
     email: login,

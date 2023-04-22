@@ -5,15 +5,23 @@ import {
   SET_ORDER_LOAD,
   UNSET_ORDER_LOAD,
 } from "../actions/orderDetails";
+import { TOrderDetailsActions } from "../actions/orderDetails";
 
-const initialState = {
+type TOrderDetailsState = {
+  ingredientsId: ReadonlyArray<string> | null;
+  orderNumber: number | null;
+  orderDetailsOpen: boolean;
+  orderDetailsLoading: boolean;
+}
+
+const initialState: TOrderDetailsState = {
   ingredientsId: null,
   orderNumber: null,
   orderDetailsOpen: false,
   orderDetailsLoading: false,
 };
 
-export const orderDetails = (state = initialState, action) => {
+export const orderDetails = (state = initialState, action: TOrderDetailsActions): TOrderDetailsState => {
   switch (action.type) {
     case SET_ID: {
       return {

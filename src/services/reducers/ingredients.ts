@@ -3,14 +3,22 @@ import {
   SELECTION_STARTED,
   SELECTION_STOPPPED,
 } from "../actions/getIngredients";
+import { IIngredientData } from "../../utils/types";
+import { TGetIngredientsActions } from "../actions/getIngredients";
 
-const initialState = {
+type TIngredientsState = {
+  ingredients: ReadonlyArray<IIngredientData>;
+  ingredientsLoading: boolean;
+  selectionStarted: boolean;
+}
+
+const initialState: TIngredientsState = {
   ingredients: [],
   ingredientsLoading: false,
   selectionStarted: false,
 };
 
-export const ingredients = (state = initialState, action) => {
+export const ingredients = (state = initialState, action: TGetIngredientsActions): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENT_SUCCESS: {
       return {
