@@ -1,5 +1,4 @@
 import { IWsActions } from "../actions/wsActions";
-import { TWsActions } from "../actions/wsActions";
 
 
 export const socketMiddleware = (wsActions: IWsActions) => {
@@ -18,7 +17,6 @@ export const socketMiddleware = (wsActions: IWsActions) => {
 
       if (socket) {
         socket.onopen = (event: any) => {
-          console.log(event)
           dispatch({ type: onOpen, payload: event });
         };
 

@@ -1,13 +1,13 @@
-import { ICountItems, IIngredient } from "../utils/types";
+import { ICountItems, IIngredientData } from "../utils/types";
 
-export const useSort = (orderData: Array<string>, ingredients: Array<IIngredient>, reverse: boolean) => {
+export const useSort = (orderData: Array<string>, ingredients: Array<IIngredientData>, reverse: boolean) => {
   const countItems: ICountItems = {};
 
   for (const item of orderData) {
     countItems[item] = countItems[item] ? countItems[item] + 1 : 1;
   }
 
-  const orderIngredients: Array<IIngredient> = ingredients.reduce((prevValue: Array<IIngredient>, item: IIngredient) => {
+  const orderIngredients: Array<IIngredientData> = ingredients.reduce((prevValue: Array<IIngredientData>, item: IIngredientData) => {
     for (const key in countItems) {
       if (key === item._id) {
         prevValue.push({ ...item, count: countItems[key] });
@@ -18,7 +18,7 @@ export const useSort = (orderData: Array<string>, ingredients: Array<IIngredient
   }, []);
 
   const orderPrice = orderIngredients.reduce(
-    (prevValue: number, item: IIngredient) => prevValue + item.price * (item.count ?? 1),
+    (prevValue: number, item: IIngredientData) => prevValue + item.price * (item.count ?? 1),
     0
   );
 

@@ -1,6 +1,6 @@
 import uuid from "react-uuid";
 import { AppDispatch } from "../types";
-import { IIngredient } from "../../utils/types";
+import { IIngredientData } from "../../utils/types";
 
 export const ADDING_INGREDIENT: "ADDING_INGREDIENT" = "ADDING_INGREDIENT";
 export const REPLACEMENT_INGREDIENT: "REPLACEMENT_INGREDIENT" = "REPLACEMENT_INGREDIENT";
@@ -11,7 +11,7 @@ export const CLEAN_INGREDIENT: "CLEAN_INGREDIENT" = "CLEAN_INGREDIENT";
 export interface IAddingIngredient {
   readonly type: typeof REPLACEMENT_INGREDIENT | typeof ADDING_INGREDIENT;
   typeIngredient: string;
-  ingredient: IIngredient;
+  ingredient: IIngredientData;
   key: string;
 }
 
@@ -36,7 +36,7 @@ export type TBurgerConstructorActions =
   | IDeleteIngredient
   | ICleanIngredient;
 
-export const addingIngredient = (typeIngredient: string, ingredient: IIngredient) => (dispatch: AppDispatch) => {
+export const addingIngredient = (typeIngredient: string, ingredient: IIngredientData) => (dispatch: AppDispatch) => {
   if (typeIngredient === "bun") {
     dispatch({
       type: REPLACEMENT_INGREDIENT,
