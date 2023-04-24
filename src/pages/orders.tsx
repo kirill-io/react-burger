@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "../services/hooks";
 import { Outlet, useLocation } from "react-router-dom";
 import styles from "./orders.module.css";
 import { ProfileMenu } from "../components/ProfileMenu/ProfileMenu";
@@ -32,7 +32,7 @@ export const OrdersPage = () => {
     <div className={styles.wrapper}>
       {data && modal && (
         <div className={styles.container}>
-          <ProfileMenu margin="mr-15" />
+          <ProfileMenu />
           <Orders data={data} />
         </div>
       )}

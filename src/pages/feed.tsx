@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "../services/hooks";
 import { Outlet, useLocation } from "react-router-dom";
 import styles from "./feed.module.css";
 import { OrderList } from "../components/OrderList/OrderList";

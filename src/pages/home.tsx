@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../services/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
@@ -66,7 +66,7 @@ export const HomePage = () => {
         </Modal>
       )}
       {orderDetailsLoading && (
-        <Modal modalClose={false} buttonClose={false}>
+        <Modal onClose={() => undefined} modalClose={false} buttonClose={false}>
           <p className="text text_type_main-large">Загрузка...</p>
         </Modal>
       )}
