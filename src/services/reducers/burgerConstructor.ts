@@ -6,10 +6,10 @@ import {
   DELETE_INGREDIENT,
   CLEAN_INGREDIENT,
 } from "../actions/burgerConstructor";
-import { IIngredientData } from "../../utils/types";
+import { IIngredientData, IIngredientKey } from "../../utils/types";
 import { TBurgerConstructorActions } from "../actions/burgerConstructor";
 
-type TBurgerConstructorState = ReadonlyArray<IIngredientData>;
+type TBurgerConstructorState = ReadonlyArray<IIngredientData & IIngredientKey>;
 
 const initialState: TBurgerConstructorState = [
   {
@@ -25,16 +25,20 @@ const initialState: TBurgerConstructorState = [
     image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
     image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
     __v: 0,
+    key: "0",
   },
 ];
 
-export const burgerConstructor = (state = initialState, action: TBurgerConstructorActions): TBurgerConstructorState => {
+export const burgerConstructor = (
+  state = initialState,
+  action: TBurgerConstructorActions
+): TBurgerConstructorState => {
   switch (action.type) {
     case ADDING_INGREDIENT: {
       return [...state, { ...action.ingredient, key: action.key }];
     }
     case REPLACEMENT_INGREDIENT: {
-      return [action.ingredient, ...state.slice(1)];
+      return [{ ...action.ingredient, key: action.key }, ...state.slice(1)];
     }
     case MOVE_INGREDIENT: {
       return update(state, {

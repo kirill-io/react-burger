@@ -9,21 +9,27 @@ interface IOrderStatisticsProps {
 }
 
 export const OrderStatistics: FC<IOrderStatisticsProps> = ({ data }) => {
-  const orderDone = data.orders.reduce((prevValue: Array<number>, item: IWsOrders) => {
-    if (item.status === "done") {
-      prevValue.push(item.number);
-    }
+  const orderDone = data.orders.reduce(
+    (prevValue: Array<number>, item: IWsOrders) => {
+      if (item.status === "done") {
+        prevValue.push(item.number);
+      }
 
-    return prevValue;
-  }, []);
+      return prevValue;
+    },
+    []
+  );
 
-  const orderWork = data.orders.reduce((prevValue: Array<number>, item: IWsOrders) => {
-    if (item.status === "created" || item.status === "pending") {
-      prevValue.push(item.number);
-    }
+  const orderWork = data.orders.reduce(
+    (prevValue: Array<number>, item: IWsOrders) => {
+      if (item.status === "created" || item.status === "pending") {
+        prevValue.push(item.number);
+      }
 
-    return prevValue;
-  }, []);
+      return prevValue;
+    },
+    []
+  );
 
   return (
     <div className={styles.wrapper}>

@@ -11,7 +11,7 @@ import {
   moveIngredient,
 } from "../../services/actions/burgerConstructor";
 import { selectionStart } from "../../services/actions/getIngredients";
-import { IIngredientData } from "../../utils/types";
+import { IIngredientData, IIngredientKey } from "../../utils/types";
 
 interface IBurgerConstructorProps {
   onOpen: () => void;
@@ -29,27 +29,54 @@ export const BurgerConstructor: FC<IBurgerConstructorProps> = ({ onOpen }) => {
     dispatch(setIngredientsId(ingredientsId()));
   }, [dispatch, selectedIngredients]); // eslint-disable-line
 
+  const findIngredients = (
+    itemIngredient: string,
+    initState: IIngredientData & IIngredientKey
+  ) => {
+    if (
+      ingredientsAll.find(
+        (item: IIngredientData) => item._id === itemIngredient
+      )
+    ) {
+      return ingredientsAll.find(
+        (item: IIngredientData) => item._id === itemIngredient
+      );
+    } else {
+      return initState;
+    }
+  };
+
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemIngredient: IIngredientData) {
+    drop(itemIngredient: { id: string; type: string }) {
       dispatch(selectionStart());
       dispatch(
         addingIngredient(
           itemIngredient.type,
-          ingredientsAll.find((item: IIngredientData) => item._id === itemIngredient.id)
+          findIngredients(itemIngredient.id, selectedIngredients[0])
         )
       );
     },
   });
 
-  const bun = selectedIngredients.find((item: IIngredientData) => item.type === "bun");
-  const ingredients = selectedIngredients.filter((item: IIngredientData) => item.type !== "bun");
-
-  const totalPrice = useMemo(
-    () =>
-      bun.price * 2 + ingredients.reduce((acc: number, item: IIngredientData) => (acc += item.price), 0),
-    [bun, ingredients]
+  const bun = selectedIngredients.find(
+    (item: IIngredientData) => item.type === "bun"
   );
+  const ingredients = selectedIngredients.filter(
+    (item: IIngredientData) => item.type !== "bun"
+  );
+
+  const totalPrice = useMemo(() => {
+    if (bun) {
+      return (
+        bun.price * 2 +
+        ingredients.reduce(
+          (acc: number, item: IIngredientData) => (acc += item.price),
+          0
+        )
+      );
+    }
+  }, [bun, ingredients]);
 
   const ingredientsId = () => {
     const id = selectedIngredients.map((item: IIngredientData) => item._id);
@@ -72,10 +99,10 @@ export const BurgerConstructor: FC<IBurgerConstructorProps> = ({ onOpen }) => {
   );
 
   const renderIngredient = useCallback(
-    (item: IIngredientData, index: number) => {
+    <T extends IIngredientData & IIngredientKey>(item: T, index: number) => {
       return (
         <ConstructorItem
-          type = {undefined}
+          type={undefined}
           data={item}
           key={item.key}
           index={index}
@@ -100,25 +127,33 @@ export const BurgerConstructor: FC<IBurgerConstructorProps> = ({ onOpen }) => {
               type="top"
               isLocked={true}
               text=" (верх)"
-              data={bun}
+              data={bun ? bun : selectedIngredients[0]}
               noIcon={true}
               onDelete={handleDeleteIngredient}
             />
             <li className={styles.constructor__item_center}>
               <ul className={styles.list}>
-                {ingredients.map((item: IIngredientData, i: number) => renderIngredient(item, i))}
+                {ingredients.map(
+                  <T extends IIngredientData & IIngredientKey>(
+                    item: T,
+                    i: number
+                  ) => renderIngredient(item, i)
+                )}
               </ul>
             </li>
             <ConstructorItem
               type="bottom"
               isLocked={true}
               text=" (низ)"
-              data={bun}
+              data={bun ? bun : selectedIngredients[0]}
               noIcon={true}
               onDelete={handleDeleteIngredient}
             />
           </ul>
-          <ConstructorOrder totalPrice={totalPrice} onOpen={onOpen} />
+          <ConstructorOrder
+            totalPrice={totalPrice ? totalPrice : 0}
+            onOpen={onOpen}
+          />
         </>
       )}
       {!selectionStarted && (

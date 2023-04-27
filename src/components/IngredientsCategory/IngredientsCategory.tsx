@@ -9,7 +9,11 @@ interface IIngredientsCategoryProps {
   goTo: HTMLHeadingElement | any;
 }
 
-export const IngredientsCategory: FC<IIngredientsCategoryProps> = ({ data, title, goTo }) => {
+export const IngredientsCategory: FC<IIngredientsCategoryProps> = ({
+  data,
+  title,
+  goTo,
+}) => {
   return (
     <div id={data[0].type} className="ingredient__category">
       <h2 className="subtitle text text_type_main-medium" ref={goTo}>

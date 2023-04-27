@@ -6,7 +6,9 @@ interface IProtectedRouteElementProps {
   element: ReactElement;
 }
 
-export const ProtectedRouteElement: FC<IProtectedRouteElementProps> = ({ element }) => {
+export const ProtectedRouteElement: FC<IProtectedRouteElementProps> = ({
+  element,
+}) => {
   const location = useLocation();
 
   return getCookie("isAuthenticated") ? (

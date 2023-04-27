@@ -4,7 +4,7 @@ import styles from "./OrderStatus.module.css";
 interface IOrderStatusProps {
   data: Array<number>;
   title: string;
-  style: { color: string }
+  style: { color: string };
 }
 
 export const OrderStatus: FC<IOrderStatusProps> = ({ data, title, style }) => {

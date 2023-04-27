@@ -4,9 +4,7 @@ export const WS_URL_ORDERS_ALL = "wss://norma.nomoreparties.space/orders/all";
 export const WS_URL_ORDERS_USER = "wss://norma.nomoreparties.space/orders";
 const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 
-type TPromise = Promise<object | string>;
-
-const checkResponse = (res: any): TPromise => {
+const checkResponse = (res: any) => {
   if (res.ok) {
     return res.json();
   }
@@ -14,7 +12,7 @@ const checkResponse = (res: any): TPromise => {
   return Promise.reject(`Ошибка ${res.status}`);
 };
 
-const checkSuccess = (res: any): TPromise => {
+const checkSuccess = (res: any) => {
   if (res && res.success) {
     return res;
   }
@@ -22,13 +20,13 @@ const checkSuccess = (res: any): TPromise => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const request = (endpoint: string, options?: any): TPromise => {
+export const request = (endpoint: string, options?: any) => {
   return fetch(`${BURGER_API_URL}${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess);
 };
 
-export const getRefreshTokenRequest = (refreshToken: string | undefined): TPromise => {
+export const getRefreshTokenRequest = (refreshToken: string | undefined) => {
   return request("/auth/token", {
     method: "POST",
     headers: {
@@ -40,7 +38,7 @@ export const getRefreshTokenRequest = (refreshToken: string | undefined): TPromi
   });
 };
 
-export const getOrderNumberRequest = async (ingredientsId: Array<string>): TPromise => {
+export const getOrderNumberRequest = async (ingredientsId: Array<string>) => {
   let accessToken;
 
   if (!getCookie("accessToken")) {
@@ -67,7 +65,7 @@ export const getOrderNumberRequest = async (ingredientsId: Array<string>): TProm
   });
 };
 
-export const getUserDataRequest = async (): TPromise => {
+export const getUserDataRequest = async () => {
   let accessToken;
 
   if (!getCookie("accessToken")) {
@@ -90,7 +88,7 @@ export const getUserDataRequest = async (): TPromise => {
   });
 };
 
-export const updateUserDataRequest = async (email: string, name: string): TPromise => {
+export const updateUserDataRequest = async (email: string, name: string) => {
   let accessToken;
 
   if (!getCookie("accessToken")) {

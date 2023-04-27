@@ -13,7 +13,10 @@ const initialState: TLoginState = {
   name: "",
 };
 
-export const login = (state = initialState, action: TLoginActions | TGetUserDataActions): TLoginState => {
+export const login = (
+  state = initialState,
+  action: TLoginActions | TGetUserDataActions
+): TLoginState => {
   switch (action.type) {
     case GET_LOGIN: {
       return {

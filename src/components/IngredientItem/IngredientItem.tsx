@@ -29,7 +29,9 @@ export const IngredientItem: FC<IIngredientItemProps> = ({ data }) => {
 
   const choiceOfIngredients = () => {
     if (data.type === "bun") {
-      const bun = selectedIngredients.find((item: IIngredientData) => item._id === data._id);
+      const bun = selectedIngredients.find(
+        (item: IIngredientData) => item._id === data._id
+      );
       if (bun) {
         return 2;
       }
@@ -41,7 +43,7 @@ export const IngredientItem: FC<IIngredientItemProps> = ({ data }) => {
         return ingredients.length;
       }
     }
-    return null;
+    return 0;
   };
 
   return (
@@ -66,7 +68,7 @@ export const IngredientItem: FC<IIngredientItemProps> = ({ data }) => {
         <p className={styles.ingredient__name + " text text_type_main-default"}>
           {data.name}
         </p>
-        {choiceOfIngredients() && selectionStarted ? (
+        {choiceOfIngredients() !== 0 && selectionStarted ? (
           <Counter
             count={choiceOfIngredients()}
             size="default"

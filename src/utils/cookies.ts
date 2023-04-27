@@ -2,7 +2,11 @@ export const deleteBearer = (token: string): string => {
   return token.split("Bearer ")[1];
 };
 
-export const setCookie = (name: string, value: string, time: number = 0): void => {
+export const setCookie = (
+  name: string,
+  value: string,
+  time: number = 0
+): void => {
   if (time) {
     document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${
       time * 60

@@ -11,7 +11,9 @@ export const IngredientContent = () => {
 
   const { ingredients } = useSelector((store) => store.ingredients);
 
-  const ingredient = ingredients.find((item: IIngredientData) => item._id === id);
+  const ingredient = ingredients.find(
+    (item: IIngredientData) => item._id === id
+  );
 
   return (
     <div className={styles.container}>
@@ -23,17 +25,26 @@ export const IngredientContent = () => {
       </h2>
       <img
         className={styles.image + " mb-4"}
-        src={ingredient.image_large}
-        alt={ingredient.name}
+        src={ingredient ? ingredient.image_large : ""}
+        alt={ingredient ? ingredient.name : ""}
       />
       <h3 className={styles.subtitle + " text text_type_main-medium"}>
-        {ingredient.name}
+        {ingredient ? ingredient.name : ""}
       </h3>
       <div className={styles.properties}>
-        <Property title="Калории,ккал" value={ingredient.calories} />
-        <Property title="Белки, г" value={ingredient.proteins} />
-        <Property title="Жиры, г" value={ingredient.fat} />
-        <Property title="Углеводы, г" value={ingredient.carbohydrates} />
+        <Property
+          title="Калории,ккал"
+          value={ingredient ? ingredient.calories : 0}
+        />
+        <Property
+          title="Белки, г"
+          value={ingredient ? ingredient.proteins : 0}
+        />
+        <Property title="Жиры, г" value={ingredient ? ingredient.fat : 0} />
+        <Property
+          title="Углеводы, г"
+          value={ingredient ? ingredient.carbohydrates : 0}
+        />
       </div>
     </div>
   );

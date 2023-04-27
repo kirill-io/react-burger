@@ -2,13 +2,14 @@ import { request } from "../../utils/burger-api";
 import { AppDispatch } from "../types";
 import { IIngredientData } from "../../utils/types";
 
-export const GET_INGREDIENT_SUCCESS: "GET_INGREDIENT_SUCCESS" = "GET_INGREDIENT_SUCCESS";
+export const GET_INGREDIENT_SUCCESS: "GET_INGREDIENT_SUCCESS" =
+  "GET_INGREDIENT_SUCCESS";
 export const SELECTION_STARTED: "SELECTION_STARTED" = "SELECTION_STARTED";
 export const SELECTION_STOPPPED: "SELECTION_STOPPPED" = "SELECTION_STOPPPED";
 
 export interface IGetIngredients {
   readonly type: typeof GET_INGREDIENT_SUCCESS;
-  data: ReadonlyArray<IIngredientData>;
+  data: Array<IIngredientData>;
 }
 
 export interface ISelectionStart {

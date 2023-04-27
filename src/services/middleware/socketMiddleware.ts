@@ -1,6 +1,5 @@
 import { IWsActions } from "../actions/wsActions";
 
-
 export const socketMiddleware = (wsActions: IWsActions) => {
   return (store: any) => {
     let socket: any = null;

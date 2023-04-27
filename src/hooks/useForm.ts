@@ -7,7 +7,7 @@ interface IInputItems {
 export const useForm = (inputValues: IInputItems) => {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event: { target: HTMLInputElement; }) => {
+  const handleChange = (event: { target: HTMLInputElement }) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };

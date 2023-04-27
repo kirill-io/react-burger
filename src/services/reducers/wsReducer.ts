@@ -18,7 +18,10 @@ const initialState: TWsReducerState = {
   messages: [],
 };
 
-export const wsReducer = (state = initialState, action: TWsActions): TWsReducerState => {
+export const wsReducer = (
+  state = initialState,
+  action: TWsActions
+): TWsReducerState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

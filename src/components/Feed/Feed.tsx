@@ -7,26 +7,37 @@ import { OrderIngredientImage } from "../OrderIngredientImage/OrderIngredientIma
 import { Price } from "../Price/Price";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useTimeZone } from "../../hooks/useTimeZone";
-import { IWsOrders, ICountItems, IIngredientData } from "../../utils/types";
+import {
+  IWsOrders,
+  ICountItems,
+  IIngredientData,
+  IIngredientCount,
+} from "../../utils/types";
 
 export const Feed = () => {
   const data = useSelector((store) => store.data.messages);
   const { ingredients } = useSelector((store) => store.ingredients);
 
-  const [orderData, setOrderData] = useState<IWsOrders | null>(null);
-  const [orderIngredients, setOrderIngredients] = useState<Array<IIngredientData> | []>([]);
+  const [orderData, setOrderData] = useState<IWsOrders | null | undefined>(
+    null
+  );
+  const [orderIngredients, setOrderIngredients] = useState<
+    Array<IIngredientData & IIngredientCount> | []
+  >([]);
   const [orderPrice, setOrderPrice] = useState<number | null>(null);
 
   const { id } = useParams();
 
   useEffect(() => {
     if (data[0]) {
-      setOrderData(data[0].orders.find((item: IWsOrders) => item.number === Number(id)));
+      setOrderData(
+        data[0].orders.find((item: IWsOrders) => item.number === Number(id))
+      );
     }
   }, [id, data]);
 
   useEffect(() => {
-    if (orderData !== null) {
+    if (orderData) {
       if (ingredients && orderData.ingredients) {
         const countItems: ICountItems = {};
 
@@ -34,18 +45,26 @@ export const Feed = () => {
           countItems[item] = countItems[item] ? countItems[item] + 1 : 1;
         }
 
-        const orderIngredients: Array<IIngredientData> = ingredients.reduce((prevValue: Array<IIngredientData>, item: IIngredientData) => {
-          for (const key in countItems) {
-            if (key === item._id) {
-              prevValue.push({ ...item, count: countItems[key] });
-            }
-          }
+        const orderIngredients: Array<IIngredientData & IIngredientCount> =
+          ingredients.reduce(
+            (
+              prevValue: Array<IIngredientData & IIngredientCount>,
+              item: IIngredientData
+            ) => {
+              for (const key in countItems) {
+                if (key === item._id) {
+                  prevValue.push({ ...item, count: countItems[key] });
+                }
+              }
 
-          return prevValue;
-        }, []);
+              return prevValue;
+            },
+            []
+          );
 
         const orderPrice = orderIngredients.reduce(
-          (prevValue: number, item: IIngredientData) => prevValue + item.price * (item.count ?? 1),
+          (prevValue: number, item: IIngredientData & IIngredientCount) =>
+            prevValue + item.price * item.count,
           0
         );
 
@@ -55,7 +74,7 @@ export const Feed = () => {
     }
   }, [ingredients, orderData]);
 
-  const timeZone = useTimeZone(orderData!==null ? orderData.createdAt : '');
+  const timeZone = useTimeZone(orderData ? orderData.createdAt : "");
 
   return (
     <section className={styles.wrapper}>
@@ -64,11 +83,13 @@ export const Feed = () => {
           <p
             className={styles.order_id + " text text_type_digits-default mb-10"}
           >
-            #{orderData !== null ? orderData.number : null}
+            #{orderData ? orderData.number : null}
           </p>
-          <h2 className="text text_type_main-medium mb-3">{orderData !== null ? orderData.name : null}</h2>
+          <h2 className="text text_type_main-medium mb-3">
+            {orderData ? orderData.name : null}
+          </h2>
           <div className="mb-10">
-            <Status status={orderData !== null ? orderData.status : ''} />
+            <Status status={orderData ? orderData.status : ""} />
           </div>
           <h3 className="text text_type_main-medium mb-6">Состав:</h3>
           <div className={styles.list_container + " mb-10"}>
@@ -94,7 +115,7 @@ export const Feed = () => {
             <div>
               <FormattedDate
                 className="text text_type_main-default text_color_inactive"
-                date={new Date(orderData!==null ? orderData.createdAt : '')}
+                date={new Date(orderData ? orderData.createdAt : "")}
               />
               <span className="text text_type_main-default text_color_inactive">
                 {" "}

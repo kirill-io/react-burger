@@ -8,20 +8,23 @@ import {
 import { TOrderDetailsActions } from "../actions/orderDetails";
 
 type TOrderDetailsState = {
-  ingredientsId: ReadonlyArray<string> | null;
+  ingredientsId: Array<string>;
   orderNumber: number | null;
   orderDetailsOpen: boolean;
   orderDetailsLoading: boolean;
-}
+};
 
 const initialState: TOrderDetailsState = {
-  ingredientsId: null,
+  ingredientsId: [],
   orderNumber: null,
   orderDetailsOpen: false,
   orderDetailsLoading: false,
 };
 
-export const orderDetails = (state = initialState, action: TOrderDetailsActions): TOrderDetailsState => {
+export const orderDetails = (
+  state = initialState,
+  action: TOrderDetailsActions
+): TOrderDetailsState => {
   switch (action.type) {
     case SET_ID: {
       return {

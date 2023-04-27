@@ -10,7 +10,10 @@ interface IConstructorOrderProps {
   onOpen: () => void;
 }
 
-export const ConstructorOrder: FC<IConstructorOrderProps> = ({ totalPrice, onOpen }) => {
+export const ConstructorOrder: FC<IConstructorOrderProps> = ({
+  totalPrice,
+  onOpen,
+}) => {
   return (
     <div className={styles.constructor__order + " mr-4"}>
       <div className={styles.constructor__price}>

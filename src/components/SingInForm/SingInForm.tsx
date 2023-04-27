@@ -25,9 +25,7 @@ export const SingInForm = () => {
   const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.email && values.password) {
-      dispatch(singIn(values.email, values.password))
-        .then(() => navigate(`${fromPage}`, { replace: true }))
-        .catch(() => alert("При авторизации произошла ошибка."));
+      dispatch(singIn(values.email, values.password, `${fromPage}`, navigate));
     } else {
       alert("Заполните поля E-mail и пароль.");
     }

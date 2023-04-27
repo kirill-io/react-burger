@@ -10,7 +10,13 @@ interface ICustomLinkProps {
   state?: boolean;
 }
 
-export const CustomLink: FC<ICustomLinkProps> = ({ to, icon, style, children, state }) => {
+export const CustomLink: FC<ICustomLinkProps> = ({
+  to,
+  icon,
+  style,
+  children,
+  state,
+}) => {
   return (
     <Link
       to={to}

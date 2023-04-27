@@ -25,9 +25,7 @@ export const ResetPasswordForm = () => {
   const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.password && values.code) {
-      dispatch(resetPassword(values.password, values.code))
-        .then(() => navigate("/login", { replace: true, state: fromPage }))
-        .catch(() => alert("При восстановлении пароля произошла ошибка."));
+      dispatch(resetPassword(values.password, values.code, fromPage, navigate));
     } else {
       alert("Заполните поле пароль и введите код из письма.");
     }

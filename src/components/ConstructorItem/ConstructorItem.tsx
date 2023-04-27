@@ -31,7 +31,7 @@ export const ConstructorItem: FC<IConstructorItemProps> = ({
   onDelete,
   moveElement,
 }) => {
-  const [elementKey, setElementKey] = useState<string>('');
+  const [elementKey, setElementKey] = useState<string>("");
   const ref = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export const ConstructorItem: FC<IConstructorItemProps> = ({
           return;
         }
 
-        if (typeof (moveElement) === "function") {
+        if (typeof moveElement === "function") {
           moveElement(dragIndex, hoverIndex);
         }
       }

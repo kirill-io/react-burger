@@ -7,10 +7,10 @@ import { IIngredientData } from "../../utils/types";
 import { TGetIngredientsActions } from "../actions/getIngredients";
 
 type TIngredientsState = {
-  ingredients: ReadonlyArray<IIngredientData>;
+  ingredients: Array<IIngredientData>;
   ingredientsLoading: boolean;
   selectionStarted: boolean;
-}
+};
 
 const initialState: TIngredientsState = {
   ingredients: [],
@@ -18,7 +18,10 @@ const initialState: TIngredientsState = {
   selectionStarted: false,
 };
 
-export const ingredients = (state = initialState, action: TGetIngredientsActions): TIngredientsState => {
+export const ingredients = (
+  state = initialState,
+  action: TGetIngredientsActions
+): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENT_SUCCESS: {
       return {

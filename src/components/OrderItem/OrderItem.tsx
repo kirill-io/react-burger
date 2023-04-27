@@ -17,7 +17,12 @@ interface IOrderItemProps {
   to: string;
 }
 
-export const OrderItem: FC<IOrderItemProps> = ({ data, itemWidth, status, to }) => {
+export const OrderItem: FC<IOrderItemProps> = ({
+  data,
+  itemWidth,
+  status,
+  to,
+}) => {
   const { ingredients } = useSelector((store) => store.ingredients);
 
   const { orderIngredientsReverse, orderPrice } = useSort(

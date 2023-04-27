@@ -20,11 +20,7 @@ export const ForgotPasswordForm = () => {
   const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.email) {
-      dispatch(forgotPassword(values.email))
-        .then(() =>
-          navigate("/reset-password", { replace: true, state: fromPage })
-        )
-        .catch(() => alert("При восстановлении пароля произошла ошибка."));
+      dispatch(forgotPassword(values.email, fromPage, navigate));
     } else {
       alert("Заполните поле E-mail.");
     }

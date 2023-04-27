@@ -21,9 +21,7 @@ export interface IUpdateUserData {
   name: string;
 }
 
-export type TGetUserDataActions =
-  | IGetUserData
-  | IUpdateUserData;
+export type TGetUserDataActions = IGetUserData | IUpdateUserData;
 
 export const getUserData = () => (dispatch: AppDispatch) => {
   getUserDataRequest()

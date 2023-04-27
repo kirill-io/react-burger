@@ -14,7 +14,12 @@ interface IModalProps {
   buttonClose: boolean;
 }
 
-export const Modal: FC<IModalProps> = ({ onClose, modalClose, children, buttonClose }) => {
+export const Modal: FC<IModalProps> = ({
+  onClose,
+  modalClose,
+  children,
+  buttonClose,
+}) => {
   useEffect(() => {
     if (modalClose) {
       document.addEventListener("keydown", onCloseEscape);

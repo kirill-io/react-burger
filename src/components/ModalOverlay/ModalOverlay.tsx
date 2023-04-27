@@ -6,7 +6,10 @@ interface IModalOverlayProps {
   modalClose: boolean;
 }
 
-export const ModalOverlay: FC<IModalOverlayProps> = ({ onClose, modalClose }) => {
+export const ModalOverlay: FC<IModalOverlayProps> = ({
+  onClose,
+  modalClose,
+}) => {
   const onCloseOverlay = () => {
     if (modalClose) {
       onClose();

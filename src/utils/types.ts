@@ -2,21 +2,26 @@ export interface ICountItems {
   [name: string]: number;
 }
 export interface IIngredientData {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
   calories: number;
-  price: number;
+  carbohydrates: number;
+  fat: number;
   image: string;
-  image_mobile: string;
   image_large: string;
+  image_mobile: string;
+  name: string;
+  price: number;
+  proteins: number;
+  type: string;
   __v: number;
-  key?: string;
-  id?: string;
-  count?: number;
+  _id: string;
+}
+
+export interface IIngredientKey {
+  key: string;
+}
+
+export interface IIngredientCount {
+  count: number;
 }
 
 export interface IWsOrders {
@@ -30,7 +35,7 @@ export interface IWsOrders {
 }
 
 export interface IWsGetData {
-  orders: ReadonlyArray<IWsOrders>;
+  orders: Array<IWsOrders>;
   success: boolean;
   total: number;
   totalToday: number;

@@ -1,13 +1,16 @@
 import { FC } from "react";
 import styles from "./OrderIngredientImage.module.css";
-import { IIngredientData } from "../../utils/types";
+import { IIngredientData, IIngredientCount } from "../../utils/types";
 
 interface IOrderIngredientImageProps {
-  data: IIngredientData;
+  data: IIngredientData & IIngredientCount;
   count: boolean;
 }
 
-export const OrderIngredientImage: FC<IOrderIngredientImageProps> = ({ data, count }) => {
+export const OrderIngredientImage: FC<IOrderIngredientImageProps> = ({
+  data,
+  count,
+}) => {
   if (data.count !== undefined) {
     if (data.count > 1 && count) {
       return (
@@ -40,8 +43,6 @@ export const OrderIngredientImage: FC<IOrderIngredientImageProps> = ({ data, cou
       );
     }
   } else {
-    return (
-      <div></div>
-    );
+    return <div></div>;
   }
 };

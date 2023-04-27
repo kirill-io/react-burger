@@ -6,7 +6,10 @@ interface ICustomProfileLinkProps {
   onClick: () => void;
 }
 
-export const CustomProfileLink: FC<ICustomProfileLinkProps> = ({ children, onClick }) => {
+export const CustomProfileLink: FC<ICustomProfileLinkProps> = ({
+  children,
+  onClick,
+}) => {
   return (
     <div
       onClick={onClick}

@@ -1,6 +1,6 @@
 import { AppDispatch } from "../types";
 import { getOrderNumberRequest } from "../../utils/burger-api";
-import { store } from "../../index.jsx";
+import { store } from "../../index";
 import { cleanIngredient } from "./burgerConstructor";
 import { selectionStop } from "./getIngredients";
 
@@ -12,7 +12,7 @@ export const UNSET_ORDER_LOAD: "UNSET_ORDER_LOAD" = "UNSET_ORDER_LOAD";
 
 export interface ISetIngredientsId {
   readonly type: typeof SET_ID;
-  ingredientsId: ReadonlyArray<string>;
+  ingredientsId: Array<string>;
 }
 
 export interface ISetOrderLoad {
@@ -39,12 +39,13 @@ export type TOrderDetailsActions =
   | IGetOrderNumber
   | IHideOrederModal;
 
-export const setIngredientsId = (ingredientsId: string) => (dispatch: AppDispatch) => {
-  dispatch({
-    type: SET_ID,
-    ingredientsId: ingredientsId,
-  });
-};
+export const setIngredientsId =
+  (ingredientsId: Array<string>) => (dispatch: AppDispatch) => {
+    dispatch({
+      type: SET_ID,
+      ingredientsId: ingredientsId,
+    });
+  };
 
 export const setOrderLoad = () => (dispatch: AppDispatch) => {
   if (store.getState().orderDetails.ingredientsId.length > 2) {

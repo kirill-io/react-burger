@@ -9,7 +9,12 @@ interface ITabListProps {
   selectedTab: string;
 }
 
-export const TabList: FC<ITabListProps> = ({ bunClick, mainsClick, sauceClick, selectedTab }) => {
+export const TabList: FC<ITabListProps> = ({
+  bunClick,
+  mainsClick,
+  sauceClick,
+  selectedTab,
+}) => {
   const [current, setCurrent] = useState("bun");
 
   useEffect(() => {
