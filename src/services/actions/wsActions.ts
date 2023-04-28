@@ -10,12 +10,12 @@ export const WS_GET_MESSAGE: "WS_GET_MESSAGE" = "WS_GET_MESSAGE";
 export const WS_SEND_MESSAGE: "WS_SEND_MESSAGE" = "WS_SEND_MESSAGE";
 
 export interface IWsActions {
-  wsInit: "WS_CONNECTION_START";
-  wsSendMessage: "WS_SEND_MESSAGE";
-  onOpen: "WS_CONNECTION_SUCCESS";
-  onClose: "WS_CONNECTION_CLOSED";
-  onError: "WS_CONNECTION_ERROR";
-  onMessage: "WS_GET_MESSAGE";
+  wsInit: typeof WS_CONNECTION_START;
+  wsSendMessage: typeof WS_SEND_MESSAGE;
+  onOpen: typeof WS_CONNECTION_SUCCESS;
+  onClose: typeof WS_CONNECTION_CLOSED;
+  onError: typeof WS_CONNECTION_ERROR;
+  onMessage: typeof WS_GET_MESSAGE;
 }
 
 export const wsActions: IWsActions = {

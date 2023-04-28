@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
 interface IInputItems {
   [name: string]: string;
@@ -7,7 +7,7 @@ interface IInputItems {
 export const useForm = (inputValues: IInputItems) => {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event: { target: HTMLInputElement }) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setValues({ ...values, [name]: value });
   };

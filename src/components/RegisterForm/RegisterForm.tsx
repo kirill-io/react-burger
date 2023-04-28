@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FormEvent } from "react";
 import { useDispatch } from "../../services/hooks";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./RegisterForm.module.css";
@@ -25,7 +25,7 @@ export const RegisterForm = () => {
 
   const fromPage = location.state?.from || "/";
 
-  const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitFormHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.name && values.email && values.password) {
       request("/auth/register", {

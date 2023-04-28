@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FormEvent } from "react";
 import { useDispatch } from "../../services/hooks";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./SingInForm.module.css";
@@ -22,7 +22,7 @@ export const SingInForm = () => {
 
   const fromPage = location.state?.from?.pathname || location.state || "/";
 
-  const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitFormHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.email && values.password) {
       dispatch(singIn(values.email, values.password, `${fromPage}`, navigate));

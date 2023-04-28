@@ -1,3 +1,4 @@
+import { FormEvent } from "react";
 import { useDispatch } from "../../services/hooks";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./ForgotPasswordForm.module.css";
@@ -17,7 +18,7 @@ export const ForgotPasswordForm = () => {
 
   const fromPage = location.state?.from || "/";
 
-  const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitFormHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.email) {
       dispatch(forgotPassword(values.email, fromPage, navigate));

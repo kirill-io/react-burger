@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useSelector, useDispatch } from "../../services/hooks";
 import styles from "./ProfileInputs.module.css";
 import {
@@ -22,15 +22,15 @@ export const ProfileInputs = () => {
     dispatch(getUserData());
   }, [dispatch]);
 
-  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(updateName(e.target.value));
   };
 
-  const onChangeLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(updateLogin(e.target.value));
   };
 
-  const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitFormHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitButton === "cancel") {
       dispatch(getUserData());

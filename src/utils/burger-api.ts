@@ -4,7 +4,7 @@ export const WS_URL_ORDERS_ALL = "wss://norma.nomoreparties.space/orders/all";
 export const WS_URL_ORDERS_USER = "wss://norma.nomoreparties.space/orders";
 const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 
-const checkResponse = (res: any) => {
+const checkResponse = (res: Response) => {
   if (res.ok) {
     return res.json();
   }
@@ -20,7 +20,7 @@ const checkSuccess = (res: any) => {
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const request = (endpoint: string, options?: any) => {
+export const request = (endpoint: string, options?: RequestInit) => {
   return fetch(`${BURGER_API_URL}${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess);

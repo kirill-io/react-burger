@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FormEvent } from "react";
 import { useDispatch } from "../../services/hooks";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./ResetPasswordForm.module.css";
@@ -22,7 +22,7 @@ export const ResetPasswordForm = () => {
 
   const fromPage = location.state || "/";
 
-  const onSubmitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitFormHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (values.password && values.code) {
       dispatch(resetPassword(values.password, values.code, fromPage, navigate));
