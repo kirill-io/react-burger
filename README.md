@@ -25,5 +25,5 @@ ___
 * npm test - Запускает средство запуска тестов;
 * npm run build - Финальная сборка проекта для продакшена.
 ___
-Проект на GitHub Pages - https://kirill-begej.github.io/react-burger/
+Ссылка на демо сайта - https://react-burger-iota.vercel.app/
 ___
